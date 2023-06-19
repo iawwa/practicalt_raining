@@ -20,12 +20,9 @@ npm run dev
 
 ```
 npm install element-plus
-```
-
-```
+npm install axios
 npm install vue-router
 ```
-
 
 ### 如何创建网页
 
