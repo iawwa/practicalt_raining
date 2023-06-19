@@ -1,4 +1,10 @@
-# 注意
+# 前端VUE部分
+
+### 如何提交更改？
+
+先提交，然后推送，就可以更改仓库。
+
+### 注意
 
 不要上传node_modules文件夹
 
@@ -14,9 +20,7 @@ npm install
 npm run dev
 ```
 
-### 前端VUE部分
-
-可能用到,无法使用请使用cnpm替代npm
+### 可能用到,无法使用请使用cnpm替代npm
 
 ```
 npm install element-plus
