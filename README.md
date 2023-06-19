@@ -16,7 +16,7 @@ npm run dev
 
 ### 前端VUE部分
 
-可能用到
+可能用到,无法使用请使用cnpm替代npm
 
 ```
 npm install element-plus
