@@ -3,7 +3,9 @@
 import MainBody from "@/components/MainBody.vue";
 </script>
 <template>
-  <MainBody>
-  </MainBody>
+  <MainBody></MainBody>
 
 </template>
+<style>
+
+</style>
