@@ -4,7 +4,7 @@
       <el-header class="header">
         <el-menu :default-active="activeIndex" class="el-menu-header" text-color="#fff" mode="horizontal"
           :ellipsis="false" @select="handleSelect">
-          <el-menu-item index="0">LOGO</el-menu-item>
+          <el-menu-item index="0"><img src="src/assets/logo.svg" alt="Logo" style="width: 50px;height: 50px"></el-menu-item>
           <div class="flex-grow" />
           <el-menu-item index="1">Processing Center</el-menu-item>
           <el-sub-menu index="2">
@@ -104,6 +104,23 @@
 
 .flex-grow {
   flex-grow: 1;
+}
+
+@media (hover: none) {
+  header {
+    color: pink;
+    background-color: greenyellow;
+  }
+  .el-menu-header
+  {
+    color: pink;
+    background-color: greenyellow;
+  }
+  .span
+  {
+    color: pink;
+    background-color: greenyellow;
+  }
 }
 
 @media (min-width: 1024px) {
