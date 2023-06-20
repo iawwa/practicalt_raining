@@ -30,4 +30,8 @@ npm install vue-router
 
 ### 如何创建网页
 
-在src//components下创建相应vue文件.
+在src//components下创建相应vue文件.再到相应网页使用import使用。
+
+MainBody为页面主体
+
+assets用于存放资源
