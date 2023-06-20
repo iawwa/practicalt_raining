@@ -7,8 +7,7 @@
           <User_pic></User_pic>
         </div>
         <div style="width: 80%">
-          mianbody_head
-
+          头部主体
         </div>
         <div class="toolbar" style="width: 5%">
         <el-dropdown>
@@ -17,9 +16,9 @@
           </el-icon>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item>View</el-dropdown-item>
-              <el-dropdown-item>Add</el-dropdown-item>
-              <el-dropdown-item>Delete</el-dropdown-item>
+              <el-dropdown-item>个人资料</el-dropdown-item>
+              <el-dropdown-item>退出</el-dropdown-item>
+              <el-dropdown-item>回到登录</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -48,7 +47,7 @@
                 <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Apps.ico"></el-icon>个人信息
               </template>
               <el-menu-item-group>
-                <template #title>Group 1</template>
+                <template #title>查看班级</template>
                 <el-menu-item index="2-1">Option 1</el-menu-item>
                 <el-menu-item index="2-2">Option 2</el-menu-item>
               </el-menu-item-group>
@@ -56,7 +55,7 @@
                 <el-menu-item index="2-3">Option 3</el-menu-item>
               </el-menu-item-group>
               <el-sub-menu index="2-4">
-                <template #title>Option 4</template>
+                <template #title>查看课程</template>
                 <el-menu-item index="2-4-1">Option 4-1</el-menu-item>
               </el-sub-menu>
             </el-sub-menu>
@@ -97,9 +96,22 @@
                 <el-table-column prop="age" label="age" width="140" />
                 <el-table-column prop="phone" label="phone" width="120" />
                 <el-table-column prop="address" label="address"   />
+                <el-button>Default</el-button>
+                <el-button type="primary">Primary</el-button>
+                <el-button type="success">Success</el-button>
+                <el-button type="info">Info</el-button>
+                <el-button type="warning">Warning</el-button>
+                <el-button type="danger">Danger</el-button>
+
               </el-table>
+
             </el-scrollbar>
           </el-main>
+          <el-footer><div class="example-pagination-block">
+            <div class="example-demonstration">When you have few pages</div>
+            <el-pagination layout="prev, pager, next" :total="50" />
+          </div>
+            </el-footer>
         </el-container></el-main>
       </el-container>
     </el-container>
@@ -110,7 +122,14 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import User_pic from "./user_pic.vue";
-
+import {
+  Check,
+  Delete,
+  Edit,
+  Message,
+  Search,
+  Star,
+} from '@element-plus/icons-vue'
 
 
 const item = {
