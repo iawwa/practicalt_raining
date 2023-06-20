@@ -107,20 +107,6 @@
 }
 
 @media (hover: none) {
-  header {
-    color: pink;
-    background-color: greenyellow;
-  }
-  .el-menu-header
-  {
-    color: pink;
-    background-color: greenyellow;
-  }
-  .span
-  {
-    color: pink;
-    background-color: greenyellow;
-  }
 }
 
 @media (min-width: 1024px) {
