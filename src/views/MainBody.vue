@@ -29,13 +29,14 @@
       <el-container >
         <el-aside width="200px" class="ori_el_aside">
           <el-scrollbar>
-          <el-menu :default-openeds="['1', '3']">
+          <el-menu :default-openeds="[]">
 
 
             <el-sub-menu index="1">
               <template #title>
                 <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Apps.ico"></el-icon>个人中心
               </template>
+              <el-menu-item index="1-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>个人主页</el-menu-item>
               <el-sub-menu index="2-4">
                 <template #title>个人信息</template>
                 <el-menu-item index="2-4-1">修改密码</el-menu-item>
@@ -66,7 +67,7 @@
 
             <el-sub-menu index="3">
               <template #title>
-                <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Default App.ico"></el-icon>考试管理
+                <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Default App.ico"></el-icon>课程测试
               </template>
               <el-menu-item-group>
                 <template #title><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>测试管理主页</template>
@@ -92,7 +93,7 @@
                 <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Default App.ico"></el-icon>班级中心
               </template>
               <el-menu-item-group>
-                <template #title><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>测试管理主页</template>
+                <template #title><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>班级主页</template>
                 <el-menu-item index="3-1">Option 1</el-menu-item>
                 <el-menu-item index="3-2">Option 2</el-menu-item>
               </el-menu-item-group>
@@ -118,22 +119,26 @@
         <el-main class="ori_el_main">
           <el-container>
             <el-main>
-              <el-scrollbar>
-                <el-table :data="tableData">
-                  <el-table-column prop="id" label="id" width="50" />
-                  <el-table-column prop="name" label="name" width="120" />
-                  <el-table-column prop="sex" label="sex" width="50" />
-                  <el-table-column prop="age" label="age" width="140" />
-                  <el-table-column prop="phone" label="phone" width="120" />
-                  <el-table-column prop="address" label="address"   />
-                  <el-button>Default</el-button>
-                  <el-button type="primary">Primary</el-button>
-                  <el-button type="success">Success</el-button>
-                  <el-button type="info">Info</el-button>
-                  <el-button type="warning">Warning</el-button>
-                  <el-button type="danger">Danger</el-button>
-                </el-table>
-              </el-scrollbar>
+              <el-table :data="tableData" style="width: 100%">
+                <el-table-column label="ID" prop="id" />
+                <el-table-column label="姓名" prop="name" />
+                <el-table-column label="性别" prop="sex" />
+                <el-table-column label="年龄" prop="age" />
+                <el-table-column label="电话" prop="phone" />
+                <el-table-column label="地址" prop="address" />
+                <el-table-column align="right">
+                  <template #header>
+                    <el-input v-model="search" size="small" placeholder="Type to search" />
+                  </template>
+                  <template #default="scope">
+                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+                    <el-button
+                        size="small"
+                        type="danger"
+                        @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
             </el-main>
 
             <el-footer>
@@ -153,7 +158,8 @@
 
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+
 import User_pic from "../components/user_pic.vue";
 import {
   Check,
@@ -163,9 +169,25 @@ import {
   Search,
   Star,
 } from '@element-plus/icons-vue'
+interface User {
+  id:number;
+  name: string;
+  sex: string
+  phone:number;
+  address: string;
+}
+
+const search = ref('')
+
+const handleEdit = (index: number, row: User) => {
+  console.log(index, row)
+}
+const handleDelete = (index: number, row: User) => {
+  console.log(index, row)
+}
 
 
-const item = {
+const person = {
   id:1,
   name:"iawwa",
   sex:"male",
@@ -173,7 +195,7 @@ const item = {
   phone:110,
   address:"mars"
 }
-const tableData = ref(Array.from({ length: 8 }).fill(item))
+const tableData = ref(Array.from({ length:12}).fill(person))
 </script>
 
 
