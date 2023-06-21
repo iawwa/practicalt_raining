@@ -3,7 +3,7 @@
     <el-container class="layout-container-demo">
       <el-header class="ori_el_header">
         <div style="display: flex">
-          <div style="width: 15%">
+          <div style="width: 15%;padding-top: 4px" >
             <User_pic></User_pic>
           </div>
           <div style="width: 80%">
@@ -31,17 +31,8 @@
           <el-scrollbar>
           <el-menu :default-openeds="['1', '3']">
 
+
             <el-sub-menu index="1">
-              <template #title>
-                <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Documents.ico"></el-icon>课程中心
-              </template>
-              <el-menu-item index="1-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>课程主页</el-menu-item>
-              <el-menu-item index="1-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Desktop.ico"></el-icon>我的课程</el-menu-item>
-              <el-menu-item index="1-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Connect.ico"></el-icon>课程管理</el-menu-item>
-
-            </el-sub-menu>
-
-            <el-sub-menu index="2">
               <template #title>
                 <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Apps.ico"></el-icon>个人中心
               </template>
@@ -60,6 +51,18 @@
                 <el-menu-item index="2-4-1">Option 4-1</el-menu-item>
               </el-sub-menu>
             </el-sub-menu>
+
+            <el-sub-menu index="2">
+              <template #title>
+                <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Documents.ico"></el-icon>课程中心
+              </template>
+              <el-menu-item index="1-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>课程主页</el-menu-item>
+              <el-menu-item index="1-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Desktop.ico"></el-icon>我的课程</el-menu-item>
+              <el-menu-item index="1-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Connect.ico"></el-icon>课程管理</el-menu-item>
+
+            </el-sub-menu>
+
+
 
             <el-sub-menu index="3">
               <template #title>
@@ -83,6 +86,30 @@
                 <el-menu-item index="3-4-1">Option 4-1</el-menu-item>
               </el-sub-menu>
             </el-sub-menu>
+
+            <el-sub-menu index="4">
+              <template #title>
+                <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Default App.ico"></el-icon>班级中心
+              </template>
+              <el-menu-item-group>
+                <template #title><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>测试管理主页</template>
+                <el-menu-item index="3-1">Option 1</el-menu-item>
+                <el-menu-item index="3-2">Option 2</el-menu-item>
+              </el-menu-item-group>
+              <el-menu-item-group>
+                <template #title>Group 1</template>
+                <el-menu-item index="3-1">Option 1</el-menu-item>
+                <el-menu-item index="3-2">Option 2</el-menu-item>
+              </el-menu-item-group>
+              <el-menu-item-group title="Group 2">
+                <el-menu-item index="3-3">Option 3</el-menu-item>
+              </el-menu-item-group>
+              <el-sub-menu index="3-4">
+                <template #title>Option 4</template>
+                <el-menu-item index="3-4-1">Option 4-1</el-menu-item>
+              </el-sub-menu>
+            </el-sub-menu>
+
 
           </el-menu>
         </el-scrollbar>
