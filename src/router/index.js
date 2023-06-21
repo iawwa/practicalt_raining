@@ -8,6 +8,9 @@ const routes=[
         children: [
             //这里是用来渲染主页面之下的部分
             { path: '/personinfo', component: personinfo },
+            {path: "/listcourse", component: () => import("@/views/ListCourese.vue") },
+            {path: "/resetpassword", component: () => import("@/views/ResetPassword.vue")},
+            {path: "/resetheadpic",component: () => import("@/views/ResetHeadPic.vue")},
 
         ],
     },
