@@ -8,7 +8,6 @@
           </div>
           <div style="width: 80%">
             头部主体
-            <router-link to="/login">Go to Home</router-link>
           </div>
           <div class="toolbar" style="width: 5%;margin-top: 45px;padding-left: 50px;">
             <el-dropdown>
@@ -17,8 +16,8 @@
               </el-icon>
               <template #dropdown>
                 <el-dropdown-menu >
-                  <el-dropdown-item>注销</el-dropdown-item>
-                  <el-dropdown-item>退出</el-dropdown-item>
+                  <el-dropdown-item><router-link to="/login">注销</router-link></el-dropdown-item>
+                  <el-dropdown-item >退出</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
@@ -34,14 +33,14 @@
 
             <el-sub-menu index="1">
               <template #title>
-                <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Apps.ico"></el-icon>个人中心
+                <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Apps.ico"></el-icon >个人中心
               </template>
-              <el-menu-item index="1-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>个人主页</el-menu-item>
+              <el-menu-item index="1-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon><router-link to="/personinfo">个人主页</router-link></el-menu-item>
               <el-sub-menu index="2-4">
                 <template #title>个人信息</template>
                 <el-menu-item index="2-4-1">修改密码</el-menu-item>
                 <el-menu-item index="2-4-1">修改头像</el-menu-item>
-                <el-menu-item index="2-4-1">Option 4-1</el-menu-item>
+                <el-menu-item index="2-4-1">信息修改</el-menu-item>
               </el-sub-menu>
               <el-sub-menu index="2-4">
                 <template #title>查看课程</template>
@@ -62,7 +61,6 @@
               <el-menu-item index="1-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Connect.ico"></el-icon>课程管理</el-menu-item>
 
             </el-sub-menu>
-
 
 
             <el-sub-menu index="3">
@@ -117,38 +115,7 @@
         </el-aside>
 
         <el-main class="ori_el_main">
-          <el-container>
-            <el-main>
-              <el-table :data="tableData" style="width: 100%">
-                <el-table-column label="ID" prop="id" />
-                <el-table-column label="姓名" prop="name" />
-                <el-table-column label="性别" prop="sex" />
-                <el-table-column label="年龄" prop="age" />
-                <el-table-column label="电话" prop="phone" />
-                <el-table-column label="地址" prop="address" />
-                <el-table-column align="right">
-                  <template #header>
-                    <el-input v-model="search" size="small" placeholder="Type to search" />
-                  </template>
-                  <template #default="scope">
-                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-                    <el-button
-                        size="small"
-                        type="danger"
-                        @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </el-main>
-
-            <el-footer>
-              <div class="example-pagination-block">
-                <div class="example-demonstration">When you have few pages</div>
-                <el-pagination layout="prev, pager, next" :total="50" />
-              </div>
-            </el-footer>
-
-          </el-container>
+        <RouterView></RouterView>
         </el-main>
 
       </el-container>
@@ -158,48 +125,22 @@
 
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
-
-import User_pic from "../components/user_pic.vue";
-import {
-  Check,
-  Delete,
-  Edit,
-  Message,
-  Search,
-  Star,
-} from '@element-plus/icons-vue'
-interface User {
-  id:number;
-  name: string;
-  sex: string
-  phone:number;
-  address: string;
-}
-
-const search = ref('')
-
-const handleEdit = (index: number, row: User) => {
-  console.log(index, row)
-}
-const handleDelete = (index: number, row: User) => {
-  console.log(index, row)
-}
 
 
-const person = {
-  id:1,
-  name:"iawwa",
-  sex:"male",
-  age:"500",
-  phone:110,
-  address:"mars"
-}
-const tableData = ref(Array.from({ length:12}).fill(person))
+
 </script>
 
 
 <style scoped>
+a{
+  text-decoration: none;
+  background-color: white;
+}
+
+
+
+
+
 
 .toolbar {
   display: inline-flex;
