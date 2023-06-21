@@ -1,9 +1,8 @@
 <script setup>
-import MainBody from "@/components/MainBody.vue";
-import MainBody2 from "@/components/MainBody2.vue";
+import MainBody from "@/views/MainBody.vue";
 </script>
 <template>
-  <MainBody2></MainBody2>
+  <MainBody></MainBody>
 </template>
 <style>
 </style>
