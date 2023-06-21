@@ -8,7 +8,7 @@
           </div>
           <div style="width: 80%">
             头部主体
-            <router-link to="/">Go to Home</router-link>
+            <router-link to="/login">Go to Home</router-link>
           </div>
           <div class="toolbar" style="width: 5%;margin-top: 45px;padding-left: 50px;">
             <el-dropdown>

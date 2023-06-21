@@ -2,7 +2,9 @@
 import MainBody from "@/views/MainBody.vue";
 </script>
 <template>
-  <MainBody></MainBody>
+  <div>
+    <RouterView></RouterView>
+  </div>
 </template>
 <style>
 </style>

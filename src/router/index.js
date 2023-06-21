@@ -4,6 +4,10 @@ const routes=[
     {
         path:"/",
         component:MainBody
+    },
+    {
+        path:"/login",
+        component:()=>import("@/views/LoginView.vue")
     }
 ]
 const router=createRouter({
