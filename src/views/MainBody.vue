@@ -7,7 +7,7 @@
             <User_pic></User_pic>
           </div>
           <div style="width: 80%">
-            头部主体
+            head
           </div>
           <div class="toolbar" style="width: 5%;margin-top: 45px;padding-left: 50px;">
             <el-dropdown>
@@ -33,18 +33,14 @@
 
             <el-sub-menu index="1">
               <template #title>
-                <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Apps.ico"></el-icon >个人中心
+                <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Firefox.ico"></el-icon >个人中心
               </template>
-              <el-menu-item index="1-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon><router-link to="/personinfo">个人主页</router-link></el-menu-item>
+              <el-menu-item index="1-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon><router-link to="/PersonInfo">个人主页</router-link></el-menu-item>
               <el-sub-menu index="1-2">
                 <template #title>个人信息</template>
-                <el-menu-item index="1-2-1"><router-link to="/resetpassword">修改密码</router-link></el-menu-item>
-                <el-menu-item index="1-2-2"><router-link to="/resetheadpic">修改头像</router-link></el-menu-item>
-                <el-menu-item index="1-2-3">信息修改</el-menu-item>
-              </el-sub-menu>
-              <el-sub-menu index="1-3">
-                <template #title>查看课程</template>
-                <el-menu-item index="1-3-1"><router-link to="/listcourse">我的课程</router-link></el-menu-item>
+                <el-menu-item index="1-2-1"><router-link to="/ResetPassword"><img style="width: 30px;height: 30px" src="src/assets/Icons/Computer Blue.ico">修改密码</router-link></el-menu-item>
+                <el-menu-item index="1-2-2"><router-link to="/ResetHeadPic"><img style="width: 30px;height: 30px" src="src/assets/Icons/Firefox.ico">修改头像</router-link></el-menu-item>
+                <el-menu-item index="1-2-3"><router-link to="/ResetInfo"><img style="width: 30px;height: 30px" src="src/assets/Icons/Get Info.ico">信息修改</router-link></el-menu-item>
               </el-sub-menu>
             </el-sub-menu>
 
@@ -52,10 +48,9 @@
               <template #title>
                 <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Documents.ico"></el-icon>课程中心
               </template>
-              <el-menu-item index="2-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>课程主页</el-menu-item>
-              <el-menu-item index="2-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Desktop.ico"></el-icon>我的课程</el-menu-item>
-              <el-menu-item index="2-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Connect.ico"></el-icon>课程管理</el-menu-item>
-
+              <el-menu-item index="2-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon><router-link to="/CreateCourse">创建课程</router-link></el-menu-item>
+              <el-menu-item index="2-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Desktop.ico"></el-icon><router-link to="/MyCourse">我的课程</router-link></el-menu-item>
+              <el-menu-item index="2-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Connect.ico"></el-icon><router-link to="/CourseManager">课程管理</router-link></el-menu-item>
             </el-sub-menu>
 
 
@@ -64,20 +59,19 @@
                 <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Default App.ico"></el-icon>课程测试
               </template>
               <el-menu-item-group>
-
-                <el-menu-item index="3-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>测试管理主页</el-menu-item>
-                <el-menu-item index="3-2">你好</el-menu-item>
+                <el-menu-item index="3-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon><router-link to="/Assessment">测评</router-link></el-menu-item>
+                <el-menu-item index="3-2"><router-link to="/CreateTestPaper">创建试卷</router-link></el-menu-item>
               </el-menu-item-group>
             </el-sub-menu>
 
             <el-sub-menu index="4">
               <template #title>
-                <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Default App.ico"></el-icon>班级中心
+                <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Apps.ico"></el-icon>班级中心
               </template>
               <el-menu-item-group>
-                <el-menu-item index="4-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>班级信息管理</el-menu-item>
-                <el-menu-item index="4-2">创建班级</el-menu-item>
-                <el-menu-item index="4-2">管理班级</el-menu-item>
+                <el-menu-item index="4-1"><img style="width: 30px;height: 30px" src="src/assets/Icons/Get Info.ico"><router-link to="/ClassInfo">班级信息</router-link></el-menu-item>
+                <el-menu-item index="4-2"><router-link to="/CreateClass">创建班级</router-link></el-menu-item>
+                <el-menu-item index="4-3"><router-link to="/ManagerClass">管理班级</router-link></el-menu-item>
               </el-menu-item-group>
             </el-sub-menu>
 

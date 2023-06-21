@@ -1,0 +1,3 @@
+<template>
+  manager class
+</template>
