@@ -35,13 +35,12 @@
               <template #title>
                 <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Firefox.ico"></el-icon >个人中心
               </template>
-              <el-menu-item index="1-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon><router-link to="/PersonInfo">个人主页</router-link></el-menu-item>
-              <el-sub-menu index="1-2">
-                <template #title>个人信息</template>
-                <el-menu-item index="1-2-1"><router-link to="/ResetPassword"><img style="width: 30px;height: 30px" src="src/assets/Icons/Computer Blue.ico">修改密码</router-link></el-menu-item>
-                <el-menu-item index="1-2-2"><router-link to="/ResetHeadPic"><img style="width: 30px;height: 30px" src="src/assets/Icons/Firefox.ico">修改头像</router-link></el-menu-item>
-                <el-menu-item index="1-2-3"><router-link to="/ResetInfo"><img style="width: 30px;height: 30px" src="src/assets/Icons/Get Info.ico">信息修改</router-link></el-menu-item>
-              </el-sub-menu>
+              <router-link to="/PersonInfo"><el-menu-item index="1-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>个人主页</el-menu-item></router-link>
+              <el-menu-item index="1-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Computer Blue.ico"></el-icon><router-link to="/ResetPassword">修改密码</router-link></el-menu-item>
+              <el-menu-item index="1-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Firefox.ico"></el-icon><router-link to="/ResetHeadPic">修改头像</router-link></el-menu-item>
+              <el-menu-item index="1-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Get Info.ico"></el-icon><router-link to="/ResetInfo">信息修改</router-link></el-menu-item>
+
+
             </el-sub-menu>
 
             <el-sub-menu index="2">
