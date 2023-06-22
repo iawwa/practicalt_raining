@@ -60,11 +60,12 @@
 
             <el-sub-menu index="3">
               <template #title>
-                <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Default App.ico"></el-icon>课程测试
+                <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Default App.ico"></el-icon>考试测评
               </template>
               <el-menu-item-group>
                 <router-link to="/Assessment"><el-menu-item index="3-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>考试中心</el-menu-item></router-link>
                 <router-link to="/CreateTestPaper"><el-menu-item index="3-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Burn Folder.ico"></el-icon>创建试卷</el-menu-item></router-link>
+                <router-link to="/ListTestPaper"><el-menu-item index="3-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Library Sidebar.ico"></el-icon>查看试卷</el-menu-item></router-link>
               </el-menu-item-group>
             </el-sub-menu>
 
@@ -74,7 +75,7 @@
               </template>
               <el-menu-item-group>
                 <router-link to="/CreateClass"><el-menu-item index="4-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Developer Folder.ico"></el-icon>创建班级</el-menu-item></router-link>
-                <router-link to="/ManagerClass"><el-menu-item index="4-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Library Sidebar.ico"></el-icon>管理班级</el-menu-item></router-link>
+                <router-link to="/ManagerClass"><el-menu-item index="4-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Public.ico"></el-icon>管理班级</el-menu-item></router-link>
                 <router-link to="/ClassInfo"><el-menu-item index="4-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Get Info.ico"></el-icon>班级信息</el-menu-item></router-link>
               </el-menu-item-group>
             </el-sub-menu>

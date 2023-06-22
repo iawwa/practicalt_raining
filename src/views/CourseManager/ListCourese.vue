@@ -44,13 +44,7 @@ import {
   Search,
   Star,
 } from '@element-plus/icons-vue'
-interface User {
-  id:number;
-  name: string;
-  sex: string
-  phone:number;
-  address: string;
-}
+
 
 const search = ref('')
 
@@ -61,7 +55,13 @@ const handleDelete = (index: number, row: User) => {
   console.log(index, row)
 }
 
-
+interface User {
+  id:number;
+  name: string;
+  sex: string
+  phone:number;
+  address: string;
+}
 const person = {
   id:1,
   name:"iawwa",

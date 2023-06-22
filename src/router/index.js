@@ -2,7 +2,7 @@ import {createRouter,createWebHistory} from 'vue-router'
 import MainBody from "@/views/MainBody.vue";
 const routes=[
     {
-        path:"/",
+        path:"/home",
         component:MainBody,
         children: [
             //这里是用来渲染主页面之下的部分
@@ -19,11 +19,16 @@ const routes=[
             {path:"/ClassInfo",component: () => import("@/views/ClassManager/ClassInfo.vue")},
             {path:"/CreateClass",component: () => import("@/views/ClassManager/CreateClass.vue")},
             {path:"/ManagerClass",component: () => import("@/views/ClassManager/ManagerClass.vue")},
+            {path:"/ListTestPaper",component: () => import("@/views/TestPaperManager/ListTestPaper.vue")},
         ],
     },
     {
         path:"/login",
         component:()=>import("@/views/LoginView.vue")
+    },
+    {
+        path:"/test",
+        component: ()=>import("@/views/TestWeb.vue")
     }
 ]
 const router=createRouter({

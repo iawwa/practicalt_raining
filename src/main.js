@@ -17,8 +17,14 @@ import  router from "./router/index.js"
 //导入图标库
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
-const app = createApp(App)
 
+
+//import axsio
+import axios from "./axios/request.js"
+         //将这个vue3app全局挂载到#app元素上
+
+const app = createApp(App)
+app.config.globalProperties.$axios=axios;  //配置axios的全局引用
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)

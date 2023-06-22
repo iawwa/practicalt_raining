@@ -1,13 +1,12 @@
 <template>
   <el-button @click="visible = true">
-    Open Dialog with customized header
+    w
   </el-button>
   <el-dialog v-model="visible" :show-close="false">
     <template #header="{ close, titleId, titleClass }">
       <div class="my-header">
-
         <el-form>
-          1:<el-input type="text">修改</el-input>
+          :<el-input type="text">修改</el-input>
           2:<el-input type="text">修改</el-input>
           3:<el-input type="text">修改</el-input>
           <el-button type="danger" @click="close">
