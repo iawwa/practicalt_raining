@@ -35,7 +35,7 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 
-import User_pic from "../components/user_pic.vue";
+import User_pic from "../../components/user_pic.vue";
 import {
   Check,
   Delete,
