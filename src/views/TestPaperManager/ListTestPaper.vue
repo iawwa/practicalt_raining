@@ -16,8 +16,8 @@
 
           </template>
           <template #default="scope">
-            <el-button size="small" @click="handleOpen(scope.$index, scope.row)">打开</el-button>
-            <el-button size="small" @click="handleEdit(scope.row.eid, scope.row.ename,scope.row.edescribe)">编辑</el-button>
+            <el-button size="small" type="success" @click="handleOpen(scope.$index, scope.row)">打开</el-button>
+            <el-button size="small" type="default" @click="handleEdit(scope.row.eid, scope.row.ename,scope.row.edescribe)">编辑</el-button>
             <el-button
                 size="small"
                 type="danger"
@@ -39,12 +39,12 @@
     <template #header="{ close, titleId, titleClass }">
       <div class="my-header">
         <el-form>
-          :<el-input type="text">修改</el-input>
-          2:<el-input type="text">修改</el-input>
-          3:<el-input type="text">修改</el-input>
-          <el-button type="success" @click="close">
+
+          <el-input type="text" v-model="editParm.currentTestPageName" placeholder="editParm.currentTestPageName">试卷名字</el-input>
+          <el-input type="text" v-model="editParm.currentTestPageDescribe" placeholder="editParm.currentTestPageDescribe">试卷描述</el-input>
+          <el-button type="success" @click="submitUpdate">
             <el-icon class="el-icon--left"><CircleCloseFilled /></el-icon>
-            save
+            更改
           </el-button>
 
           <el-button type="danger" @click="close">
@@ -54,7 +54,6 @@
         </el-form>
       </div>
     </template>
-    This is dialog content.
   </el-dialog>
 
 </template>
@@ -63,7 +62,7 @@
 
 <script lang="ts">
 import API from "../../axios/request";
-import {ElButton, ElDialog, ElInput} from "element-plus";
+import {Action, ElButton, ElDialog, ElInput, ElMessage, ElMessageBox} from "element-plus";
 import {CircleCloseFilled, Search} from "@element-plus/icons-vue";
 
 export default {
@@ -95,7 +94,25 @@ export default {
     },
     handleEdit(a,b,c) {
       this.visible = true
+      this.editParm.currentTestPageID=a
+      this.editParm.currentTestPageName=b
+      this.editParm.currentTestPageDescribe=c
+    },
+    submitUpdate(){
+      this.visible=false
 
+      API({
+        url: '/updateExamination',
+        method: 'get',
+        params: {
+          eid: this.editParm.currentTestPageID,
+          ename:this.editParm.currentTestPageName,
+          edescribe:this.editParm.currentTestPageDescribe,
+        }
+      }).then((res) => {
+        ElMessageBox.alert(res.data.msg, '提示', {
+          confirmButtonText: '确认',})
+      })
     },
     handleDelete(eid) {
       API({
@@ -104,6 +121,9 @@ export default {
         params: {
           eid: eid,
         }
+      }).then((res) => {
+        ElMessageBox.alert(res.data.msg, '提示', {
+          confirmButtonText: '确认',})
       })
     },
     handleCurrentChange(number)
