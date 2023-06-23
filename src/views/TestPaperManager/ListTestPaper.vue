@@ -2,7 +2,8 @@
 
   <el-container>
     <el-main>
-      <el-table :data="TestPaperData.list.data" style="width: 100%;height:550px">
+
+      <el-table :data="TestPaperData.list.data" v-loading="loading" style="width: 100%;height:550px">
         <el-table-column label="试卷ID" prop="eid" style="width: 10%;" />
         <el-table-column label="试卷名字" prop="ename" style="width: 15%;" />
         <el-table-column label="描述" prop="edescribe" style="width: 30%;" />
@@ -40,23 +41,29 @@
           </template>
         </el-table-column>
       </el-table>
+
     </el-main>
+
+
+
+
+
 
     <el-footer>
       <div class="example-pagination-block">
         <el-pagination layout="prev, pager, next"  @current-change="handleCurrentChange" :page-size="pageSize" />
       </div>
     </el-footer>
-+-
+
 
   </el-container>
   <el-dialog v-model="visible" :show-close="false">
     <template #header="{ close, titleId, titleClass }">
       <div class="my-header">
         <el-form>
-
-          <el-input type="text" v-model="editParm.currentTestPageName" placeholder="editParm.currentTestPageName">试卷名字</el-input>
-          <el-input type="text" v-model="editParm.currentTestPageDescribe" placeholder="editParm.currentTestPageDescribe">试卷描述</el-input>
+          试卷ID:<el-text >{{editParm.currentTestPageID}}</el-text><p></p>
+          试卷名字:<el-input type="text" v-model="editParm.currentTestPageName" placeholder="editParm.currentTestPageName"></el-input>
+          试卷描述:<el-input type="text" v-model="editParm.currentTestPageDescribe" placeholder="editParm.currentTestPageDescribe"></el-input>
           <el-button type="success" @click="submitUpdate">
             <el-icon class="el-icon--left"><CircleCloseFilled /></el-icon>
             更改
@@ -95,6 +102,7 @@ export default {
         currentTestPageName:"",
         currentTestPageDescribe:"",
       },
+      loading:true,
     }
   },
   computed: {
@@ -117,7 +125,6 @@ export default {
     },
     submitUpdate(){
       this.visible=false
-
       API({
         url: '/updateExamination',
         method: 'get',
@@ -130,6 +137,9 @@ export default {
         ElMessageBox.alert(res.data.msg, '提示', {
           confirmButtonText: '确认',})
       })
+
+      this.SearchTestPaperData(this.currentPage);
+
     },
     handleDelete(eid) {
       API({
@@ -149,6 +159,7 @@ export default {
       this.SearchTestPaperData(number)
     },
     SearchTestPaperData(default_current_page=this.currentPage) {
+      this.loading=true
       API({
         url: '/selectExamination',
         method: 'get',
@@ -160,6 +171,7 @@ export default {
       }).then((res) => {
         this.TestPaperData.list = res.data;
       })
+      this.loading=false
     }
   },
   mounted() {
@@ -167,10 +179,6 @@ export default {
     this.SearchTestPaperData(1);
   }
 };
-
-import { ElButton, ElDialog } from 'element-plus'
-import { CircleCloseFilled } from '@element-plus/icons-vue'
-
 
 
 
