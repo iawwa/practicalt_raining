@@ -50,9 +50,14 @@
 
 
     <el-footer>
-      <div class="example-pagination-block">
-        <el-pagination layout="prev, pager, next"  @current-change="handleCurrentChange" :page-size="pageSize" />
-      </div>
+      <el-pagination
+          :background="true"
+          :page-size="pageSize"
+          :total="total"
+          layout="total, prev, pager, next"
+          @current-change="handleCurrentChange"
+          class="pagination"
+      />
     </el-footer>
 
 
@@ -95,6 +100,7 @@ export default {
       TestPaperData: {
         list: []
       },
+      total:0,
       currentPage:1,
       pageSize:12,
       editParm:{
@@ -170,6 +176,7 @@ export default {
         }
       }).then((res) => {
         this.TestPaperData.list = res.data;
+        this.total=res.data.count
       })
       this.loading=false
     }
