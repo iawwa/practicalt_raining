@@ -45,10 +45,6 @@
     </el-main>
 
 
-
-
-
-
     <el-footer>
       <el-pagination
           :background="true"
