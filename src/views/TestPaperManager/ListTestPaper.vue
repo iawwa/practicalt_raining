@@ -18,10 +18,25 @@
           <template #default="scope">
             <el-button size="small" type="success" @click="handleOpen(scope.$index, scope.row)">打开</el-button>
             <el-button size="small" type="default" @click="handleEdit(scope.row.eid, scope.row.ename,scope.row.edescribe)">编辑</el-button>
-            <el-button
-                size="small"
-                type="danger"
-                @click="handleDelete(scope.row.eid)">删除</el-button>
+
+            <el-popconfirm
+                width="220"
+                confirm-button-text="确认"
+                cancel-button-text="不"
+                icon="el-icon-info"
+                icon-color="#626AEF"
+                title="你确认要删除吗"
+                @confirm="handleDelete(scope.row.eid)"
+            >
+              <template #reference>
+                <el-button
+                    size="small"
+                    type="danger"
+                    >删除</el-button>
+              </template>
+            </el-popconfirm>
+
+
           </template>
         </el-table-column>
       </el-table>
@@ -152,7 +167,7 @@ export default {
     this.SearchTestPaperData(1);
   }
 };
-import { ref } from 'vue'
+
 import { ElButton, ElDialog } from 'element-plus'
 import { CircleCloseFilled } from '@element-plus/icons-vue'
 
