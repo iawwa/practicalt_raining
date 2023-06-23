@@ -89,9 +89,11 @@ export default {
     ElInput,ElButton, CircleCloseFilled, ElDialog,
   },
   methods: {
+    // 打开试卷
     handleOpen(index, row) {
       console.log(index, row);
     },
+    // 编辑
     handleEdit(a,b,c) {
       this.visible = true
       this.editParm.currentTestPageID=a
