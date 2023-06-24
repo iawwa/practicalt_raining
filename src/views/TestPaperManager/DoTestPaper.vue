@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <h2>{{ currentQuestion.qdescribe }}</h2>
@@ -8,36 +7,35 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import API from "../../axios/request";
 export default {
   data() {
     return {
-      eid:"",
+      eid: "",
       questions: [],
-      currentQuestion: null,
+      currentQuestion:{},
       userAnswer: "",
       showResult: false,
-
     };
   },
   mounted() {
     this.eid = this.$route.query.eid;
     // 假设您将后端传来的数据存储在response中
-    const response = {
-      msg: "success",
-      code: 0,
-      data: [
-        { eid: 69, qid: 1, qdescribe: "1+1=?", answer: "2", point: 10 },
-        { eid: 69, qid: 2, qdescribe: "2+2=?", answer: "4", point: 10 },
-        { eid: 69, qid: 3, qdescribe: "3+3=?", answer: "6", point: 10 }
-      ]
-    };
+    API({
+      url: '/selectQuestionByEid',
+      method: 'get',
+      params: {
+        eid: this.eid,
+      }
+    }).then((res) => {
 
-    // 将数据存储到questions数组中
-    this.questions = response.data;
-
-    // 设置当前题目为第一个题目
-    this.currentQuestion = this.questions[0];
+      this.questions = res.data.data;
+      // console.log(this.questions)
+      // 设置当前题目为第一个题目
+      this.currentQuestion = this.questions[0]
+      console.log(this.currentQuestion)
+    });
   },
   methods: {
     submitAnswer() {
@@ -64,8 +62,7 @@ export default {
         // 已经回答完所有题目，进行其他操作（如显示分数等）
         // ...
       }
-    }
+    },
   }
 };
 </script>
-

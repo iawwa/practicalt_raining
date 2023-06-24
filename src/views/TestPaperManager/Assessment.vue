@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <h2>{{ currentQuestion.qdescribe}}</h2>
+    <h2>{{ currentQuestion}}</h2>
     <input v-model="userAnswer" type="text" placeholder="请输入答案" />
     <button @click="submitAnswer">提交</button>
     <p v-if="showResult">回答正确！</p>

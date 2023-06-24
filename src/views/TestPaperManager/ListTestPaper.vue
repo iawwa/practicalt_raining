@@ -17,7 +17,7 @@
                   >
                     <template #prepend>
                       <el-select v-model="search_selectd.chose" placeholder="Select"  style="width: 75px;">
-                        <el-option label="名字" value="1" />
+                        <el-option label="试卷" value="1" />
                         <el-option label="教师" value="2" />
                         <el-option label="描述" value="3" />
                       </el-select>

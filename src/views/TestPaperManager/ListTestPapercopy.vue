@@ -2,22 +2,39 @@
 
   <el-container>
     <el-main>
-
-      <el-table :data="TestPaperData.list.data" v-loading="loading" style="width: 100%;height:550px">
-        <el-table-column label="试卷ID" prop="eid" style="width: 10%;" />
-        <el-table-column label="试卷名字" prop="ename" style="width: 15%;" />
-        <el-table-column label="描述" prop="edescribe" style="width: 30%;" />
-        <el-table-column label="教师ID" prop="tid" style="width: 10%;" />
-        <el-table-column align="right" style="width: 25%;">
+      <el-table :data="TestPaperData.list.data" v-loading="loading" style="width: 100%;height:550px;">
+        <el-table-column label="试卷ID" prop="eid"  />
+        <el-table-column label="试卷名字" prop="ename" />
+        <el-table-column label="描述" prop="edescribe" />
+        <el-table-column label="教师名字" prop="tname"  />
+        <el-table-column align="right" >
           <template #header>
-            <div style="display: flex; align-items: center;">
-              <el-input v-model="search" size="small" placeholder="Type to search"></el-input>
-              <el-button @click="SearchTestPaperData()" style="margin-left: 5%;background-color: greenyellow"  :icon="Search" ></el-button>
+            <div style="display: flex; align-items: center;text-align: left">
+              <el-input
+                  v-model="search"
+                  placeholder="查询"
+                  class="input-with-select"
+              >
+                <template #prepend>
+                  <el-select v-model="search_selectd.chose" placeholder="Select"  style="width: 75px;">
+                    <el-option label="名字" value="1" />
+                    <el-option label="教师" value="2" />
+                    <el-option label="描述" value="3" />
+                  </el-select>
+                </template>
+                <template #append>
+                  <el-button :icon="Search" @click="SearchTestPaperData()" style="background-color: greenyellow" />
+                </template>
+              </el-input>
+
             </div>
+
+
+
 
           </template>
           <template #default="scope">
-            <el-button size="small" type="success" @click="handleOpen(scope.$index, scope.row)">打开</el-button>
+            <el-button size="small" type="success" @click="handleOpen(scope.row.eid)">打开</el-button>
             <el-button size="small" type="default" @click="handleEdit(scope.row.eid, scope.row.ename,scope.row.edescribe)">编辑</el-button>
 
             <el-popconfirm
@@ -88,9 +105,16 @@ import API from "../../axios/request";
 import {Action, ElButton, ElDialog, ElInput, ElMessage, ElMessageBox} from "element-plus";
 import {CircleCloseFilled, Search} from "@element-plus/icons-vue";
 
+
 export default {
   data() {
     return {
+      search_selectd:{
+        keyword:"",
+        tname:"",
+        keydescribe:"",
+        chose:"1",
+      },
       visible:false,
       search: "",
       TestPaperData: {
@@ -115,8 +139,8 @@ export default {
   },
   methods: {
     // 打开试卷
-    handleOpen(index, row) {
-      console.log(index, row);
+    handleOpen(eid) {
+      this.$router.push({ path: '/DoTestPaper', query: { eid } });
     },
     // 编辑
     handleEdit(a,b,c) {
@@ -163,13 +187,43 @@ export default {
     },
     SearchTestPaperData(default_current_page=this.currentPage) {
       this.loading=true
+      switch (this.search_selectd.chose)
+      {
+        case "1":
+        {
+          this.search_selectd.keyword=this.search
+          this.search_selectd.keydescribe=""
+          this.search_selectd.tname=""
+          break;
+        }
+        case "2":
+        {
+          this.search_selectd.tname=this.search
+          this.search_selectd.keydescribe=""
+          this.search_selectd.keyword=""
+          break;
+        }
+        case "3":
+        {
+          this.search_selectd.keydescribe=this.search
+          this.search_selectd.tname=""
+          this.search_selectd.keyword=""
+          break;
+        }
+        default:
+        {
+          break;
+        }
+      }
       API({
         url: '/selectExamination',
         method: 'get',
         params: {
           page: default_current_page,
           limit: this.pageSize,
-          keyword: this.search,
+          keyword: this.search_selectd.keyword,
+          tname: this.search_selectd.tname,
+          keydescribe: this.search_selectd.keydescribe,
         }
       }).then((res) => {
         this.TestPaperData.list = res.data;
