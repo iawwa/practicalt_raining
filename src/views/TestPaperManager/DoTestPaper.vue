@@ -1,18 +1,18 @@
 
 <template>
   <div>
-    <h2>{{ currentQuestion.qdescribe}}</h2>
+    <h2>{{ currentQuestion.qdescribe }}</h2>
     <input v-model="userAnswer" type="text" placeholder="请输入答案" />
     <button @click="submitAnswer">提交</button>
     <p v-if="showResult">回答正确！</p>
   </div>
 </template>
 
-<script lang="ts">
+<script>
 export default {
   data() {
     return {
-
+      eid:"",
       questions: [],
       currentQuestion: null,
       userAnswer: "",
@@ -21,6 +21,7 @@ export default {
     };
   },
   mounted() {
+    this.eid = this.$route.query.eid;
     // 假设您将后端传来的数据存储在response中
     const response = {
       msg: "success",

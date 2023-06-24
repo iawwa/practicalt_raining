@@ -20,16 +20,14 @@ const routes=[
             {path:"/CreateClass",component: () => import("@/views/ClassManager/CreateClass.vue")},
             {path:"/ManagerClass",component: () => import("@/views/ClassManager/ManagerClass.vue")},
             {path:"/ListTestPaper",component: () => import("@/views/TestPaperManager/ListTestPaper.vue")},
+            {path:"/DoTestPaper",component: () => import("@/views/TestPaperManager/DoTestPaper.vue")},
+
         ],
     },
-    {
-        path:"/login",
-        component:()=>import("@/views/LoginView.vue")
-    },
-    {
-        path:"/test",
-        component: ()=>import("@/views/TestWeb.vue")
-    }
+    {path:"/login", component:()=>import("@/views/LoginView.vue")},
+    {path:"/test", component: ()=>import("@/views/TestWeb.vue")},
+
+
 ]
 const router=createRouter({
     history: createWebHistory(),
