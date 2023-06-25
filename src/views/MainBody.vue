@@ -5,13 +5,13 @@
       <el-header  style="display: flex;height: 100px;background-color: #8c2222;position: relative;color: var(--el-text-color-primary);">
         <el-container>
           <el-aside style="width: 30%">
-            <User_pic></User_pic>
+            <User_pic style="margin-top: 5px"></User_pic>
           </el-aside>
           <el-main style="width: 65%;">
-            <el-text style="margin-left: 100px;text-align: center">{{role}}</el-text>
+            <el-text style="color: white;margin-left: 100px;text-align: center">{{role}}</el-text>
           </el-main>
           <el-aside style="width: 5%;">
-            <div class="toolbar" >
+            <div class="toolbar" style="padding: 25px">
               <el-dropdown>
                 <el-icon style="margin-right: 8px; margin-top: 1px;border: 0px">
                   <img src="src/assets/Icons/Utilities Sidebar.ico" style="width: 50px;height: 50px;" />
@@ -64,7 +64,7 @@
               </template>
               <el-menu-item-group>
                 <router-link to="/Assessment"><el-menu-item index="3-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>考试中心</el-menu-item></router-link>
-                <router-link to="/CreateTestPaper"><el-menu-item index="3-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Burn Folder.ico"></el-icon>创建试卷</el-menu-item></router-link>
+                <router-link v-if="shouldShowLink" to="/CreateTestPaper"><el-menu-item index="3-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Burn Folder.ico"></el-icon>创建试卷</el-menu-item></router-link>
                 <router-link to="/ListTestPaper"><el-menu-item index="3-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Library Sidebar.ico"></el-icon>查看试卷</el-menu-item></router-link>
               </el-menu-item-group>
             </el-sub-menu>
@@ -102,19 +102,45 @@
 <script lang="ts">
 import User_pic from "../components/user_pic.vue";
 
+
 export default
 {
   data()
   {
     return{
       role:"default",
+      is_studnet:false,
+      is_admin:false,
+      is_teacher:false,
     }
   },methods:{
   },mounted()
   {
     this.role=this.$cookies.get("role")
-    console.log(this.role)
-  }
+    switch(this.role){
+      case "student":
+      {
+        this.is_studnet=true
+        break
+      }
+      case "teacher":
+      {
+        this.is_teacher=true
+        break
+      }
+      case "manager":{
+        this.is_admin=true
+        break
+      }
+    }
+  },components: {
+    User_pic,
+  },computed: {
+    //调用这个计算属性以选择性展示管理员教师与学生
+    shouldShowLink() {
+      return (this.is_teacher || this.is_admin);
+    },
+  },
 
 }
 

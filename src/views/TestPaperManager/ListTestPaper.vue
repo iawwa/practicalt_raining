@@ -30,12 +30,10 @@
             </div>
 
 
-
-
           </template>
           <template #default="scope">
             <el-button size="small" type="success" @click="handleOpen(scope.row.eid)">打开</el-button>
-            <el-button size="small" type="default" @click="handleEdit(scope.row.eid, scope.row.ename,scope.row.edescribe)">编辑</el-button>
+            <el-button :disabled="!(is_admin||is_teacher)" size="small" type="default" @click="handleEdit(scope.row.eid, scope.row.ename,scope.row.edescribe)">编辑</el-button>
 
             <el-popconfirm
                 width="220"
@@ -50,6 +48,7 @@
                 <el-button
                     size="small"
                     type="danger"
+                    :disabled="!(is_admin||is_teacher)"
                 >删除</el-button>
               </template>
             </el-popconfirm>
@@ -111,7 +110,9 @@ export default {
   data() {
     return {
       // 0:管理员1:教师2:学生
-      current_role:"0",
+      is_studnet:false,
+      is_admin:false,
+      is_teacher:false,
       search_selectd:{
         keyword:"",
         tname:"",
@@ -236,8 +237,23 @@ export default {
   mounted() {
     // 在mounted钩子中调用getData
     this.SearchTestPaperData(1);
-
-
+    let current_role=this.$cookies.get("role");
+    switch(current_role){
+      case "student":
+      {
+        this.is_studnet=true
+        break
+      }
+      case "teacher":
+      {
+        this.is_teacher=true
+        break
+      }
+      case "manager":{
+        this.is_admin=true
+        break
+      }
+    }
 
   }
 };
