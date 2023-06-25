@@ -3,7 +3,7 @@
     <el-text>题号:{{currentQuestionIndex+1}}------</el-text>
     <el-text>问题:{{currentQuestion.qdescribe}}------</el-text>
     <el-text>分值:{{currentQuestion.point}}------</el-text>
-    <el-text v-if="visable" >正确答案:{{currentQuestion.answer}}-------</el-text>
+    <el-text v-if="visable">正确答案:{{currentQuestion.answer}}-------</el-text>
     <el-text v-if="visable">你的答案:{{UserResult[currentQuestionIndex]}}</el-text>
     <el-text v-if="visable">得分{{UserScore}}</el-text>
     <el-button v-if="Pvisable&visable" type="success" icon="el-icon-check" circle />
