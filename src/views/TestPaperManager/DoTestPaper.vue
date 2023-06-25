@@ -1,25 +1,26 @@
 <template>
   <div>
     <div style="display:flex;">
-      <el-text>题号:{{currentQuestionIndex}}------</el-text>
+      <el-text>题号:{{currentQuestionIndex+1}}------</el-text>
       <el-text>问题:{{currentQuestion.qdescribe}}------</el-text>
-      <el-text v-if="visable" >答案:{{currentQuestion.answer}}-------</el-text>
-      <el-text v-if="visable">得分{{UserScore}}</el-text>
-      <el-progress :percentage="progressPercentage"
-                   :stroke-width="15"
-                   status="elProgressStatus"
-                   striped
-                   striped-flow
-                   :duration="10"
-                   :format="format"
-                   style=" margin-bottom: 15px;width: 350px;" />
     </div>
+    <el-text v-if="visable" >答案:{{currentQuestion.answer}}-------</el-text>
+    <el-text v-if="visable">得分{{UserScore}}</el-text>
+
+    <el-progress :percentage="progressPercentage"
+                 :stroke-width="15"
+                 striped
+                 striped-flow
+                 :duration="10"
+                 :format="format"
+                 style=" margin-bottom: 15px;width: 350px;" />
+
     <el-input v-model="currentQuestionUserResult" type="text" input-style="width: 200px" placeholder="请输入答案" />
     <div style="display: flex">
       <el-button type="primary" @click="ShiftBeforeQuestion">上一题</el-button>
       <el-button type="primary" @click="ShiftNextQuestion">下一题</el-button>
-      <el-button type="primary" @click="SaveCurrentQuestion">保存当前答案</el-button>
-      <el-button type="success" @click="SubmitAnswer">提交</el-button>
+      <el-button type="primary" @click="SaveCurrentQuestion" :disabled="isSaveButtonDisabled">保存当前答案</el-button>
+      <el-button type="success" @click="SubmitAnswer" :disabled="isSubmitButtonDisabled">提交</el-button>
     </div>
   </div>
 </template>
@@ -46,8 +47,11 @@ export default {
       //完成题目数量
       currentDonNumb:0,
       progressPercentage: 0,
-      format:(percentage) => (percentage === 100 ? 'Full' : `${percentage}%`),
-      elProgressStatus:"duration",
+      format:(percentage) => (percentage === 100 ? '完成' : `${percentage}%`),
+
+      //再提交后禁用
+      isSaveButtonDisabled: false,
+      isSubmitButtonDisabled: false,
     };
   },
   mounted() {
@@ -89,7 +93,7 @@ export default {
     SaveCurrentQuestion(){
       this.UserResult[this.currentQuestionIndex] = this.currentQuestionUserResult;
       this.currentDonNumb+=1;
-
+      this.ShiftNextQuestion();
     },
     SubmitAnswer() {
       for (var i=0; i<this.questions.length; i++)
@@ -101,24 +105,16 @@ export default {
         }
       }
       this.visable = true;
+      this.isSaveButtonDisabled = true;
+      this.isSubmitButtonDisabled = true;
     },
   },computed:{
       progressPercentage() {
         let progress_line;
         progress_line=(this.currentDonNumb) / this.questions.length * 100;
+
         return Math.floor(progress_line);
-        if(progress_line<50)
-        {
-          this.elProgressStatus="duration"
-        }
-        else if(progress_line>=50&&progress_line<100)
-        {
-          this.elProgressStatus=""
-        }
-        else
-        {
-          this.elProgressStatus="success"
-        }
+
       },
     },
 };
