@@ -3,7 +3,9 @@
     <div style="display:flex;">
       <el-text>题号:{{currentQuestionIndex}}------</el-text>
       <el-text>问题:{{currentQuestion.qdescribe}}------</el-text>
-      <el-text style="display: none">答案:{{currentQuestion.answer}}-------</el-text>
+      <el-text v-if="visable" >答案:{{currentQuestion.answer}}-------</el-text>
+      <el-text v-if="visable">得分{{UserScore}}</el-text>
+      <el-progress :percentage="progressPercentage" :format="(progressPercentage) => (progressPercentage === 100 ? 'Full' : `${progressPercentage}%`)"  />
     </div>
     <el-input v-model="currentQuestionUserResult" type="text" input-style="width: 200px" placeholder="请输入答案" />
     <div style="display: flex">
@@ -17,6 +19,7 @@
 
 <script lang="ts">
 import API from "../../axios/request";
+
 export default {
   data() {
     return {
@@ -27,9 +30,16 @@ export default {
       currentQuestionIndex:0,
       UserResult:[],
       currentQuestionUserResult:"",
-
       //正确错误表，1表示用户做对了，0表示错误
       UserResultSure:[],
+      //用户的得分
+      UserScore:0,
+      //显示答案与得分
+      visable: false,
+      //完成题目数量
+      currentDonNumb:0,
+      progressPercentage:0,
+      format:"",
     };
   },
   mounted() {
@@ -70,12 +80,19 @@ export default {
     },
     SaveCurrentQuestion(){
       this.UserResult[this.currentQuestionIndex] = this.currentQuestionUserResult;
+      this.currentDonNumb+=1;
+      this.progressPercentage=this.currentDonNumb/this.questions.length*100;
     },
     SubmitAnswer() {
       for (var i=0; i<this.questions.length; i++)
       {
-
+        if(this.UserResult[i] == this.questions[i].answer)
+        {
+          this.UserScore+=this.questions[i].point;
+          this.UserResultSure[i] = 1;
+        }
       }
+      this.visable = true;
     },
   }
 };
