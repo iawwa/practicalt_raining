@@ -11,9 +11,11 @@ import API from "../axios/request"
 export default{
   data() {
     return{
+      //定义变量
       data:"",
     }
   },methods:{
+    //定义函数
     getData(){
       API({
         url:'/selectExamination',
