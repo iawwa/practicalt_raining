@@ -20,7 +20,7 @@
               <template #dropdown>
                 <el-dropdown-menu >
                   <router-link  to="/login"><el-dropdown-item>注销</el-dropdown-item></router-link>
-                  <el-text  @clink="window.close()"><el-dropdown-item >退出</el-dropdown-item></el-text>
+                  <router-link  to="/MyInfo"><el-dropdown-item>信息</el-dropdown-item></router-link>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
@@ -40,7 +40,7 @@
               <template #title>
                 <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Firefox.ico"></el-icon >个人中心
               </template>
-              <router-link to="/PersonInfo"><el-menu-item index="1-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>个人主页</el-menu-item></router-link>
+              <router-link to="/PersonInfo"><el-menu-item index="1-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>用户信息管理</el-menu-item></router-link>
               <router-link to="/ResetPassword"><el-menu-item index="1-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Computer Blue.ico"></el-icon>修改密码</el-menu-item></router-link>
               <router-link to="/ResetHeadPic"><el-menu-item index="1-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Pictures.ico"></el-icon>修改头像</el-menu-item></router-link>
               <router-link to="/ResetInfo"><el-menu-item index="1-4"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Get Info.ico"></el-icon>信息修改</el-menu-item></router-link>

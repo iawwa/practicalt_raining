@@ -1,10 +1,30 @@
 <template>
-  <div v-for="item in TestPaperData.list.data" style="display: flex">
-    <p>{{item.ename}}</p>
-    <image src="getImageUrl(item.image)"></image>
-    <el-image :src="getImageUrl(item.image)"></el-image>
 
 
+  <div>
+    <div v-for="(item, index) in TestPaperData.data" :key="index" style="background-color: #cccccc">
+      <div class="row" v-if="index % 3 === 0">
+        <div v-for="subItem in TestPaperData.data.slice(index, index + 3)" :key="subItem.id" class="item">
+          <el-container
+              style="cursor: pointer;background-color: white;width: 400px;height: 185px;margin:10px;border-radius: 10px 10px 10px 10px"
+            @click="handleOpen(subItem.eid)"
+          >
+            <el-aside><el-image :src="getImageUrl(subItem.image)" style="width: 150px; height: 150px; border-radius: 45%"></el-image>
+            </el-aside>
+            <el-footer><el-text style="">{{ subItem.ename }}</el-text></el-footer>
+          </el-container>
+        </div>
+      </div>
+    </div>
+      <el-pagination
+          :background="true"
+          :page-size="pageSize"
+          :total="total"
+          layout="total, prev, pager, next"
+          @current-change="handleCurrentChange"
+          class="pagination"
+          style="background-color: #cccccc"
+      />
   </div>
 </template>
 
@@ -19,6 +39,7 @@ import { ElImage } from 'element-plus';
 export default {
   data() {
     return {
+      ElMainMyStyle:"",
       image_data:"",
       // 0:管理员1:教师2:学生
       current_role:"0",
@@ -30,9 +51,7 @@ export default {
       },
       visible:false,
       search: "",
-      TestPaperData: {
-        list: []
-      },
+      TestPaperData:"",
       total:0,
       currentPage:1,
       pageSize:12,
@@ -52,13 +71,9 @@ export default {
   },
   methods: {
     getImageUrl(blob) {
-      console.log(blob)
-      let blobuse = new Blob([blob]);
-      let url = window.URL.createObjectURL(blobuse);
+      console.log(blob);
+      let url = 'data:' + 'image/png' + ';base64,' + blob;
       return url;
-
-
-
       },
     // 打开试卷
     handleOpen(eid) {
@@ -111,7 +126,7 @@ export default {
           keydescribe: this.search_selectd.keydescribe,
         }
       }).then((res) => {
-        this.TestPaperData.list = res.data;
+        this.TestPaperData= res.data;
         this.total=res.data.count
       })
       this.loading=false
@@ -128,9 +143,20 @@ export default {
 </script>
 
 <style scoped>
-.my-header {
+.ElMainClassMy
+{
+  background-color: rgba(255, 255, 255);
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 20px 20px 20px 20px
+}
+.row {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
+}
+
+.item {
+  flex-basis: 23%;
+  /* 其他样式属性 */
 }
 </style>

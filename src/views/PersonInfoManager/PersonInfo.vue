@@ -1,6 +1,6 @@
 <template>
   <div>
-    个人主页
+    用户信息管理
   </div>
 </template>
 <script>

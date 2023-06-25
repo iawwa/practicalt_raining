@@ -1,3 +1,3 @@
 <template>
-我的课程
+  个人信息页面
 </template>
