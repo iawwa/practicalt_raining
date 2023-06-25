@@ -34,7 +34,7 @@
 
           </template>
           <template #default="scope">
-            <el-button size="small" type="success" @click="handleOpen(scope.row.eid)">打开</el-button>
+            <el-button size="small" type="success" @click="handleOpen(scope.row.eid)" >打开</el-button>
             <el-button size="small" type="default" @click="handleEdit(scope.row.eid, scope.row.ename,scope.row.edescribe)">编辑</el-button>
 
             <el-popconfirm

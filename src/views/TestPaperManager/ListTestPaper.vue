@@ -109,6 +109,8 @@ import {CircleCloseFilled, Search} from "@element-plus/icons-vue";
 export default {
   data() {
     return {
+      // 0:管理员1:教师2:学生
+      current_role:"0",
       search_selectd:{
         keyword:"",
         tname:"",
