@@ -1,8 +1,17 @@
 <template>
   <div>
-    <h2>{{ currentQuestion.qdescribe }}</h2>
-    <input v-model="userAnswer" type="text" placeholder="请输入答案" />
-    <button @click="submitAnswer">提交</button>
+    <div style="display:flex;">
+      <el-text>题号:{{currentQuestionIndex}}------</el-text>
+      <el-text>问题:{{currentQuestion.qdescribe}}------</el-text>
+      <el-text style="display: none">答案:{{currentQuestion.answer}}-------</el-text>
+    </div>
+    <el-input v-model="currentQuestionUserResult" type="text" input-style="width: 200px" placeholder="请输入答案" />
+    <div style="display: flex">
+      <el-button type="primary" @click="ShiftBeforeQuestion">上一题</el-button>
+      <el-button type="primary" @click="ShiftNextQuestion">下一题</el-button>
+      <el-button type="primary" @click="SaveCurrentQuestion">保存当前答案</el-button>
+      <el-button type="success" @click="submitAnswer">提交</el-button>
+    </div>
     <p v-if="showResult">回答正确！</p>
   </div>
 </template>
@@ -15,8 +24,10 @@ export default {
       eid: "",
       questions: [],
       currentQuestion:{},
-      userAnswer: "",
       showResult: false,
+      currentQuestionIndex:0,
+      UserResult:[],
+      currentQuestionUserResult:"",
     };
   },
   mounted() {
@@ -35,9 +46,27 @@ export default {
       // 设置当前题目为第一个题目
       this.currentQuestion = this.questions[0]
       console.log(this.currentQuestion)
+
     });
   },
   methods: {
+    ShiftBeforeQuestion(){
+      if(this.currentQuestionIndex>0)
+      {
+        this.currentQuestionIndex-=1;
+        this.currentQuestion = this.questions[this.currentQuestionIndex];
+      }
+    },
+    ShiftNextQuestion(){
+      if(this.currentQuestionIndex<this.questions.length-1)
+      {
+        this.currentQuestionIndex+=1;
+        this.currentQuestion = this.questions[this.currentQuestionIndex];
+      }
+    },
+    SaveCurrentQuestion(){
+
+    },
     submitAnswer() {
       // 检查用户答案是否正确
       if (this.userAnswer === this.currentQuestion.answer) {
@@ -59,8 +88,6 @@ export default {
         this.userAnswer = "";
         this.showResult = false;
       } else {
-        // 已经回答完所有题目，进行其他操作（如显示分数等）
-        // ...
       }
     },
   }
