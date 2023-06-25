@@ -35,3 +35,15 @@ npm install vue-router
 MainBody为页面主体
 
 assets用于存放资源
+
+### 如何获取COOIKES
+
+例子：`    this.role=this.$cookies.get("role")`
+
+### 如何设置路由
+
+例子：router/index.js
+
+### 如何前后端数据交换
+
+例子:TestWeb.vue    /test
