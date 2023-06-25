@@ -25,15 +25,9 @@ export default{
         limit:4,
       }
     }).then((res) => {
-
       this.data=res.data;
     })
   }
 }
-
-
-
-
-
 }
 </script>

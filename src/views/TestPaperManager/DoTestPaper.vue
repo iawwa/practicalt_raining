@@ -10,9 +10,8 @@
       <el-button type="primary" @click="ShiftBeforeQuestion">上一题</el-button>
       <el-button type="primary" @click="ShiftNextQuestion">下一题</el-button>
       <el-button type="primary" @click="SaveCurrentQuestion">保存当前答案</el-button>
-      <el-button type="success" @click="submitAnswer">提交</el-button>
+      <el-button type="success" @click="SubmitAnswer">提交</el-button>
     </div>
-    <p v-if="showResult">回答正确！</p>
   </div>
 </template>
 
@@ -28,6 +27,9 @@ export default {
       currentQuestionIndex:0,
       UserResult:[],
       currentQuestionUserResult:"",
+
+      //正确错误表，1表示用户做对了，0表示错误
+      UserResultSure:[],
     };
   },
   mounted() {
@@ -46,7 +48,9 @@ export default {
       // 设置当前题目为第一个题目
       this.currentQuestion = this.questions[0]
       console.log(this.currentQuestion)
-
+      this.UserResult = Array(this.questions.length).fill("");
+      this.UserResultSure = Array(this.questions.length).fill(0);
+      console.log(this.UserResult)
     });
   },
   methods: {
@@ -65,29 +69,12 @@ export default {
       }
     },
     SaveCurrentQuestion(){
-
+      this.UserResult[this.currentQuestionIndex] = this.currentQuestionUserResult;
     },
-    submitAnswer() {
-      // 检查用户答案是否正确
-      if (this.userAnswer === this.currentQuestion.answer) {
-        this.showResult = true;
-      } else {
-        this.showResult = false;
-      }
+    SubmitAnswer() {
+      for (var i=0; i<this.questions.length; i++)
+      {
 
-      // 切换到下一题
-      this.nextQuestion();
-    },
-    nextQuestion() {
-      const currentIndex = this.questions.indexOf(this.currentQuestion);
-      const nextIndex = currentIndex + 1;
-
-      // 如果还有下一题，更新当前题目
-      if (nextIndex < this.questions.length) {
-        this.currentQuestion = this.questions[nextIndex];
-        this.userAnswer = "";
-        this.showResult = false;
-      } else {
       }
     },
   }
