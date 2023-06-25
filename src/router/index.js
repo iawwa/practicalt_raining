@@ -1,5 +1,6 @@
 import {createRouter,createWebHistory} from 'vue-router'
 import MainBody from "@/views/MainBody.vue";
+import VueCookies from "vue-cookies";
 const routes=[
     {
         path:"/home",
@@ -33,6 +34,8 @@ const routes=[
     },
     {path:"/login", component:()=>import("@/views/LoginView.vue")},
     {path:"/test", component: ()=>import("@/views/TestWeb.vue")},
+    // Catch-all route to redirect unknown paths to login
+    { path: '/:pathMatch(.*)*', redirect: '/login' },
 
 
 ]
@@ -40,4 +43,24 @@ const router=createRouter({
     history: createWebHistory(),
     routes
 })
+router.beforeEach((to, from, next) => {
+    if (to.path === '/login') {
+        next();
+    } else {
+        let role = VueCookies.get('role');
+        if (!role) {
+            ElMessageBox.alert('您还未登录，请先登录', '提示', {
+                confirmButtonText: '确定'
+            });
+            if (from.path !== '/login') {
+                next('/login');
+            } else {
+                next();
+            }
+        } else {
+            next();
+        }
+    }
+});
+
 export default router
