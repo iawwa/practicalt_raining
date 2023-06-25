@@ -3,6 +3,7 @@
     <h1>This is an about page</h1>
     <button @click="getData()">test axios 请求数据</button>
     <p>这是请求到的数据{{testData.list}}</p>
+    <p>梁伟静</p>
   </div>
 </template>
 <script>
