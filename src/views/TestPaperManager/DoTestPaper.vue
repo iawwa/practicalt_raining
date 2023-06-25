@@ -1,12 +1,13 @@
 <template>
   <div>
-    <div style="display:flex;">
-      <el-text>题号:{{currentQuestionIndex+1}}------</el-text>
-      <el-text>问题:{{currentQuestion.qdescribe}}------</el-text>
-    </div>
-    <el-text v-if="visable" >答案:{{currentQuestion.answer}}-------</el-text>
+    <el-text>题号:{{currentQuestionIndex+1}}------</el-text>
+    <el-text>问题:{{currentQuestion.qdescribe}}------</el-text>
+    <el-text>分值:{{currentQuestion.point}}------</el-text>
+    <el-text v-if="visable" >正确答案:{{currentQuestion.answer}}-------</el-text>
+    <el-text v-if="visable">你的答案:{{UserResult[currentQuestionIndex]}}</el-text>
     <el-text v-if="visable">得分{{UserScore}}</el-text>
-
+    <el-button v-if="Pvisable&visable" type="success" icon="el-icon-check" circle />
+    <el-button v-if="Evisable&visable" type="danger" icon="el-icon-close" circle />
     <el-progress :percentage="progressPercentage"
                  :stroke-width="15"
                  striped
@@ -28,10 +29,12 @@
 <script lang="ts">
 import API from "../../axios/request";
 import { ElProgress } from 'element-plus';
+import {Check, Delete} from "@element-plus/icons-vue";
 export default {
   data() {
     return {
       eid: "",
+      sid:10010001,
       questions: [],
       currentQuestion:{},
       showResult: false,
@@ -52,6 +55,8 @@ export default {
       //再提交后禁用
       isSaveButtonDisabled: false,
       isSubmitButtonDisabled: false,
+      Pvisable: false,
+      Evisable: false,
     };
   },
   mounted() {
@@ -82,6 +87,7 @@ export default {
         this.currentQuestionIndex-=1;
         this.currentQuestion = this.questions[this.currentQuestionIndex];
       }
+      this.showPE()
     },
     ShiftNextQuestion(){
       if(this.currentQuestionIndex<this.questions.length-1)
@@ -89,11 +95,16 @@ export default {
         this.currentQuestionIndex+=1;
         this.currentQuestion = this.questions[this.currentQuestionIndex];
       }
+      this.showPE()
     },
     SaveCurrentQuestion(){
       this.UserResult[this.currentQuestionIndex] = this.currentQuestionUserResult;
       this.currentDonNumb+=1;
       this.ShiftNextQuestion();
+      if(this.currentDonNumb==this.questions.length)
+      {
+        this.isSaveButtonDisabled = true;
+      }
     },
     SubmitAnswer() {
       for (var i=0; i<this.questions.length; i++)
@@ -102,19 +113,51 @@ export default {
         {
           this.UserScore+=this.questions[i].point;
           this.UserResultSure[i] = 1;
+
         }
       }
       this.visable = true;
       this.isSaveButtonDisabled = true;
       this.isSubmitButtonDisabled = true;
+      this.UploadStudentScore();
+      this.showPE()
     },
+    UploadStudentScore()
+    {
+      API({
+        url: '/studentAnswer',
+        method: 'get',
+        params: {
+          eid:this.eid,
+          sid:this.sid,
+          score:this.UserScore,
+        }
+      })
+    },
+    //显示当前题目是否正确
+    showPE()
+    {
+      if(this.UserResultSure[this.currentQuestionIndex]==1)
+      {
+        this.Pvisable = true;
+        this.Evisable = false;
+      }
+      else{
+        this.Pvisable = false;
+        this.Evisable = true;
+      }
+    }
   },computed:{
+    Check() {
+      return Check
+    },
+    Delete() {
+      return Delete
+    },
       progressPercentage() {
         let progress_line;
         progress_line=(this.currentDonNumb) / this.questions.length * 100;
-
         return Math.floor(progress_line);
-
       },
     },
 };
