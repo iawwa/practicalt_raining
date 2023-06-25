@@ -117,13 +117,15 @@ export default {
           role:this.selectedRole,
         }
       }).then((res) => {
-        console.log(res)
-        if(res.msg == "success")
+        if(res.data.msg === "success")
         {
-          this.$cookies.set("user", res.data.user);
-          this.$cookies.set("tole",res.role)
+          console.log(res.data.user)
+          console.log(res.role)
+          this.$cookies.set("user", res.data.data.user);
+          this.$cookies.set("role",res.data.role)
+          this.$router.push({ path: '/home'});
         }
-        this.$router.push({ path: '/home'});
+
       })
     },
     register() {

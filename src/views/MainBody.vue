@@ -1,37 +1,37 @@
 <template>
 
   <div class="common-layout" style="height: 100%;overflow: hidden">
-
     <el-container class="layout-container-demo">
-
-      <el-header class="ori_el_header">
-        <div style="display: flex">
-          <div style="width: 15%;padding-top: 4px" >
+      <el-header  style="display: flex;height: 100px;background-color: #8c2222;position: relative;color: var(--el-text-color-primary);">
+        <el-container>
+          <el-aside style="width: 30%">
             <User_pic></User_pic>
-          </div>
-          <div style="width: 80%">
-            head
-          </div>
-          <div class="toolbar" style="width: 5%;margin-top: 45px;padding-left: 50px;">
-            <el-dropdown>
-              <el-icon style="margin-right: 8px; margin-top: 1px;border: 0px">
-                <img src="src/assets/Icons/Utilities Sidebar.ico" style="width: 50px;height: 50px;" />
-              </el-icon>
-              <template #dropdown>
-                <el-dropdown-menu >
-                  <router-link  to="/login"><el-dropdown-item>注销</el-dropdown-item></router-link>
-                  <router-link  to="/MyInfo"><el-dropdown-item>信息</el-dropdown-item></router-link>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-          </div>
-        </div>
+          </el-aside>
+          <el-main style="width: 65%;">
+            <el-text style="margin-left: 100px;text-align: center">{{role}}</el-text>
+          </el-main>
+          <el-aside style="width: 5%;">
+            <div class="toolbar" >
+              <el-dropdown>
+                <el-icon style="margin-right: 8px; margin-top: 1px;border: 0px">
+                  <img src="src/assets/Icons/Utilities Sidebar.ico" style="width: 50px;height: 50px;" />
+                </el-icon>
+                <template #dropdown>
+                  <el-dropdown-menu >
+                    <router-link  to="/login"><el-dropdown-item>注销</el-dropdown-item></router-link>
+                    <router-link  to="/MyInfo"><el-dropdown-item>信息</el-dropdown-item></router-link>
+                  </el-dropdown-menu>
+                </template>
+              </el-dropdown>
+            </div>
+          </el-aside>
+        </el-container>
 
       </el-header>
 
       <el-container >
 
-        <el-aside width="200px" class="ori_el_aside">
+        <el-aside width="200px" style="color: var(--el-text-color-primary);background-color: #9f3425;">
           <el-scrollbar>
           <el-menu :default-openeds="[]">
 
@@ -85,7 +85,7 @@
         </el-scrollbar>
         </el-aside>
 
-        <el-main class="ori_el_main">
+        <el-main style="  color: var(--el-text-color-primary);padding: 0;">
         <RouterView></RouterView>
         </el-main>
 
@@ -99,8 +99,24 @@
 </template>
 
 
-<script lang="ts" setup>
+<script lang="ts">
 import User_pic from "../components/user_pic.vue";
+
+export default
+{
+  data()
+  {
+    return{
+      role:"default",
+    }
+  },methods:{
+  },mounted()
+  {
+    this.role=this.$cookies.get("role")
+    console.log(this.role)
+  }
+
+}
 
 
 </script>
@@ -119,23 +135,8 @@ a{
   height: 100%;
   right: 20px;
 }
-.ori_el_header
-{
-  height: 100px;
-  background-color: #9f3425;
-  position: relative;
-  color: var(--el-text-color-primary);
-}
-.ori_el_aside
-{
-  color: var(--el-text-color-primary);
-  background-color: #9f3425;
-}
-.ori_el_main
-{
-  color: var(--el-text-color-primary);
-  padding: 0;
-}
+
+
 </style>
 
 
