@@ -2,16 +2,31 @@
 
 
   <div>
-    <div v-for="(item, index) in TestPaperData.data" :key="index" style="background-color: #cccccc">
+    <div v-for="(item, index) in TestPaperData.data" :key="index" style="background-color: #ffffff">
       <div class="row" v-if="index % 3 === 0">
         <div v-for="subItem in TestPaperData.data.slice(index, index + 3)" :key="subItem.id" class="item">
           <el-container
-              style="cursor: pointer;background-color: white;width: 400px;height: 185px;margin:10px;border-radius: 10px 10px 10px 10px"
+              style="cursor: pointer;
+              background-color: #dad5d5;
+              width: 400px;height: 185px;
+              margin:10px;
+              border: 2px solid #dad5d5;
+              border-radius: 20px 20px 20px 20px"
             @click="handleOpen(subItem.eid)"
           >
-            <el-aside><el-image :src="getImageUrl(subItem.image)" style="width: 150px; height: 150px; border-radius: 45%"></el-image>
+            <el-aside style="display: flex">
+              <el-image
+                  :src="getImageUrl(subItem.image)"
+                  style="width: 150px; height: 150px;
+                  border: 2px solid #dad5d5;
+                  border-radius: 45%">
+
+              </el-image>
+              <el-text style="text-align: center;">{{item.tname}}</el-text>
             </el-aside>
-            <el-footer><el-text style="">{{ subItem.ename }}</el-text></el-footer>
+            <el-footer>
+              <el-text style="">{{ subItem.ename }}</el-text>
+            </el-footer>
           </el-container>
         </div>
       </div>
@@ -23,7 +38,7 @@
           layout="total, prev, pager, next"
           @current-change="handleCurrentChange"
           class="pagination"
-          style="background-color: #cccccc"
+          style="background-color: #ffffff"
       />
   </div>
 </template>
