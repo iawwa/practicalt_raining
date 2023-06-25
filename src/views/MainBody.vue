@@ -31,7 +31,7 @@
 
       <el-container >
 
-        <el-aside width="200px" style="color: var(--el-text-color-primary);background-color: #9f3425;">
+        <el-aside width="200px" style="color: var(--el-text-color-primary);background-color: white;">
           <el-scrollbar>
           <el-menu :default-openeds="[]">
 
