@@ -5,7 +5,14 @@
       <el-text>问题:{{currentQuestion.qdescribe}}------</el-text>
       <el-text v-if="visable" >答案:{{currentQuestion.answer}}-------</el-text>
       <el-text v-if="visable">得分{{UserScore}}</el-text>
-      <el-progress :percentage="progressPercentage" :format="(progressPercentage) => (progressPercentage === 100 ? 'Full' : `${progressPercentage}%`)"  />
+      <el-progress :percentage="progressPercentage"
+                   :stroke-width="15"
+                   status="elProgressStatus"
+                   striped
+                   striped-flow
+                   :duration="10"
+                   :format="format"
+                   style=" margin-bottom: 15px;width: 350px;" />
     </div>
     <el-input v-model="currentQuestionUserResult" type="text" input-style="width: 200px" placeholder="请输入答案" />
     <div style="display: flex">
@@ -19,7 +26,7 @@
 
 <script lang="ts">
 import API from "../../axios/request";
-
+import { ElProgress } from 'element-plus';
 export default {
   data() {
     return {
@@ -38,8 +45,9 @@ export default {
       visable: false,
       //完成题目数量
       currentDonNumb:0,
-      progressPercentage:0,
-      format:"",
+      progressPercentage: 0,
+      format:(percentage) => (percentage === 100 ? 'Full' : `${percentage}%`),
+      elProgressStatus:"duration",
     };
   },
   mounted() {
@@ -81,7 +89,7 @@ export default {
     SaveCurrentQuestion(){
       this.UserResult[this.currentQuestionIndex] = this.currentQuestionUserResult;
       this.currentDonNumb+=1;
-      this.progressPercentage=this.currentDonNumb/this.questions.length*100;
+
     },
     SubmitAnswer() {
       for (var i=0; i<this.questions.length; i++)
@@ -94,6 +102,24 @@ export default {
       }
       this.visable = true;
     },
-  }
+  },computed:{
+      progressPercentage() {
+        let progress_line;
+        progress_line=(this.currentDonNumb) / this.questions.length * 100;
+        return Math.floor(progress_line);
+        if(progress_line<50)
+        {
+          this.elProgressStatus="duration"
+        }
+        else if(progress_line>=50&&progress_line<100)
+        {
+          this.elProgressStatus=""
+        }
+        else
+        {
+          this.elProgressStatus="success"
+        }
+      },
+    },
 };
 </script>

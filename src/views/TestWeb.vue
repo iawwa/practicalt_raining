@@ -2,23 +2,19 @@
   <div class="about">
     <h1>This is an about page</h1>
     <button @click="getData()">test axios 请求数据</button>
-    <p>这是请求到的数据{{testData.list}}</p>
+    <p>这是请求到的数据{{data}}</p>
     <p>梁伟静</p>
   </div>
 </template>
-<script>
-import { reactive } from 'vue'
+<script lang="ts">
 import API from "../axios/request"
 export default{
-  name:'About',
-  setup(){
-    //数据
-    const testData = reactive({
-      list:[]
-    });
-
-    //测试请求方法
-    const getData = function(){
+  data() {
+    return{
+      data:"",
+    }
+  },methods:{
+    getData(){
       API({
         url:'/selectExamination',
         method:'get',
@@ -27,15 +23,9 @@ export default{
           limit:4
         }
       }).then((res)=>{
-        alert('请求成功!');
-        testData.list = res.data;
+        this.data = res.data;
       });
     }
-    return{
-      testData,
-      getData,
-    }
   }
-
 }
 </script>
