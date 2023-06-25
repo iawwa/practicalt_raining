@@ -2,7 +2,7 @@
 
   <el-container>
     <el-main>
-      <el-table :data="TestPaperData.list.data" v-loading="loading" style="width: 100%;height:550px;">
+      <el-table :data="TestPaperData.data" v-loading="loading" style="width: 100%;height:550px;">
         <el-table-column label="试卷ID" prop="eid"  />
         <el-table-column label="试卷名字" prop="ename" />
         <el-table-column label="描述" prop="edescribe" />
@@ -106,6 +106,7 @@ import {Action, ElButton, ElDialog, ElInput, ElMessage, ElMessageBox} from "elem
 import {CircleCloseFilled, Search} from "@element-plus/icons-vue";
 
 
+
 export default {
   data() {
     return {
@@ -119,9 +120,7 @@ export default {
       },
       visible:false,
       search: "",
-      TestPaperData: {
-        list: []
-      },
+      TestPaperData:"",
       total:0,
       currentPage:1,
       pageSize:12,
@@ -228,7 +227,7 @@ export default {
           keydescribe: this.search_selectd.keydescribe,
         }
       }).then((res) => {
-        this.TestPaperData.list = res.data;
+        this.TestPaperData = res.data;
         this.total=res.data.count
       })
       this.loading=false
@@ -237,6 +236,9 @@ export default {
   mounted() {
     // 在mounted钩子中调用getData
     this.SearchTestPaperData(1);
+
+
+
   }
 };
 

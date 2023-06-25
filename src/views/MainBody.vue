@@ -20,7 +20,7 @@
               <template #dropdown>
                 <el-dropdown-menu >
                   <router-link  to="/login"><el-dropdown-item>注销</el-dropdown-item></router-link>
-                  <el-dropdown-item >退出</el-dropdown-item>
+                  <el-text  @clink="window.close()"><el-dropdown-item >退出</el-dropdown-item></el-text>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
@@ -111,9 +111,6 @@ a{
   text-decoration: none;
   background-color: white;
 }
-
-
-
 
 .toolbar {
   display: inline-flex;

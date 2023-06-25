@@ -16,6 +16,7 @@ import App from './App.vue'
 import  router from "./router/index.js"
 //导入图标库
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import VueCookies from "vue-cookies";
 
 
 
@@ -30,5 +31,5 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
 //vue对象配置路由
-app.use(router).use(ElementPlus).mount('#app')
+app.use(router).use(VueCookies).use(ElementPlus).mount('#app')
 
