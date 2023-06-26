@@ -2,6 +2,43 @@
   <div>
     <h1>Create Question</h1>
     <el-form ref="questionForm" :model="questionData" label-width="120px">
+
+      <el-upload action="#" list-type="picture-card" :auto-upload="false">
+        <el-icon><Plus /></el-icon>
+
+        <template #file="{ file }">
+          <div>
+            <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
+            <span class="el-upload-list__item-actions">
+          <span
+              class="el-upload-list__item-preview"
+              @click="handlePictureCardPreview(<UploadFile>file)"
+          >
+            <el-icon><zoom-in /></el-icon>
+          </span>
+          <span
+              v-if="!disabled"
+              class="el-upload-list__item-delete"
+              @click="handleDownload(<UploadFile>file)"
+          >
+            <el-icon><Download /></el-icon>
+          </span>
+          <span
+              v-if="!disabled"
+              class="el-upload-list__item-delete"
+              @click="handleRemove(<UploadFile>file)"
+          >
+            <el-icon><Delete /></el-icon>
+          </span>
+        </span>
+          </div>
+        </template>
+      </el-upload>
+
+      <el-dialog v-model="dialogVisible">
+        <img w-full :src="dialogImageUrl" alt="Preview Image" />
+      </el-dialog>
+
       <el-form-item label="试卷名字">
         <el-input v-model="questionData.ename"></el-input>
       </el-form-item>
@@ -34,11 +71,19 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import {ElMessage, ElMessageBox} from 'element-plus'
 import API from "../../axios/request";
-import axios from 'axios';
-import {ElMessageBox} from "element-plus";
+import { Delete, Download, Plus, ZoomIn } from '@element-plus/icons-vue'
+import type { UploadFile,UploadProps } from 'element-plus'
+
+
 export default {
+  computed: {
+    UploadFile() {
+      return UploadFile
+    }
+  },
   data() {
     return {
       questionData: {
@@ -52,11 +97,25 @@ export default {
             answer: "",
             point: 0
           }
-        ]
-      }
+        ],
+
+      },
+      dialogImageUrl: '',
+      dialogVisible: false,
+      disabled: false,
     };
   },
   methods: {
+    handleRemove(file: UploadFile){
+      console.log(file)
+    },
+    handlePictureCardPreview(file: UploadFile){
+      this.dialogImageUrl.value = file.url!
+      this.dialogVisible.value = true
+    },
+    handleDownload(file: UploadFile){
+      console.log(file)
+    },
     addQuestion() {
       this.questionData.questions.push({
         eid: 0,
@@ -90,5 +149,36 @@ export default {
       console.log(this.questionData);
     }
   }
+
 };
 </script>
+
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
+</style>
+<style scoped>
+.avatar-uploader .avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+</style>
