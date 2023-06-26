@@ -3,11 +3,14 @@
     <el-text>题号:{{currentQuestionIndex+1}}------</el-text>
     <el-text>问题:{{currentQuestion.qdescribe}}------</el-text>
     <el-text>分值:{{currentQuestion.point}}------</el-text>
+    <transition name="el-fade-in-linear">
     <el-text v-if="visable">正确答案:{{currentQuestion.answer}}-------</el-text>
+    </transition>
     <el-text v-if="visable">你的答案:{{UserResult[currentQuestionIndex]}}</el-text>
     <el-text v-if="visable">得分{{UserScore}}</el-text>
     <el-button v-if="Pvisable&visable" type="success" icon="el-icon-check" circle />
     <el-button v-if="Evisable&visable" type="danger" icon="el-icon-close" circle />
+
     <el-progress :percentage="progressPercentage"
                  :stroke-width="15"
                  striped
@@ -34,7 +37,7 @@ export default {
   data() {
     return {
       eid: "",
-      sid:10010001,
+      sid:0,
       questions: [],
       currentQuestion:{},
       showResult: false,
@@ -61,6 +64,7 @@ export default {
   },
   mounted() {
     this.eid = this.$route.query.eid;
+    this.sid=this.$cookies.get("data").sid
     // 假设您将后端传来的数据存储在response中
     API({
       url: '/selectQuestionByEid',
@@ -160,5 +164,6 @@ export default {
         return Math.floor(progress_line);
       },
     },
+
 };
 </script>

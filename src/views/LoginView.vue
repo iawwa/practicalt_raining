@@ -119,11 +119,24 @@ export default {
       }).then((res) => {
         if(res.data.msg === "success")
         {
+          console.log(res.data)
           console.log(res.data.user)
-          console.log(res.role)
-          this.$cookies.set("user", res.data.data.user);
+          console.log(res.data.role)
+          //data::
+          // age:19
+          // cid:0
+          // cname:null
+          // email:"8890@qq.com"
+          // password:null
+          // phoneNumber:"17798907812"
+          // sex:"男"
+          // sid:10010001
+          // sname:"张三"
+          // userName:"s0001
+          this.$cookies.set("data", res.data.data);
           this.$cookies.set("role",res.data.role)
           this.$router.push({ path: '/home'});
+
         }
 
       })

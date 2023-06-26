@@ -2,6 +2,9 @@
 
   <el-container>
     <el-main>
+
+
+
       <el-table :data="TestPaperData.data" v-loading="loading" style="width: 100%;height:550px;">
         <el-table-column label="试卷ID" prop="eid"  />
         <el-table-column label="试卷名字" prop="ename" />
@@ -31,6 +34,7 @@
 
 
           </template>
+
           <template #default="scope">
             <el-button size="small" type="success" @click="handleOpen(scope.row.eid)">打开</el-button>
             <el-button :disabled="!(is_admin||is_teacher)" size="small" type="default" @click="handleEdit(scope.row.eid, scope.row.ename,scope.row.edescribe)">编辑</el-button>
@@ -74,6 +78,7 @@
 
 
   </el-container>
+  <transition name="el-fade-in">
   <el-dialog v-model="visible" :show-close="false">
     <template #header="{ close, titleId, titleClass }">
       <div class="my-header">
@@ -94,7 +99,7 @@
       </div>
     </template>
   </el-dialog>
-
+  </transition>
 </template>
 
 
@@ -254,7 +259,8 @@ export default {
         break
       }
     }
-
+    console.log(this.$cookies.get("user"));
+    console.log(this.$cookies.get("role"))
   }
 };
 
