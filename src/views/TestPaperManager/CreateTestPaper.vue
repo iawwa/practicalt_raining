@@ -3,7 +3,13 @@
     <h1>Create Question</h1>
     <el-form ref="questionForm" :model="questionData" label-width="120px">
 
-     <UploadPic></UploadPic>
+      <el-form>
+        <el-upload class="upload-demo" action="#" :auto-upload="false" :on-preview="handlePreview"
+                   :on-remove="handleRemove" :file-list="fileList" :on-change="onchange" list-type="picture">
+          <el-button size="small" type="primary">点击上传</el-button>
+        </el-upload>
+      </el-form>
+
 
       <el-form-item label="试卷名字">
         <el-input v-model="questionData.ename"></el-input>
@@ -40,9 +46,11 @@
 <script lang="ts">
 import {ElMessage, ElMessageBox} from 'element-plus'
 import API from "../../axios/request";
-import UploadPic from "../../components/TestPaperManager/UploadPic.vue";
+
+import {Plus} from "@element-plus/icons-vue";
+import axios from "axios";
 export default {
-  components: {UploadPic},
+  components: {Plus,},
   computed: {
   },
   data() {
@@ -56,14 +64,32 @@ export default {
             qid: 0,
             qdescribe: "",
             answer: "",
-            point: 0
+            point: 0,
+            file:"",
           }
         ],
-
       },
+      dialogImageUrl: '',
+      dialogVisible: false,
+      //用来接收缓存中的图片
+      fileList: []
     };
   },
   methods: {
+    handleRemove(file, fileList) { //文件列表移除文件时的钩子
+      console.log(file, fileList);
+      console.log(file.raw)
+    },
+    handlePreview(file) { //点击文件列表中已上传的文件时的钩子
+      // console.log(file);
+    },
+    onchange(file, fileList) {
+      // console.log("上传时的动作")
+      // console.log(file, fileList);
+      // console.log(file.raw)
+      // fileList.push('file', file.raw);
+      this.fileList = fileList;//每一个改变都会将el-upload里面的图片传递的参数复制到this.filelist去
+    },
     addQuestion() {
       this.questionData.questions.push({
         eid: 0,
@@ -83,7 +109,7 @@ export default {
       requestData.append('ename', this.questionData.ename);
       requestData.append('edescribe', this.questionData.edescribe);
       requestData.append('questions', JSON.stringify(this.questionData.questions));
-
+      requestData.append('multipartFile', this.fileList[0].raw);
       API({
         url: url,
         method: 'post',
@@ -91,9 +117,6 @@ export default {
         headers: {
           'Content-Type': 'multipart/form-data' // 设置请求头为 multipart/form-data
         },
-        params: {
-          multipartFile:this.imageUrl.value,
-        }
       }).then(res =>
           ElMessageBox.alert(res.data.msg, '提示', {
         confirmButtonText: '确认',}))
@@ -104,14 +127,5 @@ export default {
 };
 </script>
 
-<style>
 
 
-</style>
-<style scoped>
-.avatar-uploader .avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
-}
-</style>
