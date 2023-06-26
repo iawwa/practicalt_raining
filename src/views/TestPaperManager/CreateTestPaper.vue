@@ -84,10 +84,6 @@ export default {
       // console.log(file);
     },
     onchange(file, fileList) {
-      // console.log("上传时的动作")
-      // console.log(file, fileList);
-      // console.log(file.raw)
-      // fileList.push('file', file.raw);
       this.fileList = fileList;//每一个改变都会将el-upload里面的图片传递的参数复制到this.filelist去
     },
     addQuestion() {
