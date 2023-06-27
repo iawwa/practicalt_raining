@@ -162,7 +162,15 @@ a{
   height: 100%;
   right: 20px;
 }
+.common-layout {
+  /* 添加阴影效果 */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
 
+.layout-container-demo {
+  /* 添加阴影效果 */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
 
 </style>
 

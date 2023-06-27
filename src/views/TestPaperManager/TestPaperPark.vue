@@ -1,21 +1,19 @@
 <template>
-
-
- <el-container >
-   <el-main style="height:620px;">
+ <el-container>
+   <el-main style="height:590px;padding: 0px">
     <div v-for="(item, index) in TestPaperData.data" :key="index" style="background-color: #ffffff; display: flex;">
       <div class="row" v-if="index % 3 === 0">
         <div v-for="subItem in TestPaperData.data.slice(index, index + 3)" :key="subItem.id" class="item">
-
           <el-container
               class="active-container"
               style="cursor: pointer;
               background-color: #dad5d5;
               width: 390px;height: 185px;
               margin:5px;
+              margin-left: 25px;
               border: 2px solid #dad5d5;
               border-radius: 20px 20px 20px 20px"
-            @click="handleOpen(subItem.eid)"
+            @click="handleOpen(subItem.eid,subItem.ename)"
           >
             <el-aside style="display: flex;width: 185px;">
               <el-image
@@ -102,8 +100,8 @@ export default {
       return url;
       },
     // 打开试卷
-    handleOpen(eid) {
-      this.$router.push({ path: '/DoTestPaper', query: { eid } });
+    handleOpen(eid,ename) {
+      this.$router.push({ path: '/DoTestPaper', query: { eid,ename } });
     },
     // 编辑
     handleCurrentChange(number)

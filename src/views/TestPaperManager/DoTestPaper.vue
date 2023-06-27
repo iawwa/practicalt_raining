@@ -1,75 +1,79 @@
 <template>
-<el-container style="background-color: #cccccc">
-  <el-header style="width: 100%;height: 100px;margin-bottom: 10px;background-color: white">
-    <el-text>{{ename}}</el-text>
-
-  </el-header>
-  <el-container style="background-color: white">
-  <el-aside style="width:70%;height: 600px;">
-    <el-card style="height: auto">
-      <div slot="header" style="font-weight: bold;">
-        题号: {{ currentQuestionIndex + 1 }}
-        <span style="float: right">得分: {{ UserScore }}</span>
-      </div>
-      <div style="margin-bottom: 10px;">
-        <p style="font-weight: bold;">问题: {{ currentQuestion.qdescribe }}</p>
-        <p>分值: {{ currentQuestion.point }}</p>
-        <transition name="el-fade-in-linear">
-          <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
-        </transition>
-        <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex] }}</p>
-      </div>
-      <el-input
-          v-model="currentQuestionUserResult"
-          type="text"
-          input-style="width: 200px"
-          placeholder="请输入答案"
-      />
-      <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-        <el-button type="primary" @click="ShiftBeforeQuestion">上一题</el-button>
-        <el-button type="primary" @click="ShiftNextQuestion">下一题</el-button>
-        <el-button type="primary" @click="SaveCurrentQuestion" :disabled="isSaveButtonDisabled">
-          保存当前答案
-        </el-button>
-        <el-button type="success" @click="SubmitAnswer" :disabled="isSubmitButtonDisabled">
-          提交
-        </el-button>
-      </div>
-    </el-card>
-
-  </el-aside>
-
-
-<el-main>
-  <el-progress :percentage="progressPercentage"
-               :stroke-width="15"
-               striped
-               striped-flow
-               :duration="10"
-               :format="format"
-               style=" margin-bottom: 15px;width: 350px;" />
-  <el-text>答题卡</el-text>
-  <el-row>
-    <el-col v-for="(question, index) in questions" :key="index" :span="4">
-      <el-button
-          :class="[
-    'question-button',
-    { 'completed-question': isQuestionCompleted[index] === true&&!visable },
-    { 'correct-question': UserResultSure[index] === 1&&visable },
-    { 'incorrect-question': UserResultSure[index] === 0&&visable }
-  ]"
-          @click="goToQuestion(index)"
-          round
-          style="width: 40px; height: 40px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-      >
-        {{ index + 1 }}
-      </el-button>
-
-    </el-col>
-  </el-row>
-</el-main>
+  <el-container style="background-color: #cccccc;height: 650px">
+    <el-header style="width: 100%; height: 100px; margin-bottom: 10px; background-color: white">
+      <el-text>{{ename}}</el-text>
+    </el-header>
+    <el-container style="background-color: white">
+      <el-aside style="width:70%;height: auto;">
+        <el-card style="height: auto">
+          <div slot="header" style="font-weight: bold;">
+            题号: {{ currentQuestionIndex + 1 }}
+            <transition name="fade-in-linear">
+            <span v-if="visable" style="float: right">得分: {{ UserScore }}</span>
+            </transition>
+          </div>
+          <div style="margin-bottom: 10px;">
+            <transition name="fade-in-linear">
+              <p style="font-weight: bold;">问题: {{ currentQuestion.qdescribe }}</p>
+            </transition>
+            <p>分值: {{ currentQuestion.point }}</p>
+            <transition name="fade-in-linear">
+              <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
+            </transition>
+            <transition name="fade-in-linear">
+              <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex] }}</p>
+            </transition>
+          </div>
+          <el-input
+              v-model="currentQuestionUserResult"
+              type="text"
+              input-style="width: 200px"
+              placeholder="请输入答案"
+          />
+          <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+            <el-button type="primary" @click="ShiftBeforeQuestion">上一题</el-button>
+            <el-button type="primary" @click="ShiftNextQuestion">下一题</el-button>
+            <el-button type="primary" @click="SaveCurrentQuestion" :disabled="isSaveButtonDisabled">
+              保存当前答案
+            </el-button>
+            <el-button type="success" @click="SubmitAnswer" :disabled="isSubmitButtonDisabled||!isStudent">
+              提交
+            </el-button>
+          </div>
+        </el-card>
+      </el-aside>
+      <el-main>
+        <el-progress
+            :percentage="progressPercentage"
+            :stroke-width="15"
+            striped
+            striped-flow
+            :duration="10"
+            :format="format"
+            style="margin-bottom: 15px;width: 350px;"
+        />
+        <el-text>答题卡</el-text>
+        <el-row>
+          <el-col v-for="(question, index) in questions" :key="index" :span="4">
+            <el-button
+                :class="[
+                'question-button',
+                { 'completed-question': isQuestionCompleted[index] === true && !visable },
+                { 'correct-question': UserResultSure[index] === 1 && visable },
+                { 'incorrect-question': UserResultSure[index] === 0 && visable }
+              ]"
+                @click="goToQuestion(index)"
+                round
+                style="width: 40px; height: 40px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+            >
+              {{ index + 1 }}
+            </el-button>
+          </el-col>
+        </el-row>
+      </el-main>
+    </el-container>
   </el-container>
-</el-container>
+
 </template>
 
 <script lang="ts">
@@ -79,6 +83,7 @@ import {Check, Delete} from "@element-plus/icons-vue";
 export default {
   data() {
     return {
+      isStudent:false,
       ename:"",
       eid: "",
       sid:0,
@@ -106,12 +111,16 @@ export default {
       Evisable: false,
       // 用于跟踪每个题目的完成状态
       isQuestionCompleted: [],
+
     };
   },
   mounted() {
     this.eid = this.$route.query.eid;
     this.ename=this.$route.query.ename;
     this.sid=this.$cookies.get("data").sid
+    if (this.$cookies.get("role") === "student") {
+      this.isStudent=true;
+    };
     // 假设您将后端传来的数据存储在response中
     API({
       url: '/selectQuestionByEid',

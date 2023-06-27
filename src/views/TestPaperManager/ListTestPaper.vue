@@ -1,10 +1,7 @@
 <template>
 
-  <el-container>
+  <el-container style=" height: 650px;">
     <el-main>
-
-
-
       <el-table :data="TestPaperData.data" v-loading="loading" style="width: 100%;height:550px;">
         <el-table-column label="试卷ID" prop="eid"  />
         <el-table-column label="试卷名字" prop="ename" />

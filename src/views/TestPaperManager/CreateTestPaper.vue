@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <h1>Create Question</h1>
+  <div class="create-question-container">
+    <h1 class="page-title">Create Question</h1>
     <el-form ref="questionForm" :model="questionData" label-width="120px">
 
-      <el-form>
+      <el-form style="width: 200px">
         <el-upload class="upload-demo" action="#" :auto-upload="false" :on-preview="handlePreview"
                    :on-remove="handleRemove" :file-list="fileList" :on-change="onchange" list-type="picture">
           <el-button size="small" type="primary">点击上传</el-button>
@@ -106,15 +106,11 @@ export default {
       requestData.append('ename', this.questionData.ename);
       requestData.append('edescribe', this.questionData.edescribe);
       requestData.append('questions', JSON.stringify(this.questionData.questions));
-      requestData.append('multipartFile', this.fileList[0].raw);
-      // Add default image if selected
-      if (this.selectedDefaultImage) {
-        this.defaultImageFile = {
-          name: 'default_image.png',
-          url: this.selectedDefaultImage
-        };
-        requestData.append('multipartFile', this.defaultImageFile);
+      if (this.fileList.length > 0) {
+        requestData.append('multipartFile', this.fileList[0].raw);
       }
+
+
 
       API({
         url: url,
@@ -133,5 +129,19 @@ export default {
 };
 </script>
 
+<style scoped>
+.create-question-container {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: auto;
+  height: 650px;
+}
 
+.page-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+</style>
 
