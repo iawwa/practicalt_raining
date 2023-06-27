@@ -9,11 +9,10 @@
     <el-text>题号:{{currentQuestionIndex+1}}</el-text>
     <el-text>问题:{{currentQuestion.qdescribe}}------</el-text>
     <el-text>分值:{{currentQuestion.point}}------</el-text>
-    <transition name="el-fade-in-linear">
     <el-text v-if="visable">正确答案:{{currentQuestion.answer}}-------</el-text>
-    </transition>
     <el-text v-if="visable">你的答案:{{UserResult[currentQuestionIndex]}}</el-text>
     <el-text v-if="visable">得分{{UserScore}}</el-text>
+
     <el-button v-if="Pvisable&visable" type="success" icon="el-icon-check" circle />
     <el-button v-if="Evisable&visable" type="danger" icon="el-icon-close" circle />
 
@@ -41,13 +40,19 @@
   <el-row>
     <el-col v-for="(question, index) in questions" :key="index" :span="4">
       <el-button
-          :class="['question-button', { 'completed-question': index < currentDonNumb }]"
+          :class="[
+    'question-button',
+    { 'completed-question': isQuestionCompleted[index] === true&&!visable },
+    { 'correct-question': UserResultSure[index] === 1&&visable },
+    { 'incorrect-question': UserResultSure[index] === 0&&visable }
+  ]"
           @click="goToQuestion(index)"
           round
           style="width: 40px; height: 40px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
       >
         {{ index + 1 }}
       </el-button>
+
     </el-col>
   </el-row>
 </el-main>
@@ -108,12 +113,11 @@ export default {
       // console.log(this.questions)
       // 设置当前题目为第一个题目
       this.currentQuestion = this.questions[0]
-      console.log(this.currentQuestion)
       this.UserResult = Array(this.questions.length).fill("");
       this.UserResultSure = Array(this.questions.length).fill(0);
-      console.log(this.UserResult)
+      this.isQuestionCompleted = Array(this.questions.length).fill(false); // 初始化题目完成状态数组
     });
-    this.isQuestionCompleted = Array(this.questions.length).fill(false); // 初始化题目完成状态数组
+
   },
   methods: {
     //通过右边按钮切换题目
@@ -121,10 +125,10 @@ export default {
     {
       if(index>=0&&index<this.questions.length)
       {
-        this.currentQuestion = this.questions[index];
         this.currentQuestionIndex = index;
+        this.currentQuestion = this.questions[this.currentQuestionIndex];
+        this.showPE()
       }
-      this.showPE()
     },
     ShiftBeforeQuestion(){
       if(this.currentQuestionIndex>0)
@@ -143,6 +147,7 @@ export default {
       this.showPE()
     },
     SaveCurrentQuestion(){
+      this.isQuestionCompleted[this.currentQuestionIndex] = true;
       this.UserResult[this.currentQuestionIndex] = this.currentQuestionUserResult;
       this.currentDonNumb+=1;
       this.ShiftNextQuestion();
@@ -150,7 +155,8 @@ export default {
       {
         this.isSaveButtonDisabled = true;
       }
-      this.isQuestionCompleted[this.currentQuestionIndex] = true;
+
+      // console.log("this.currentQuestionIndex",this.currentQuestionIndex)
     },
     SubmitAnswer() {
       for (var i=0; i<this.questions.length; i++)
@@ -215,4 +221,14 @@ export default {
   background-color: #5db0ec !important;
   color: white;
 }
+.correct-question {
+  background-color: limegreen !important;
+  color: white;
+}
+
+.incorrect-question {
+  background-color: indianred !important;
+  color: white;
+}
+
 </style>
