@@ -1,15 +1,18 @@
 <template>
 
 
-  <div>
-    <div v-for="(item, index) in TestPaperData.data" :key="index" style="background-color: #ffffff">
+ <el-container >
+   <el-main style="height:620px;">
+    <div v-for="(item, index) in TestPaperData.data" :key="index" style="background-color: #ffffff; display: flex;">
       <div class="row" v-if="index % 3 === 0">
         <div v-for="subItem in TestPaperData.data.slice(index, index + 3)" :key="subItem.id" class="item">
+
           <el-container
+              class="active-container"
               style="cursor: pointer;
               background-color: #dad5d5;
-              width: 400px;height: 185px;
-              margin:10px;
+              width: 390px;height: 185px;
+              margin:5px;
               border: 2px solid #dad5d5;
               border-radius: 20px 20px 20px 20px"
             @click="handleOpen(subItem.eid)"
@@ -17,20 +20,22 @@
             <el-aside style="display: flex">
               <el-image
                   :src="getImageUrl(subItem.image)"
-                  style="width: 150px; height: 150px;
+                  style="width: auto;height: auto;
                   border: 2px solid #dad5d5;
-                  border-radius: 45%">
-
+                  border-radius: 10%"
+                  class="active-image"
+              >
               </el-image>
-              <el-text style="text-align: center;">{{item.tname}}</el-text>
+<!--              <el-text style="text-align: center;">{{item.tname}}</el-text>-->
+<!--              <el-text style="">{{ subItem.ename }}</el-text>-->
             </el-aside>
-            <el-footer>
-              <el-text style="">{{ subItem.ename }}</el-text>
-            </el-footer>
           </el-container>
+
         </div>
       </div>
     </div>
+   </el-main>
+   <el-footer>
       <el-pagination
           :background="true"
           :page-size="pageSize"
@@ -38,9 +43,10 @@
           layout="total, prev, pager, next"
           @current-change="handleCurrentChange"
           class="pagination"
-          style="background-color: #ffffff"
+          style="background-color: #ffffff;margin-top: auto"
       />
-  </div>
+   </el-footer>
+ </el-container>
 
 </template>
 
@@ -159,13 +165,7 @@ export default {
 </script>
 
 <style scoped>
-.ElMainClassMy
-{
-  background-color: rgba(255, 255, 255);
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-radius: 20px 20px 20px 20px
-}
+
 .row {
   display: flex;
   justify-content: space-between;
@@ -174,5 +174,19 @@ export default {
 .item {
   flex-basis: 23%;
   /* 其他样式属性 */
+}
+
+
+.active-container:hover {
+  /* 在鼠标悬停时，添加激活效果的样式 */
+  background-color: #ffffff;
+  border-color: #000000;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.active-image:hover {
+  /* 在鼠标悬停时，添加激活效果的样式 */
+  border-color: #000000;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 </style>
