@@ -17,7 +17,7 @@
               border-radius: 20px 20px 20px 20px"
             @click="handleOpen(subItem.eid)"
           >
-            <el-aside style="display: flex">
+            <el-aside style="display: flex;width: 185px;">
               <el-image
                   :src="getImageUrl(subItem.image)"
                   style="width: auto;height: auto;
@@ -26,9 +26,14 @@
                   class="active-image"
               >
               </el-image>
-<!--              <el-text style="text-align: center;">{{item.tname}}</el-text>-->
-<!--              <el-text style="">{{ subItem.ename }}</el-text>-->
+
             </el-aside>
+            <el-main style="width: 205px;display: flex; flex-direction: column;">
+              <el-text style="text-align: center;color: black;font-size: larger;font-family: Arial,system-ui">{{ subItem.ename }}</el-text>
+              <el-text style="text-align: center;font-family: Roboto,serif">{{subItem.tname}}</el-text>
+              <el-text style="text-align: center;">{{subItem.edescribe}}</el-text>
+
+            </el-main>
           </el-container>
 
         </div>
