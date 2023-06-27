@@ -6,25 +6,37 @@
   </el-header>
   <el-container style="background-color: white">
   <el-aside style="width:70%;height: 600px;">
-    <el-text>题号:{{currentQuestionIndex+1}}</el-text>
-    <el-text>问题:{{currentQuestion.qdescribe}}------</el-text>
-    <el-text>分值:{{currentQuestion.point}}------</el-text>
-    <el-text v-if="visable">正确答案:{{currentQuestion.answer}}-------</el-text>
-    <el-text v-if="visable">你的答案:{{UserResult[currentQuestionIndex]}}</el-text>
-    <el-text v-if="visable">得分{{UserScore}}</el-text>
+    <el-card style="height: auto">
+      <div slot="header" style="font-weight: bold;">
+        题号: {{ currentQuestionIndex + 1 }}
+        <span style="float: right">得分: {{ UserScore }}</span>
+      </div>
+      <div style="margin-bottom: 10px;">
+        <p style="font-weight: bold;">问题: {{ currentQuestion.qdescribe }}</p>
+        <p>分值: {{ currentQuestion.point }}</p>
+        <transition name="el-fade-in-linear">
+          <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
+        </transition>
+        <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex] }}</p>
+      </div>
+      <el-input
+          v-model="currentQuestionUserResult"
+          type="text"
+          input-style="width: 200px"
+          placeholder="请输入答案"
+      />
+      <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+        <el-button type="primary" @click="ShiftBeforeQuestion">上一题</el-button>
+        <el-button type="primary" @click="ShiftNextQuestion">下一题</el-button>
+        <el-button type="primary" @click="SaveCurrentQuestion" :disabled="isSaveButtonDisabled">
+          保存当前答案
+        </el-button>
+        <el-button type="success" @click="SubmitAnswer" :disabled="isSubmitButtonDisabled">
+          提交
+        </el-button>
+      </div>
+    </el-card>
 
-    <el-button v-if="Pvisable&visable" type="success" icon="el-icon-check" circle />
-    <el-button v-if="Evisable&visable" type="danger" icon="el-icon-close" circle />
-
-
-
-    <el-input v-model="currentQuestionUserResult" type="text" input-style="width: 200px" placeholder="请输入答案" />
-    <div style="display: flex">
-      <el-button type="primary" @click="ShiftBeforeQuestion">上一题</el-button>
-      <el-button type="primary" @click="ShiftNextQuestion">下一题</el-button>
-      <el-button type="primary" @click="SaveCurrentQuestion" :disabled="isSaveButtonDisabled">保存当前答案</el-button>
-      <el-button type="success" @click="SubmitAnswer" :disabled="isSubmitButtonDisabled">提交</el-button>
-    </div>
   </el-aside>
 
 
