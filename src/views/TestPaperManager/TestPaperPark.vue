@@ -42,10 +42,10 @@
           :background="true"
           :page-size="pageSize"
           :total="total"
-          layout="total, prev, pager, next"
+          layout=" prev, pager, next"
           @current-change="handleCurrentChange"
           class="pagination"
-          style="background-color: #ffffff;margin-top: auto"
+          style="margin-top: auto;"
       />
    </el-footer>
  </el-container>
@@ -191,4 +191,7 @@ export default {
   border-color: #000000;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
+
+
 </style>
+
