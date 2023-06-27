@@ -36,7 +36,7 @@
           </template>
 
           <template #default="scope">
-            <el-button size="small" type="success" @click="handleOpen(scope.row.eid)">打开</el-button>
+            <el-button size="small" type="success" @click="handleOpen(scope.row.eid,scope.row.ename)">打开</el-button>
             <el-button :disabled="!(is_admin||is_teacher)" size="small" type="default" @click="handleEdit(scope.row.eid, scope.row.ename,scope.row.edescribe)">编辑</el-button>
 
             <el-popconfirm
@@ -146,8 +146,8 @@ export default {
   },
   methods: {
     // 打开试卷
-    handleOpen(eid) {
-      this.$router.push({ path: '/DoTestPaper', query: { eid } });
+    handleOpen(eid,ename) {
+      this.$router.push({ path: '/DoTestPaper', query: { eid,ename } });
     },
     // 编辑
     handleEdit(a,b,c) {

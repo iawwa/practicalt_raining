@@ -1,5 +1,9 @@
 @import './base.css';
 
+
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap');
+
 body{
   margin:0;
   padding:0;
@@ -24,5 +28,4 @@ a,
     background-color: hsla(160, 3%, 41%, 0.72);
   }
 }
-
 
