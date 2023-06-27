@@ -70,7 +70,7 @@ export default {
       TestPaperData:"",
       total:0,
       currentPage:1,
-      pageSize:12,
+      pageSize:9,
       editParm:{
         currentTestPageID:1,
         currentTestPageName:"",

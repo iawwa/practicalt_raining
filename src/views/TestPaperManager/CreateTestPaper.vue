@@ -48,9 +48,12 @@ import {ElMessage, ElMessageBox} from 'element-plus'
 import API from "../../axios/request";
 
 import {Plus} from "@element-plus/icons-vue";
-import axios from "axios";
+
+
+
+
 export default {
-  components: {Plus,},
+  components: {Plus},
   computed: {
   },
   data() {
@@ -65,20 +68,17 @@ export default {
             qdescribe: "",
             answer: "",
             point: 0,
-            file:"",
           }
         ],
       },
-      dialogImageUrl: '',
-      dialogVisible: false,
       //用来接收缓存中的图片
-      fileList: []
+      fileList: [],
     };
   },
   methods: {
     handleRemove(file, fileList) { //文件列表移除文件时的钩子
-      console.log(file, fileList);
-      console.log(file.raw)
+      // console.log(file, fileList);
+      // console.log(file.raw)
     },
     handlePreview(file) { //点击文件列表中已上传的文件时的钩子
       // console.log(file);
@@ -98,6 +98,7 @@ export default {
     removeQuestion(index) {
       this.questionData.questions.splice(index, 1);
     },
+
     createQuestion() {
       const url = '/createExamination'; // 后端接口的URL
       const requestData = new FormData();
@@ -106,6 +107,15 @@ export default {
       requestData.append('edescribe', this.questionData.edescribe);
       requestData.append('questions', JSON.stringify(this.questionData.questions));
       requestData.append('multipartFile', this.fileList[0].raw);
+      // Add default image if selected
+      if (this.selectedDefaultImage) {
+        this.defaultImageFile = {
+          name: 'default_image.png',
+          url: this.selectedDefaultImage
+        };
+        requestData.append('multipartFile', this.defaultImageFile);
+      }
+
       API({
         url: url,
         method: 'post',
