@@ -131,6 +131,11 @@ export default {
       currentQuestionIndex:0,
       // 当前题目类型
       currentQuestionClass:"",
+      //选项
+      choice_a:null,
+      choice_b:null,
+      choice_c:null,
+      choice_d:null,
       UserResult:[],
       currentQuestionUserResult:"",
       //正确错误表，1表示用户做对了，0表示错误
@@ -159,7 +164,8 @@ export default {
     this.startTimer();
     this.eid = this.$route.query.eid;
     this.ename=this.$route.query.ename;
-    this.sid=this.$cookies.get("data").sid
+    this.sid=this.$cookies.get("data").sid;
+
     if (this.$cookies.get("role") === "student") {
       this.isStudent=true;
     };
@@ -180,7 +186,7 @@ export default {
       this.UserResultSure = Array(this.questions.length).fill(0);
       this.isQuestionCompleted = Array(this.questions.length).fill(false); // 初始化题目完成状态数组
     });
-
+    this.currentQuestionClass=this.currentQuestion.qtype
   },
   methods: {
     startTimer() {
@@ -201,6 +207,7 @@ export default {
         this.currentQuestion = this.questions[this.currentQuestionIndex];
         this.showPE()
       }
+      this.currentQuestionClass=this.currentQuestion.qtype
     },
     ShiftBeforeQuestion(){
       if(this.currentQuestionIndex>0)
@@ -209,6 +216,7 @@ export default {
         this.currentQuestion = this.questions[this.currentQuestionIndex];
       }
       this.showPE()
+      this.currentQuestionClass=this.currentQuestion.qtype
     },
     ShiftNextQuestion(){
       if(this.currentQuestionIndex<this.questions.length-1)
@@ -217,6 +225,7 @@ export default {
         this.currentQuestion = this.questions[this.currentQuestionIndex];
       }
       this.showPE()
+      this.currentQuestionClass=this.currentQuestion.qtype
     },
     SaveCurrentQuestion(){
       this.isQuestionCompleted[this.currentQuestionIndex] = true;
