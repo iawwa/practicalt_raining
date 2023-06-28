@@ -6,16 +6,18 @@
   padding-top: 20px;
   padding-left: 20%;
   width: auto;
-  height: 650px;">
-    <h1 style="font-size: 24px;margin-bottom: 20px;">Create Question</h1>
+  height: 650px">
+    <h1 style="font-size: 24px;margin-bottom: 20px;">创建</h1>
 
     <el-form style="width: 900px;display: flex;height: 150px" >
+
       <el-upload
           style="width: 200px"
-          class="upload-demo" action="#" :auto-upload="false" :on-preview="handlePreview"
+          class="upload-demo"  :auto-upload="false" :on-preview="handlePreview"
                  :on-remove="handleRemove" :file-list="fileList" :on-change="onchange" list-type="picture">
         <el-button v-if="!isPiced" size="small" type="primary">点击上传</el-button>
       </el-upload>
+
       <el-form-item label="默认图片" style="width: auto">
         <el-radio-group v-model="selectedDefaultImage" style="margin-top: 5px">
           <el-radio :label="0">
@@ -86,6 +88,11 @@ import defaultImage3 from '@/assets/images/TestPaperPic/3.png';
 export default {
   components: {Plus},
   computed: {
+    adjustContainerHeight() {
+      const windowHeight = window.innerHeight;
+      const minHeight = 650; // 设置最小高度为650px
+      this.containerHeight = `${windowHeight < minHeight ? minHeight : 'auto'}`;
+    },
   },
   data() {
     return {
@@ -106,8 +113,10 @@ export default {
       fileList: [],
       isPiced: false,
       defaultImages: [defaultImage1, defaultImage2, defaultImage3],
-      selectedDefaultImage: 0
+      selectedDefaultImage: 0,
     };
+  },
+  mounted() {
   },
   methods: {
     handleRemove(file, fileList) { //文件列表移除文件时的钩子
