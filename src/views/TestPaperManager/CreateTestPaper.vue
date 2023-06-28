@@ -10,17 +10,17 @@
     </el-header>
 
     <el-main style="margin-top: 30px;height:auto">
-      <div v-if="current_Page === 0" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-        <div style="float: left">
+      <el-container v-if="current_Page==0" style="padding-top: 1%;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+        <el-header>
           <el-text>试卷名称:</el-text>
           <el-input input-style="width: 100px" v-model="questionData.ename"></el-input>
-        </div>
-        <div>
+        </el-header>
+        <el-main>
           <el-text>试卷描述:
           </el-text>
           <el-input type="textarea" :rows="3" input-style="width: 500px" v-model="questionData.edescribe"></el-input>
-        </div>
-      </div>
+        </el-main>
+      </el-container>
 
 
       <div v-if="current_Page==1">
