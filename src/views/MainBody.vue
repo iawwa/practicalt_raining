@@ -76,7 +76,7 @@
                 <router-link to="/TestPaperPark"><el-menu-item index="3-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>考试中心</el-menu-item></router-link>
                 <router-link v-if="shouldShowLink" to="/CreateTestPaper"><el-menu-item index="3-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Burn Folder.ico"></el-icon>创建试卷</el-menu-item></router-link>
                 <router-link to="/ListTestPaper"><el-menu-item index="3-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Library Sidebar.ico"></el-icon>查看试卷</el-menu-item></router-link>
-                <router-link to="/IHaveDoTestPaper"><el-menu-item index="3-4"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Favorites.ico"></el-icon>我的足迹</el-menu-item></router-link>
+                <router-link v-if="is_studnet" to="/IHaveDoTestPaper"><el-menu-item index="3-4"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Favorites.ico"></el-icon>我的足迹</el-menu-item></router-link>
               </el-menu-item-group>
             </el-sub-menu>
 
