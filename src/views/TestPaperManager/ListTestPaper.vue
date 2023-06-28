@@ -77,26 +77,44 @@
 
   </el-container>
   <transition name="el-fade-in">
-  <el-dialog v-model="visible" :show-close="false">
-    <template #header="{ close, titleId, titleClass }">
-      <div class="my-header">
-        <el-form>
-          试卷ID:<el-text >{{editParm.currentTestPageID}}</el-text><p></p>
-          试卷名字:<el-input type="text" v-model="editParm.currentTestPageName" placeholder="editParm.currentTestPageName"></el-input>
-          试卷描述:<el-input type="text" v-model="editParm.currentTestPageDescribe" placeholder="editParm.currentTestPageDescribe"></el-input>
-          <el-button type="success" @click="submitUpdate">
-            <el-icon class="el-icon--left"><CircleCloseFilled /></el-icon>
-            更改
-          </el-button>
+    <el-dialog v-model="visible" style="height: auto;width: 600px;border-radius: 10px 10px 10px 10px" :show-close="false" custom-class="my-dialog">
+      <template #header="{ close, titleId, titleClass }">
+        <div class="my-header">
+          <el-form class="my-form">
+            <div class="form-row">
+              <el-text class="form-label">试卷ID:</el-text>
+              <el-text class="form-input">{{ editParm.currentTestPageID }}</el-text>
+            </div>
+            <div class="form-row">
+              <el-text class="form-label">试卷名字:</el-text>
+              <el-input type="text" v-model="editParm.currentTestPageName" placeholder="请输入试卷名字"></el-input>
+            </div>
+            <div class="form-row">
+              <el-text class="form-label">试卷描述:</el-text>
+              <el-input
+                  class="form-textarea"
+                  type="textarea"
+                  v-model="editParm.currentTestPageDescribe"
+                  placeholder="请输入试卷描述"
+                  :rows="7"
+              ></el-input>
+            </div>
+            <div class="button-row">
+              <el-button type="success" @click="submitUpdate" class="submit-button">
+                <el-icon>更改</el-icon>
 
-          <el-button type="danger" @click="close">
-            <el-icon class="el-icon--left"><CircleCloseFilled /></el-icon>
-            关闭
-          </el-button>
-        </el-form>
-      </div>
-    </template>
-  </el-dialog>
+              </el-button>
+              <el-button type="danger" @click="close" class="close-button">
+                <el-icon>关闭</el-icon>
+
+              </el-button>
+            </div>
+          </el-form>
+        </div>
+      </template>
+    </el-dialog>
+
+
   </transition>
 </template>
 
@@ -272,4 +290,59 @@ export default {
   flex-direction: row;
   justify-content: space-between;
 }
+
+.my-dialog {
+  width: auto;
+}
+
+.my-header {
+  padding: 20px;
+}
+
+.my-form {
+  display: grid;
+  gap: 20px;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+}
+
+.form-label {
+  font-size: 16px;
+  width: 100px;
+}
+
+.form-input {
+  font-size: 16px;
+  flex-grow: 1;
+}
+
+.form-textarea {
+  width: 400px;
+  height: 120px;
+  resize: vertical;
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.submit-button {
+  background-color: #67c23a;
+  color: #fff;
+}
+
+.close-button {
+  background-color: #f56c6c;
+  color: #fff;
+}
+
+.el-button .el-icon {
+  margin-right: 5px;
+}
+
 </style>
