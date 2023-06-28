@@ -1,12 +1,12 @@
 <template>
   <el-container style="width: 100%" >
     <el-header>
-    <el-steps :active="current_Page" align-center style="margin-top: 10px;padding-top: 0px;margin-bottom: 0px;">
-      <el-step @click.native="current_Page=0" :icon="ChatSquare" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer;" title="Step 1" description="试卷信息" />
-      <el-step @click.native="current_Page=1" :icon="Picture" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 2" description="试卷封面" />
-      <el-step @click.native="current_Page=2" :icon="Edit" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 3" description="题目信息" />
-      <el-step @click.native="current_Page=3" :icon="Upload" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 4" description="检查提交" />
-    </el-steps>
+      <el-steps :active="current_Page" align-center style="margin-top: 10px;padding-top: 0px;margin-bottom: 0px;">
+        <el-step @click.native="current_Page=0" :icon="ChatSquare" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer;" title="Step 1" description="试卷信息" />
+        <el-step @click.native="current_Page=1" :icon="Picture" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 2" description="试卷封面" />
+        <el-step @click.native="current_Page=2" :icon="Edit" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 3" description="题目信息" />
+        <el-step @click.native="current_Page=3" :icon="Upload" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 4" description="检查提交" />
+      </el-steps>
     </el-header>
 
     <el-main style="margin-top: 30px;height:auto">
@@ -20,28 +20,25 @@
           </el-text>
           <el-input type="textarea" :rows="3" input-style="width: 500px" v-model="questionData.edescribe"></el-input>
         </el-main>
-      </el-container>
+  </el-container>
 
+      <el-container v-if="current_Page==1">
+        <el-header>
+          <el-upload
+              style="width: 200px"
+              class="upload-demo"
+              :auto-upload="false"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :file-list="fileList"
+              :on-change="onchange"
+              list-type="picture"
+          >
+            <el-button v-if="!isPiced" size="small" type="primary">点击上传</el-button>
+          </el-upload>
+        </el-header>
 
-      <div v-if="current_Page==1">
-        <el-container>
-          <el-header>
-
-        <el-upload
-            style="width: 200px"
-            class="upload-demo"
-            :auto-upload="false"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :file-list="fileList"
-            :on-change="onchange"
-            list-type="picture"
-        >
-          <el-button v-if="!isPiced" size="small" type="primary">点击上传</el-button>
-        </el-upload>
-          </el-header>
-
-          <el-main>
+        <el-main>
           <el-radio-group v-model="selectedDefaultImage" style="margin-top: 5px">
             <el-radio :label="0">
               <img :src="defaultImages[0]" style="width: 80px; height: 80px" alt="Default Image 1">
@@ -53,14 +50,11 @@
               <img :src="defaultImages[2]" style="width: 80px; height: 80px" alt="Default Image 3">
             </el-radio>
           </el-radio-group>
+        </el-main>
+      </el-container>
 
-
-          </el-main>
-        </el-container>
-    </div>
 
       <div v-if="current_Page === 2">
-
         <div v-for="(question, index) in questionData.questions" :key="index" style="margin-top: 10px;">
           <el-form :model="question" label-width="100px" style="margin-top: 10px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);padding-bottom: 5px">
             <el-form-item font-weight="bold" label="题号">
