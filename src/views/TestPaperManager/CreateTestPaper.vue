@@ -84,6 +84,12 @@ export default {
       //用来接收缓存中的图片
       fileList: [],
       isPiced: false,
+      defaultImageIndex:0,
+      defaultImages: [
+        "src/assets/images/TestPaperPic/1.png",
+        "src/assets/images/TestPaperPic/2.png",
+        "src/assets/images/TestPaperPic/3.png"
+      ]
     };
   },
   methods: {
@@ -132,11 +138,10 @@ export default {
       requestData.append('ename', this.questionData.ename);
       requestData.append('edescribe', this.questionData.edescribe);
       requestData.append('questions', JSON.stringify(this.questionData.questions));
+      requestData.append("defaultImageIndex", this.defaultImageIndex);
       if (this.fileList.length > 0) {
         requestData.append('multipartFile', this.fileList[0].raw);
       }
-
-
       API({
         url: url,
         method: 'post',
