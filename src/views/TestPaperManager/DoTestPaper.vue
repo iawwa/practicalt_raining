@@ -25,8 +25,8 @@
             <transition name="fade-in-linear">
               <div v-if="currentQuestionClass==0">
                 <el-radio-group v-model="result0" class="ml-4">
-                  <el-radio label="1" size="large">{{choice_a}}</el-radio>
-                  <el-radio label="2" size="large">{{choice_b}}</el-radio>
+                  <el-radio label="a" size="large">{{choice_a}}</el-radio>
+                  <el-radio label="b" size="large">{{choice_b}}</el-radio>
                 </el-radio-group>
               <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
               </div>
@@ -41,11 +41,11 @@
 <!--            单选题abcd-->
             <transition name="fade-in-linear">
               <div v-if="currentQuestionClass==1">
-                <el-radio-group v-model="result0" class="ml-4">
-                  <el-radio label="1" size="large">A:{{choice_a}}</el-radio>
-                  <el-radio label="2" size="large">B:{{choice_b}}</el-radio>
-                  <el-radio label="3" size="large">C:{{choice_c}}</el-radio>
-                  <el-radio label="4" size="large">D:{{choice_d}}</el-radio>
+                <el-radio-group v-model="result1" class="ml-4">
+                  <el-radio label="a" size="large">A:{{choice_a}}</el-radio>
+                  <el-radio label="b" size="large">B:{{choice_b}}</el-radio>
+                  <el-radio label="c" size="large">C:{{choice_c}}</el-radio>
+                  <el-radio label="d" size="large">D:{{choice_d}}</el-radio>
                 </el-radio-group>
               <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
               </div>
@@ -211,8 +211,7 @@ export default {
     });
 
   },
-  onBeforeUnmount()
-  {
+  onBeforeUnmount() {
     clearInterval(this.timer.value);
   },
   methods: {
@@ -226,8 +225,7 @@ export default {
       }, 1000);
     },
     //通过右边按钮切换题目
-    goToQuestion(index)
-    {
+    goToQuestion(index) {
       if(index>=0&&index<this.questions.length)
       {
         this.currentQuestionIndex = index;
@@ -257,6 +255,24 @@ export default {
     },
     SaveCurrentQuestion(){
       this.isQuestionCompleted[this.currentQuestionIndex] = true;
+      console.log("this.currentQuestionClass",this.currentQuestionClass)
+      //判断当前题型以获得用户的答案
+      if(this.currentQuestionClass==="0")
+      {
+        this.currentQuestionUserResult = this.result0
+      }
+      else if(this.currentQuestionClass==="1")
+      {
+        this.currentQuestionUserResult = this.result1
+      }
+      else if(this.currentQuestionClass==="2")
+      {
+        this.currentQuestionUserResult = this.result2
+      }
+      else{
+        console.log("题目类型error")
+      }
+      console.log("this.currentQuestionUserResult",this.currentQuestionUserResult)
       this.UserResult[this.currentQuestionIndex] = this.currentQuestionUserResult;
       this.currentDonNumb+=1;
       this.ShiftNextQuestion();
@@ -264,7 +280,6 @@ export default {
       {
         this.isSaveButtonDisabled = true;
       }
-
       // console.log("this.currentQuestionIndex",this.currentQuestionIndex)
       ElNotification.success({
         title: '保存',
