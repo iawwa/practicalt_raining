@@ -159,9 +159,9 @@ export default {
       choice_c:null,
       choice_d:null,
       //第一类题目答案:
-      result0:null,
+      result0:"a",
       //第二类题目答案
-      result1:null,
+      result1:"a",
       //第三类题目答案
       result2:null,
       UserResult:[],
