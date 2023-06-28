@@ -24,7 +24,9 @@
 
 
       <div v-if="current_Page==1">
-      <el-form style="width: 900px; display: flex; height: 150px;">
+        <el-container>
+          <el-header>
+
         <el-upload
             style="width: 200px"
             class="upload-demo"
@@ -37,8 +39,9 @@
         >
           <el-button v-if="!isPiced" size="small" type="primary">点击上传</el-button>
         </el-upload>
+          </el-header>
 
-        <el-form-item label="默认图片" style="width: auto">
+          <el-main>
           <el-radio-group v-model="selectedDefaultImage" style="margin-top: 5px">
             <el-radio :label="0">
               <img :src="defaultImages[0]" style="width: 80px; height: 80px" alt="Default Image 1">
@@ -50,8 +53,10 @@
               <img :src="defaultImages[2]" style="width: 80px; height: 80px" alt="Default Image 3">
             </el-radio>
           </el-radio-group>
-        </el-form-item>
-      </el-form>
+
+
+          </el-main>
+        </el-container>
     </div>
 
       <div v-if="current_Page === 2">
@@ -68,7 +73,7 @@
               <el-input v-model="question.answer" style="padding-right: 5%" placeholder="答案"></el-input>
             </el-form-item>
             <el-form-item label="分值">
-              <el-input-number v-model="question.point" :min="0" :step="1" placeholder="分值"></el-input-number>
+              <el-input-number v-model="question.point" controls-position="right" :min="0" :step="1" placeholder="分值"></el-input-number>
             </el-form-item>
             <el-form-item label="题目类型">
               <el-select v-model="question.qtype" placeholder="题目类型" style="width: 100px;">
@@ -82,31 +87,55 @@
             </el-form-item>
             <template v-if="(question.qtype === '2')">
               <el-form-item label="选项a">
-                <el-input v-model="question.a" placeholder="答案"></el-input>
+                <el-input v-model="question.a" style="padding-right: 5%" placeholder="答案"></el-input>
               </el-form-item>
               <el-form-item label="选项b">
-                <el-input v-model="question.b" placeholder="答案"></el-input>
+                <el-input v-model="question.b" style="padding-right: 5%" placeholder="答案"></el-input>
               </el-form-item>
               <el-form-item label="选项c">
-                <el-input v-model="question.c" placeholder="答案"></el-input>
+                <el-input v-model="question.c" style="padding-right: 5%" placeholder="答案"></el-input>
               </el-form-item>
               <el-form-item label="选项d">
-                <el-input v-model="question.d" placeholder="答案"></el-input>
+                <el-input v-model="question.d" style="padding-right: 5%" placeholder="答案"></el-input>
               </el-form-item>
             </template>
           </el-form>
         </div>
         <el-affix position="bottom" :offset="40" >
-          <el-button style="float: right" type="primary" @click="addQuestion">添加题目</el-button>
+          <el-button
+              round
+              style="float: right;
+              background-color: #8c2222;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+              type="primary"
+              @click="addQuestion">增加题目</el-button>
         </el-affix>
       </div>
 
       <div v-if="current_Page==3">
-      <el-button style="margin-left: 80px" type="success" @click="createQuestion">创建题目</el-button>
+      <el-button  style="margin-left: 80px;" type="success" @click="createQuestion">创建题目</el-button>
     </div>
 
 
     </el-main>
+    <el-backtop :bottom="100">
+      <div
+          style="
+        height: 100%;
+        width: 100%;
+        background-color: var(--el-bg-color-overlay);
+        box-shadow: var(--el-box-shadow-lighter);
+        text-align: center;
+        line-height: 40px;
+        color: #8f2222;
+        border-radius: 50%;
+      "
+      >
+        UP
+      </div>
+    </el-backtop>
   </el-container>
 </template>
 
