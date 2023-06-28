@@ -8,18 +8,37 @@
   width: auto;
   height: 650px;">
     <h1 style="font-size: 24px;margin-bottom: 20px;">Create Question</h1>
-    <el-form style="width: 200px" >
-      <el-upload class="upload-demo" action="#" :auto-upload="false" :on-preview="handlePreview"
+
+    <el-form style="width: 900px;display: flex;height: 150px" >
+      <el-upload
+          style="width: 200px"
+          class="upload-demo" action="#" :auto-upload="false" :on-preview="handlePreview"
                  :on-remove="handleRemove" :file-list="fileList" :on-change="onchange" list-type="picture">
         <el-button v-if="!isPiced" size="small" type="primary">点击上传</el-button>
       </el-upload>
+      <el-form-item label="默认图片" style="width: auto">
+        <el-radio-group v-model="selectedDefaultImage" style="margin-top: 5px">
+          <el-radio :label="0">
+            <img :src="defaultImages[0]" style="width: 80px;height: 80px" alt="Default Image 1">
+          </el-radio>
+          <el-radio :label="1">
+            <img :src="defaultImages[1]" style="width: 80px;height: 80px" alt="Default Image 2" >
+          </el-radio>
+          <el-radio :label="2">
+            <img :src="defaultImages[2]" style="width: 80px;height: 80px" alt="Default Image 3">
+          </el-radio>
+        </el-radio-group>
+      </el-form-item>
     </el-form>
-    <el-button type="primary" @click="addQuestion">添加题目</el-button>
-    <el-button type="success" @click="createQuestion">创建题目</el-button>
+
+
     <table>
-      <tr>
+      <tr style="width: 500px">
         <td>试卷名字:</td>
-        <td><el-input input-style="width: 200px" v-model="questionData.ename"></el-input></td>
+        <td><el-input input-style="width: 200px" v-model="questionData.ename"></el-input>
+          <el-button style="margin-left: 40px" type="primary" @click="addQuestion">添加题目</el-button>
+          <el-button style="margin-left: 80px" type="success" @click="createQuestion">创建题目</el-button></td>
+
       </tr>
       <tr>
         <td>试卷描述:</td>
@@ -58,7 +77,9 @@ import {ElMessage, ElMessageBox, ElNotification} from 'element-plus'
 import API from "../../axios/request";
 
 import {Plus} from "@element-plus/icons-vue";
-
+import defaultImage1 from '@/assets/images/TestPaperPic/1.png';
+import defaultImage2 from '@/assets/images/TestPaperPic/2.png';
+import defaultImage3 from '@/assets/images/TestPaperPic/3.png';
 
 
 
@@ -84,12 +105,8 @@ export default {
       //用来接收缓存中的图片
       fileList: [],
       isPiced: false,
-      defaultImageIndex:0,
-      defaultImages: [
-        "src/assets/images/TestPaperPic/1.png",
-        "src/assets/images/TestPaperPic/2.png",
-        "src/assets/images/TestPaperPic/3.png"
-      ]
+      defaultImages: [defaultImage1, defaultImage2, defaultImage3],
+      selectedDefaultImage: 0
     };
   },
   methods: {
@@ -126,6 +143,7 @@ export default {
         title: 'Add',
         message: "添加一列",
       })
+      console.log("selectedDefaultImage", this.selectedDefaultImage);
     },
     removeQuestion(index) {
       this.questionData.questions.splice(index, 1);
@@ -138,7 +156,7 @@ export default {
       requestData.append('ename', this.questionData.ename);
       requestData.append('edescribe', this.questionData.edescribe);
       requestData.append('questions', JSON.stringify(this.questionData.questions));
-      requestData.append("defaultImageIndex", this.defaultImageIndex);
+      requestData.append("defaultImageIndex", this.selectedDefaultImage);
       if (this.fileList.length > 0) {
         requestData.append('multipartFile', this.fileList[0].raw);
       }
