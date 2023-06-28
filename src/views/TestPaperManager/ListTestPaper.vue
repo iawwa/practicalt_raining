@@ -1,6 +1,6 @@
 <template>
 
-  <el-container style=" height: 100%;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);margin: 10px">
+  <el-container style=" height: auto;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);margin: 10px">
     <el-main style="padding: 0px;height: auto">
       <el-table :data="TestPaperData.data" v-loading="loading" style="width: 100%;height:auto;">
         <el-table-column label="试卷ID" prop="eid"  />
