@@ -1,7 +1,7 @@
 <template>
 
   <el-container style=" height: 650px;">
-    <el-main style="padding: 0px;height: 620px">
+    <el-main style="padding: 0px;height: auto">
       <el-table :data="TestPaperData.data" v-loading="loading" style="width: 100%;height:auto;">
         <el-table-column label="试卷ID" prop="eid"  />
         <el-table-column label="试卷名字" prop="ename" />
@@ -63,6 +63,7 @@
 
 
     <el-footer >
+      <el-affix position="bottom" :offset="5">
       <el-pagination
           style="margin-top: 0px;padding-top: 0px"
           :background="true"
@@ -72,6 +73,7 @@
           @current-change="handleCurrentChange"
           class="pagination"
       />
+      </el-affix>
     </el-footer>
 
 

@@ -1,33 +1,37 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-    <button @click="getData()">test axios 请求数据</button>
-    <p>这是请求到的数据{{data}}</p>
-    <p>梁伟静</p>
-  </div>
+  <el-button type="primary" style="margin-left: 16px" @click="drawer = true">
+    open
+  </el-button>
+
+  <el-drawer v-model="drawer" title="I'm outer Drawer" size="50%">
+    <div>
+      <el-button @click="innerDrawer = true">Click me!</el-button>
+      <el-drawer
+          v-model="innerDrawer"
+          title="I'm inner Drawer"
+          :append-to-body="true"
+          :before-close="handleClose"
+      >
+        <p>_(:зゝ∠)_</p>
+      </el-drawer>
+    </div>
+  </el-drawer>
 </template>
-<script lang="ts">
-import API from "../axios/request"
-export default{
-  data() {
-    return{
-      //定义变量
-      data:"",
-    }
-  },methods:{
-    //定义函数
-    getData(){
-      API({
-        url:'/selectExamination',
-        method:'get',
-        params:{
-          page:1,
-          limit:4
-        }
-      }).then((res)=>{
-        this.data = res.data;
-      });
-    }
-  }
+
+<script lang="ts" setup>
+import { ref } from 'vue'
+import { ElMessageBox } from 'element-plus'
+
+const drawer = ref(false)
+const innerDrawer = ref(false)
+
+const handleClose = (done: () => void) => {
+  ElMessageBox.confirm('You still have unsaved data, proceed?')
+      .then(() => {
+        done()
+      })
+      .catch(() => {
+        // catch error
+      })
 }
 </script>

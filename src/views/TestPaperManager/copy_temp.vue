@@ -1,29 +1,29 @@
 <template>
 
-<div style="display: flex;
-  justify-content: center; /* 水平居中 */">
-    <el-steps :active="current_Page" align-center style=" width: 500px;
-  border: 3px solid #409EFF;
-  /* 其他样式 */">
-      <el-step @click.native="current_Page=0" style="cursor: pointer" title="Step 1" description="试卷信息" />
-      <el-step @click.native="current_Page=1" style="cursor: pointer" title="Step 2" description="试卷封面" />
-      <el-step @click.native="current_Page=2" style="cursor: pointer" title="Step 3" description="题目信息" />
-      <el-step @click.native="current_Page=3" style="cursor: pointer" title="Step 4" description="检查提交" />
+
+
+
+  <div style="border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding-top: 20px;
+  padding-left: 20%;
+  width: auto;
+  height: 650px">
+    <el-steps :active="2" align-center>
+      <el-step title="Step 1" description="Some description" />
+      <el-step title="Step 2" description="Some description" />
+      <el-step title="Step 3" description="Some description" />
+      <el-step title="Step 4" description="Some description" />
     </el-steps>
+    <h1 style="font-size: 24px;margin-bottom: 20px;">创建</h1>
 
-  <div v-if="current_Page==0" style="width: 500px;border: 3px solid #409EFF">
-    试卷名称:
-    <el-input input-style="width: 200px" v-model="questionData.ename"></el-input>
-    试卷描述:
-    <el-input type="textarea" :rows="3" input-style="width: 500px" v-model="questionData.edescribe"></el-input>
-  </div>
-
-    <div v-if="current_Page==1">
     <el-form style="width: 900px;display: flex;height: 150px" >
+
       <el-upload
           style="width: 200px"
           class="upload-demo"  :auto-upload="false" :on-preview="handlePreview"
-                 :on-remove="handleRemove" :file-list="fileList" :on-change="onchange" list-type="picture">
+          :on-remove="handleRemove" :file-list="fileList" :on-change="onchange" list-type="picture">
         <el-button v-if="!isPiced" size="small" type="primary">点击上传</el-button>
       </el-upload>
 
@@ -41,13 +41,23 @@
         </el-radio-group>
       </el-form-item>
     </el-form>
-    </div>
 
 
-    <div v-if="current_Page==2">
-        <el-button style="margin-left: 40px" type="primary" @click="addQuestion">添加题目</el-button>
+    <table>
+      <tr style="width: 500px">
+        <td>试卷名字:</td>
+        <td><el-input input-style="width: 200px" v-model="questionData.ename"></el-input>
+          <el-button style="margin-left: 40px" type="primary" @click="addQuestion">添加题目</el-button>
+          <el-button style="margin-left: 80px" type="success" @click="createQuestion">创建题目</el-button></td>
 
-        题目列表:
+      </tr>
+      <tr>
+        <td>试卷描述:</td>
+        <td><el-input type="textarea" :rows="3" input-style="width: 500px" v-model="questionData.edescribe"></el-input></td>
+      </tr>
+      <tr>
+        <td>题目列表:</td>
+        <td>
           <table>
             <tr v-for="(question, index) in questionData.questions" :key="index">
               <td>
@@ -65,11 +75,11 @@
               </td>
             </tr>
           </table>
-    </div>
-    <div v-if="current_Page==3">
-      <el-button style="margin-left: 80px" type="success" @click="createQuestion">创建题目</el-button>
-    </div>
-</div>
+        </td>
+      </tr>
+    </table>
+
+  </div>
 
 </template>
 
@@ -180,7 +190,7 @@ export default {
         },
       }).then(res =>
           ElMessageBox.alert(res.data.msg, '提示', {
-        confirmButtonText: '确认',}))
+            confirmButtonText: '确认',}))
       console.log(this.questionData);
     }
   }
