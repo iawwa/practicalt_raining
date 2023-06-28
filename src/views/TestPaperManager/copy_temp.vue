@@ -1,377 +1,225 @@
 <template>
-  <el-container style="background-color: #cccccc;height: 650px">
-    <el-header style="width: 100%; height: 100px; margin-bottom: 10px; background-color: white">
-      <el-text>{{ename}}</el-text>
-      <el-text>剩余时间: {{ timerFormatted }}</el-text>
-
+  <el-container style="width: 100%">
+    <el-header>
+      <el-steps :active="current_Page" align-center style="margin-top: 10px;padding-top: 0px;margin-bottom: 0px;">
+        <el-step @click.native="current_Page=0" :icon="ChatSquare" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer;" title="Step 1" description="试卷信息" />
+        <el-step @click.native="current_Page=1" :icon="Picture" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 2" description="试卷封面" />
+        <el-step @click.native="current_Page=2" :icon="Edit" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 3" description="题目信息" />
+        <el-step @click.native="current_Page=3" :icon="Upload" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 4" description="检查提交" />
+      </el-steps>
     </el-header>
-    <el-container style="background-color: white">
-      <el-aside style="width:70%;height: auto;">
-        <el-card style="height: auto">
-          <div slot="header" style="font-weight: bold;">
-            题号: {{ currentQuestionIndex + 1 }}
-            <transition name="fade-in-linear">
-              <span v-if="visable" style="float: right">得分: {{ UserScore }}</span>
-            </transition>
-          </div>
-          <div style="margin-bottom: 10px;">
-            <transition name="fade-in-linear">
-              <p style="font-weight: bold;">问题: {{ currentQuestion.qdescribe }}</p>
-            </transition>
-            <p>分值: {{ currentQuestion.point }}</p>
+
+    <el-main style="margin-top: 30px;height:auto">
+      <div v-if="current_Page === 0" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+        <div style="float: left">
+          <el-text>试卷名称:</el-text>
+          <el-input input-style="width: 100px" v-model="questionData.ename"></el-input>
+        </div>
+        <div>
+          <el-text>试卷描述:
+          </el-text>
+          <el-input type="textarea" :rows="3" input-style="width: 500px" v-model="questionData.edescribe"></el-input>
+        </div>
+      </div>
 
 
-            <!-- 判断题-->
-            <transition name="fade-in-linear">
-              <div v-if="currentQuestionClass==0">
-                <el-radio-group v-model="result0" class="ml-4">
-                  <el-radio label="1" size="large">{{choice_a}}</el-radio>
-                  <el-radio label="2" size="large">{{choice_b}}</el-radio>
-                </el-radio-group>
-                <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
-              </div>
-            </transition>
-            <transition name="fade-in-linear">
-              <div v-if="currentQuestionClass==0">
-                <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex] }}</p>
-              </div>
-            </transition>
+      <div v-if="current_Page==1">
+        <el-form style="width: 900px; display: flex; height: 150px;">
+          <el-upload
+              style="width: 200px"
+              class="upload-demo"
+              :auto-upload="false"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :file-list="fileList"
+              :on-change="onchange"
+              list-type="picture"
+          >
+            <el-button v-if="!isPiced" size="small" type="primary">点击上传</el-button>
+          </el-upload>
+
+          <el-form-item label="默认图片" style="width: auto">
+            <el-radio-group v-model="selectedDefaultImage" style="margin-top: 5px">
+              <el-radio :label="0">
+                <img :src="defaultImages[0]" style="width: 80px; height: 80px" alt="Default Image 1">
+              </el-radio>
+              <el-radio :label="1">
+                <img :src="defaultImages[1]" style="width: 80px; height: 80px" alt="Default Image 2">
+              </el-radio>
+              <el-radio :label="2">
+                <img :src="defaultImages[2]" style="width: 80px; height: 80px" alt="Default Image 3">
+              </el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-form>
+      </div>
+
+      <div v-if="current_Page==2">
+        <el-button style="margin-left: 40px" type="primary" @click="addQuestion">添加题目</el-button>
+        题目列表:
+        <table v-for="(question, index) in questionData.questions" :key="index">
+          <tr >
+            <td>
+              <el-text>第{{index+1}}题</el-text>
+              <el-input style="" v-model="question.qdescribe" placeholder="题目描述"></el-input>
+            </td>
+            <td>
+              <el-input v-model="question.answer" placeholder="答案"></el-input>
+            </td>
+            <td>分值:</td>
+            <td>
+              <el-input-number v-model="question.point" :min="0" :step="1" placeholder="分值"></el-input-number>
+            </td>
+            <td>题目类型:</td>
+            <td>
+              <el-select v-model="question.qtype" placeholder="题目类型" style="width:100px;">
+                <el-option label="判断题" value="0" />
+                <el-option label="单选题" value="1" />
+                <el-option label="填空题" value="2" />
+              </el-select>
+            </td>
+            <td>
+              <el-button type="danger" icon="el-icon-delete" @click="removeQuestion(index)">删除</el-button>
+            </td>
+          </tr>
+          <tr v-if="!(question.qtype==2)" >
+            <td>a</td><el-input v-model="question.a" placeholder="答案"></el-input>
+            <td>b</td><el-input v-model="question.b" placeholder="答案"></el-input>
+            <td>c</td><el-input v-model="question.c" placeholder="答案"></el-input>
+            <td>d</td><el-input v-model="question.d" placeholder="答案"></el-input>
+          </tr>
+        </table>
+      </div>
+
+      <div v-if="current_Page==3">
+        <el-button style="margin-left: 80px" type="success" @click="createQuestion">创建题目</el-button>
+      </div>
 
 
-            <!--            单选题abcd-->
-            <transition name="fade-in-linear">
-              <div v-if="currentQuestionClass==1">
-                <el-radio-group v-model="result0" class="ml-4">
-                  <el-radio label="1" size="large">A:{{choice_a}}</el-radio>
-                  <el-radio label="2" size="large">B:{{choice_b}}</el-radio>
-                  <el-radio label="3" size="large">C:{{choice_c}}</el-radio>
-                  <el-radio label="4" size="large">D:{{choice_d}}</el-radio>
-                </el-radio-group>
-                <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
-              </div>
-            </transition>
-            <transition name="fade-in-linear">
-              <div v-if="currentQuestionClass==1">
-                <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex] }}</p>
-              </div>
-            </transition>
-
-
-            <!--            填空题-->
-            <transition name="fade-in-linear">
-              <div v-if="currentQuestionClass==2">
-                <el-input
-                    v-model="result2"
-                    type="text"
-                    input-style="width: 200px"
-                    placeholder="请输入答案"
-                />
-                <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
-              </div>
-            </transition>
-            <transition name="fade-in-linear">
-              <div v-if="currentQuestionClass==2">
-
-                <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex] }}</p>
-              </div>
-            </transition>
-
-
-
-          </div>
-
-          <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-            <el-button type="primary" @click="ShiftBeforeQuestion">上一题</el-button>
-            <el-button type="primary" @click="ShiftNextQuestion">下一题</el-button>
-            <el-button type="primary" @click="SaveCurrentQuestion" :disabled="isSaveButtonDisabled">
-              保存当前答案
-            </el-button>
-            <el-button type="success" @click="SubmitAnswer" :disabled="isSubmitButtonDisabled||!isStudent">
-              提交
-            </el-button>
-          </div>
-        </el-card>
-      </el-aside>
-      <el-main>
-        <el-progress
-            :percentage="progressPercentage"
-            :stroke-width="15"
-            striped
-            striped-flow
-            :duration="10"
-            :format="format"
-            style="margin-bottom: 15px;width: 350px;"
-        />
-        <el-text>答题卡</el-text>
-        <el-row>
-          <el-col v-for="(question, index) in questions" :key="index" :span="4">
-            <el-button
-                :class="[
-                'question-button',
-                { 'completed-question': isQuestionCompleted[index] === true && !visable },
-                { 'correct-question': UserResultSure[index] === 1 && visable },
-                { 'incorrect-question': UserResultSure[index] === 0 && visable }
-              ]"
-                @click="goToQuestion(index)"
-                round
-                style="width: 40px; height: 40px;
-                 overflow: hidden;
-                 margin-top: 10px;
-                 text-overflow: ellipsis; white-space: nowrap;"
-            >
-              {{ index + 1 }}
-            </el-button>
-          </el-col>
-        </el-row>
-      </el-main>
-    </el-container>
+    </el-main>
   </el-container>
-
 </template>
 
 <script lang="ts">
-import API from "../../axios/request";
-import {ElNotification, ElProgress} from 'element-plus';
-import {Check, Delete} from "@element-plus/icons-vue";
+import { ElMessage, ElMessageBox, ElNotification } from 'element-plus';
+import API from '../../axios/request';
+import {ChatSquare, Edit, Picture, Plus, Upload} from '@element-plus/icons-vue';
+import defaultImage1 from '@/assets/images/TestPaperPic/1.png';
+import defaultImage2 from '@/assets/images/TestPaperPic/2.png';
+import defaultImage3 from '@/assets/images/TestPaperPic/3.png';
+
 export default {
+  components: { Plus },
+  computed: {
+    ChatSquare() {
+      return ChatSquare
+    },
+    Upload() {
+      return Upload
+    },
+    Edit() {
+      return Edit
+    },
+    Picture() {
+      return Picture
+    },
+  },
   data() {
     return {
-      isStudent:false,
-      ename:"",
-      eid: "",
-      sid:0,
-      questions: [],
-      currentQuestion:{},
-      showResult: false,
-      // 当前题目索引
-      currentQuestionIndex:0,
-      // 当前题目类型
-      currentQuestionClass:"",
-      //选项
-      choice_a:null,
-      choice_b:null,
-      choice_c:null,
-      choice_d:null,
-      //第一类题目答案:
-      result0:null,
-      //第二类题目答案
-      result1:null,
-      //第三类题目答案
-      result2:null,
-      UserResult:[],
-      currentQuestionUserResult:"",
-      //正确错误表，1表示用户做对了，0表示错误
-      UserResultSure:[],
-      //用户的得分
-      UserScore:0,
-      //显示答案与得分
-      visable: false,
-      //完成题目数量
-      currentDonNumb:0,
-      progressPercentage: 0,
-      format:(percentage) => (percentage === 100 ? '完成' : `${percentage}%`),
-
-      //再提交后禁用
-      isSaveButtonDisabled: false,
-      isSubmitButtonDisabled: false,
-      Pvisable: false,
-      Evisable: false,
-      // 用于跟踪每个题目的完成状态
-      isQuestionCompleted: [],
-      //timer
-      timer:900, // 15 minutes in seconds
+      questionData: {
+        ename: '',
+        edescribe: '',
+        questions: [
+          {
+            eid: 0,
+            qid: 0,
+            qdescribe: '',
+            answer: '',
+            point: 0,
+            qtype:"",
+            a:"",
+            b:"",
+            c:"",
+            d:"",
+          },
+        ],
+      },
+      // 用来接收缓存中的图片
+      fileList: [],
+      isPiced: false,
+      defaultImages: [defaultImage1, defaultImage2, defaultImage3],
+      selectedDefaultImage: 0,
+      // 是否显示默认图片
+      isShowDefaultImage: false,
+      current_Page: 0,
     };
   },
-  mounted() {
-    this.startTimer();
-    this.eid = this.$route.query.eid;
-    this.ename=this.$route.query.ename;
-    this.sid=this.$cookies.get("data").sid;
-
-    if (this.$cookies.get("role") === "student") {
-      this.isStudent=true;
-    };
-    // 假设您将后端传来的数据存储在response中
-    API({
-      url: '/selectQuestionByEid',
-      method: 'get',
-      params: {
-        eid: this.eid,
-      }
-    }).then((res) => {
-
-      this.questions = res.data.data;
-      // console.log(this.questions)
-      // 设置当前题目为第一个题目
-      this.currentQuestion = this.questions[0]
-      this.UserResult = Array(this.questions.length).fill("");
-      this.UserResultSure = Array(this.questions.length).fill(0);
-      this.isQuestionCompleted = Array(this.questions.length).fill(false); // 初始化题目完成状态数组
-      this.GetCurrentInstanceValue();
-    });
-
-  },
-  onBeforeUnmount()
-  {
-    clearInterval(this.timer.value);
-  },
+  mounted() {},
   methods: {
-    startTimer() {
-      const timerInterval = setInterval(() => {
-        this.timer--;
-        if (this.timer === 0) {
-          this.SubmitAnswer();
-          clearInterval(timerInterval);
-        }
-      }, 1000);
+    handleRemove(file, fileList) {
+      // 文件列表移除文件时的钩子
+      this.fileList = fileList; // 每一个改变都会将el-upload里面的图片传递的参数复制到this.filelist去
+      this.isPiced = this.fileList.length > 0;
     },
-    //通过右边按钮切换题目
-    goToQuestion(index)
-    {
-      if(index>=0&&index<this.questions.length)
-      {
-        this.currentQuestionIndex = index;
-        this.currentQuestion = this.questions[this.currentQuestionIndex];
-        this.showPE()
-      }
-      this.GetCurrentInstanceValue();
+    handlePreview(file) {
+      // 点击文件列表中已上传的文件时的钩子
+      // console.log(file);
     },
-    ShiftBeforeQuestion(){
-      if(this.currentQuestionIndex>0)
-      {
-        this.currentQuestionIndex-=1;
-        this.currentQuestion = this.questions[this.currentQuestionIndex];
-      }
-      this.showPE()
-      this.GetCurrentInstanceValue();
+    onchange(file, fileList) {
+      this.fileList = fileList; // 每一个改变都会将el-upload里面的图片传递的参数复制到this.filelist去
+      this.isPiced = this.fileList.length > 0;
     },
-    ShiftNextQuestion(){
-      if(this.currentQuestionIndex<this.questions.length-1)
-      {
-        this.currentQuestionIndex+=1;
-        this.currentQuestion = this.questions[this.currentQuestionIndex];
-      }
-      this.showPE()
-      this.currentQuestionClass=this.currentQuestion.qtype
-      this.GetCurrentInstanceValue();
+    addQuestion() {
+      this.questionData.questions.push({
+        eid: 0,
+        qid: 0,
+        qdescribe: '',
+        answer: '',
+        point: 0,
+        qtype:"",
+        a:"",
+        b:"",
+        c:"",
+        d:"",
+      });
+      ElNotification({
+        title: 'Add',
+        message: '添加一列',
+      });
+      console.log('selectedDefaultImage', this.selectedDefaultImage);
     },
-    SaveCurrentQuestion(){
-      this.isQuestionCompleted[this.currentQuestionIndex] = true;
-      this.UserResult[this.currentQuestionIndex] = this.currentQuestionUserResult;
-      this.currentDonNumb+=1;
-      this.ShiftNextQuestion();
-      if(this.currentDonNumb==this.questions.length)
-      {
-        this.isSaveButtonDisabled = true;
-      }
+    removeQuestion(index) {
+      this.questionData.questions.splice(index, 1);
+    },
+    createQuestion() {
+      const url = '/createExamination'; // 后端接口的URL
+      const requestData = new FormData();
 
-      // console.log("this.currentQuestionIndex",this.currentQuestionIndex)
-      ElNotification.success({
-        title: '保存',
-        message: '保存成功',
-        offset: 100,
-      })
-    },
-    SubmitAnswer() {
-      for (var i=0; i<this.questions.length; i++)
-      {
-        if(this.UserResult[i] == this.questions[i].answer)
-        {
-          this.UserScore+=this.questions[i].point;
-          this.UserResultSure[i] = 1;
-        }
+      requestData.append('ename', this.questionData.ename);
+      requestData.append('edescribe', this.questionData.edescribe);
+      requestData.append('questions', JSON.stringify(this.questionData.questions));
+      requestData.append('defaultImageIndex', this.selectedDefaultImage);
+      if (this.fileList.length > 0) {
+        requestData.append('multipartFile', this.fileList[0].raw);
       }
-      this.visable = true;
-      this.isSaveButtonDisabled = true;
-      this.isSubmitButtonDisabled = true;
-      this.UploadStudentScore();
-      this.showPE()
-      ElNotification.success({
-        title: '提交',
-        message: '提交成功',
-        offset: 100,
-      })
-    },
-    UploadStudentScore()
-    {
       API({
-        url: '/studentAnswer',
-        method: 'get',
-        params: {
-          eid:this.eid,
-          sid:this.sid,
-          score:this.UserScore,
-        }
-      })
-    },
-    //显示当前题目是否正确
-    showPE()
-    {
-      if(this.UserResultSure[this.currentQuestionIndex]==1)
-      {
-        this.Pvisable = true;
-        this.Evisable = false;
-      }
-      else{
-        this.Pvisable = false;
-        this.Evisable = true;
-      }
-    }
-    ,GetCurrentInstanceValue()
-    {
-      this.currentQuestionClass=this.currentQuestion.qtype
-      this.choice_a=this.currentQuestion.a
-      this.choice_b=this.currentQuestion.b
-      this.choice_c=this.currentQuestion.c
-      this.choice_d=this.currentQuestion.d
-      if (this.currentQuestionClass===0) {
-        this.currentQuestionUserResult = this.result0;
-      }
-      else if (this.currentQuestionClass===1) {
-        this.currentQuestionUserResult = this.result1;
-      }
-      else if (this.currentQuestionClass===2) {
-        this.currentQuestionUserResult = this.result2;
-      }
-      else{
-
-      }
-    }
-  },computed:{
-    Check() {
-      return Check
-    },
-    Delete() {
-      return Delete
-    },
-    progressPercentage() {
-      let progress_line;
-      progress_line=(this.currentDonNumb) / this.questions.length * 100;
-      return Math.floor(progress_line);
-    },
-    timerFormatted() {
-      const minutes = Math.floor(this.timer / 60);
-      const seconds = this.timer % 60;
-      return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+        url: url,
+        method: 'post',
+        data: requestData,
+        headers: {
+          'Content-Type': 'multipart/form-data', // 设置请求头为 multipart/form-data
+        },
+      }).then((res) =>
+          ElMessageBox.alert(res.data.msg, '提示', {
+            confirmButtonText: '确认',
+          })
+      );
+      console.log(this.questionData);
     },
   },
-
 };
 </script>
+
 <style>
-
-.completed-question {
-  background-color: #5db0ec !important;
-  color: white;
-}
-.correct-question {
-  background-color: limegreen !important;
-  color: white;
-}
-
-.incorrect-question {
-  background-color: indianred !important;
-  color: white;
-}
 
 </style>

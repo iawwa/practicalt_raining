@@ -11,12 +11,13 @@
 
     <el-main style="margin-top: 30px;height:auto">
       <div v-if="current_Page === 0" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-        <div>
-          试卷名称:
+        <div style="float: left">
+          <el-text>试卷名称:</el-text>
           <el-input input-style="width: 100px" v-model="questionData.ename"></el-input>
         </div>
         <div>
-          试卷描述:
+          <el-text>试卷描述:
+          </el-text>
           <el-input type="textarea" :rows="3" input-style="width: 500px" v-model="questionData.edescribe"></el-input>
         </div>
       </div>
@@ -53,30 +54,44 @@
       </el-form>
     </div>
 
-    <div v-if="current_Page==2">
-      <el-button style="margin-left: 40px" type="primary" @click="addQuestion">添加题目</el-button>
+      <div v-if="current_Page == 2">
+        <el-button style="margin-left: 40px;" type="primary" @click="addQuestion">添加题目</el-button>
+        <table v-for="(question, index) in questionData.questions" :key="index" style="margin-top: 10px;">
+          <tr>
+            <td>
+              <el-text>第{{index + 1}}题</el-text>
+              <el-input v-model="question.qdescribe" placeholder="题目描述"></el-input>
+            </td>
+            <td>
+              <el-input v-model="question.answer" placeholder="答案"></el-input>
+            </td>
+            <td style="padding-left: 10px;">分值:</td>
+            <td>
+              <el-input-number v-model="question.point" :min="0" :step="1" placeholder="分值"></el-input-number>
+            </td>
+            <td style="padding-left: 10px;">题目类型:</td>
+            <td>
+              <el-select v-model="question.qtype" placeholder="题目类型" style="width:100px;">
+                <el-option label="判断题" value="0"></el-option>
+                <el-option label="单选题" value="1"></el-option>
+                <el-option label="填空题" value="2"></el-option>
+              </el-select>
+            </td>
+            <td>
+              <el-button type="danger" icon="el-icon-delete" @click="removeQuestion(index)">删除</el-button>
+            </td>
+          </tr>
+          <tr v-if="!(question.qtype == 2)">
+            <td style="padding-right: 10px;">a</td><el-input v-model="question.a" placeholder="答案"></el-input>
+            <td style="padding-right: 10px;">b</td><el-input v-model="question.b" placeholder="答案"></el-input>
+            <td style="padding-right: 10px;">c</td><el-input v-model="question.c" placeholder="答案"></el-input>
+            <td>d</td><el-input v-model="question.d" placeholder="答案"></el-input>
+          </tr>
+        </table>
+      </div>
 
-      题目列表:
-      <table>
-        <tr v-for="(question, index) in questionData.questions" :key="index">
-          <td>
-            <el-input v-model="question.qdescribe" placeholder="题目描述"></el-input>
-          </td>
-          <td>
-            <el-input v-model="question.answer" placeholder="答案"></el-input>
-          </td>
-          <td>分值:</td>
-          <td>
-            <el-input-number v-model="question.point" :min="0" :step="1" placeholder="分值"></el-input-number>
-          </td>
-          <td>
-            <el-button type="danger" icon="el-icon-delete" @click="removeQuestion(index)">删除</el-button>
-          </td>
-        </tr>
-      </table>
-    </div>
 
-    <div v-if="current_Page==3">
+      <div v-if="current_Page==3">
       <el-button style="margin-left: 80px" type="success" @click="createQuestion">创建题目</el-button>
     </div>
 
@@ -121,6 +136,11 @@ export default {
             qdescribe: '',
             answer: '',
             point: 0,
+            qtype:"",
+            a:"",
+            b:"",
+            c:"",
+            d:"",
           },
         ],
       },
@@ -156,6 +176,11 @@ export default {
         qdescribe: '',
         answer: '',
         point: 0,
+        qtype:"",
+        a:"",
+        b:"",
+        c:"",
+        d:"",
       });
       ElNotification({
         title: 'Add',
@@ -195,5 +220,6 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+
 </style>
