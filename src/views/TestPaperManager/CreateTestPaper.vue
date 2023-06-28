@@ -1,5 +1,5 @@
 <template>
-  <el-container style="width: 100%">
+  <el-container style="width: 100%" >
     <el-header>
     <el-steps :active="current_Page" align-center style="margin-top: 10px;padding-top: 0px;margin-bottom: 0px;">
       <el-step @click.native="current_Page=0" :icon="ChatSquare" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer;" title="Step 1" description="试卷信息" />
@@ -55,17 +55,17 @@
     </div>
 
       <div v-if="current_Page === 2">
-        <el-button style="margin-left: 40px;" type="primary" @click="addQuestion">添加题目</el-button>
+
         <div v-for="(question, index) in questionData.questions" :key="index" style="margin-top: 10px;">
           <el-form :model="question" label-width="100px" style="margin-top: 10px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);padding-bottom: 5px">
             <el-form-item font-weight="bold" label="题号">
               {{index+1}}
             </el-form-item>
             <el-form-item label="题目描述">
-              <el-input v-model="question.qdescribe" placeholder="题目描述"></el-input>
+              <el-input v-model="question.qdescribe" style="padding-right: 5%" placeholder="题目描述"></el-input>
             </el-form-item>
             <el-form-item label="答案">
-              <el-input v-model="question.answer" placeholder="答案"></el-input>
+              <el-input v-model="question.answer" style="padding-right: 5%" placeholder="答案"></el-input>
             </el-form-item>
             <el-form-item label="分值">
               <el-input-number v-model="question.point" :min="0" :step="1" placeholder="分值"></el-input-number>
@@ -78,7 +78,7 @@
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button type="danger" icon="el-icon-delete" @click="removeQuestion(index)">删除</el-button>
+              <el-button type="danger" style="width: 50px" icon="el-icon-delete" @click="removeQuestion(index)">删除</el-button>
             </el-form-item>
             <template v-if="(question.qtype === '2')">
               <el-form-item label="选项a">
@@ -96,9 +96,10 @@
             </template>
           </el-form>
         </div>
+        <el-affix position="bottom" :offset="40" >
+          <el-button style="float: right" type="primary" @click="addQuestion">添加题目</el-button>
+        </el-affix>
       </div>
-
-
 
       <div v-if="current_Page==3">
       <el-button style="margin-left: 80px" type="success" @click="createQuestion">创建题目</el-button>
