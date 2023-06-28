@@ -19,12 +19,44 @@
               <p style="font-weight: bold;">问题: {{ currentQuestion.qdescribe }}</p>
             </transition>
             <p>分值: {{ currentQuestion.point }}</p>
+
+
+            <!-- 判断题-->
             <transition name="fade-in-linear">
+              <div v-if="currentQuestionClass==0">
               <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
+              </div>
             </transition>
             <transition name="fade-in-linear">
+              <div v-if="currentQuestionClass==0">
               <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex] }}</p>
+              </div>
             </transition>
+<!--            单选题abcd-->
+            <transition name="fade-in-linear">
+              <div v-if="currentQuestionClass==1">
+              <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
+              </div>
+            </transition>
+            <transition name="fade-in-linear">
+              <div v-if="currentQuestionClass==1">
+              <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex] }}</p>
+              </div>
+            </transition>
+<!--            判断题-->
+            <transition name="fade-in-linear">
+              <div v-if="currentQuestionClass==2">
+              <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
+              </div>
+            </transition>
+            <transition name="fade-in-linear">
+              <div v-if="currentQuestionClass==2">
+              <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex] }}</p>
+              </div>
+            </transition>
+
+
+
           </div>
           <el-input
               v-model="currentQuestionUserResult"
@@ -95,7 +127,10 @@ export default {
       questions: [],
       currentQuestion:{},
       showResult: false,
+      // 当前题目索引
       currentQuestionIndex:0,
+      // 当前题目类型
+      currentQuestionClass:"",
       UserResult:[],
       currentQuestionUserResult:"",
       //正确错误表，1表示用户做对了，0表示错误
