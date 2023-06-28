@@ -4,8 +4,18 @@
     <el-container class="layout-container-demo">
       <el-header  style="display: flex;height: 100px;background-color: #8c2222;position: relative;color: var(--el-text-color-primary);">
         <el-container>
-          <el-aside style="width: 30%">
-            <User_pic style="margin-top: 5px"></User_pic>
+          <el-aside style="width: 30%;">
+            <el-image
+                :src="getImageUrl(circleUrl)"
+                style="
+                  width: 80px;
+                  height: 80px;
+                  border: 2px solid #dad5d5;
+                  margin-top: 10px;
+                  border-radius: 45%"
+
+            >
+            </el-image>
           </el-aside>
           <el-main style="width: 65%;">
             <el-text style="color: white;margin-left: 100px;text-align: center">{{role}}</el-text>
@@ -101,9 +111,9 @@
 
 
 <script lang="ts">
-import User_pic from "../components/user_pic.vue";
+import { ElImage } from 'element-plus';
 import {ElNotification} from "element-plus";
-
+import API from "../axios/request";
 
 export default
 {
@@ -115,39 +125,53 @@ export default
       is_admin:false,
       is_teacher:false,
       username:"",
+      circleUrl:"",
     }
   },methods:{
+    getImageUrl(blob) {
+      let url = 'data:' + 'image/png' + ';base64,' + blob;
+      return url;
+    },
   },mounted()
   {
+    let url="";
+    console.log("this.$cookies.get(\"data\")",this.$cookies.get("data"))
     this.role=this.$cookies.get("role")
     switch(this.role){
       case "student":
       {
         this.is_studnet=true
         this.username=this.$cookies.get("data").sname
+        url="/getStuImage"
         break
-
       }
       case "teacher":
       {
         this.is_teacher=true
         this.username=this.$cookies.get("data").tname
+        url="/getTeaImage"
         break
-
       }
       case "manager":{
         this.is_admin=true
         this.username=this.$cookies.get("data").mname
+        url="/getImage"
         break
-
       }
     }
+
+    API({
+      url: url,
+      method: 'get',
+    }).then((res) => {
+      this.circleUrl=res.data.image
+    })
+
     ElNotification({
       title: '欢迎',
       message: "欢迎！"+this.username+"!",
     })
   },components: {
-    User_pic,
   },computed: {
     //调用这个计算属性以选择性展示管理员教师与学生
     shouldShowLink() {

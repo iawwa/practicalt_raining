@@ -119,9 +119,6 @@ export default {
       }).then((res) => {
         if(res.data.msg === "success")
         {
-          console.log(res.data)
-          console.log(res.data.user)
-          console.log(res.data.role)
           //data::
           // age:19
           // cid:0
@@ -134,7 +131,7 @@ export default {
           // sname:"张三"
           // userName:"s0001
           this.$cookies.set("data", res.data.data);
-          this.$cookies.set("role",res.data.role)
+          this.$cookies.set("role",res.data.role);
           this.$router.push({ path: '/home'});
 
         }
