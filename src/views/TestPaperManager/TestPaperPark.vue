@@ -15,7 +15,7 @@
              </el-select>
            </template>
            <template #append>
-             <el-button :icon="Search" @click="SearchTestPaperData()" style="background-color: #931414" />
+             <el-button :icon="Search" @click="SearchTestPaperData()" style="background-color: #931414;color: white" />
            </template>
          </el-input>
    </el-header>

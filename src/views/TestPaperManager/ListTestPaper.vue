@@ -23,7 +23,7 @@
                       </el-select>
                     </template>
                     <template #append>
-                      <el-button :icon="Search" @click="SearchTestPaperData()" style="background-color: #931414" />
+                      <el-button :icon="Search" @click="SearchTestPaperData()" style="background-color: #931414;color: white" />
                     </template>
                   </el-input>
 
@@ -348,5 +348,8 @@ export default {
 .el-button .el-icon {
   margin-right: 5px;
 }
+
+
+
 
 </style>

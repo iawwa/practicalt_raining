@@ -24,6 +24,10 @@
             <!-- 判断题-->
             <transition name="fade-in-linear">
               <div v-if="currentQuestionClass==0">
+                <el-radio-group v-model="result0" class="ml-4">
+                  <el-radio label="1" size="large">{{choice_a}}</el-radio>
+                  <el-radio label="2" size="large">{{choice_b}}</el-radio>
+                </el-radio-group>
               <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
               </div>
             </transition>
@@ -32,9 +36,17 @@
               <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex] }}</p>
               </div>
             </transition>
+
+
 <!--            单选题abcd-->
             <transition name="fade-in-linear">
               <div v-if="currentQuestionClass==1">
+                <el-radio-group v-model="result0" class="ml-4">
+                  <el-radio label="1" size="large">A:{{choice_a}}</el-radio>
+                  <el-radio label="2" size="large">B:{{choice_b}}</el-radio>
+                  <el-radio label="3" size="large">C:{{choice_c}}</el-radio>
+                  <el-radio label="4" size="large">D:{{choice_d}}</el-radio>
+                </el-radio-group>
               <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
               </div>
             </transition>
@@ -43,14 +55,23 @@
               <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex] }}</p>
               </div>
             </transition>
-<!--            判断题-->
+
+
+<!--            填空题-->
             <transition name="fade-in-linear">
               <div v-if="currentQuestionClass==2">
+                <el-input
+                    v-model="result2"
+                    type="text"
+                    input-style="width: 200px"
+                    placeholder="请输入答案"
+                />
               <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
               </div>
             </transition>
             <transition name="fade-in-linear">
               <div v-if="currentQuestionClass==2">
+
               <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex] }}</p>
               </div>
             </transition>
@@ -58,12 +79,7 @@
 
 
           </div>
-          <el-input
-              v-model="currentQuestionUserResult"
-              type="text"
-              input-style="width: 200px"
-              placeholder="请输入答案"
-          />
+
           <div style="display: flex; justify-content: space-between; margin-top: 10px;">
             <el-button type="primary" @click="ShiftBeforeQuestion">上一题</el-button>
             <el-button type="primary" @click="ShiftNextQuestion">下一题</el-button>
@@ -136,6 +152,12 @@ export default {
       choice_b:null,
       choice_c:null,
       choice_d:null,
+      //第一类题目答案:
+      result0:null,
+      //第二类题目答案
+      result1:null,
+      //第三类题目答案
+      result2:null,
       UserResult:[],
       currentQuestionUserResult:"",
       //正确错误表，1表示用户做对了，0表示错误
@@ -185,8 +207,13 @@ export default {
       this.UserResult = Array(this.questions.length).fill("");
       this.UserResultSure = Array(this.questions.length).fill(0);
       this.isQuestionCompleted = Array(this.questions.length).fill(false); // 初始化题目完成状态数组
+      this.GetCurrentInstanceValue();
     });
-    this.currentQuestionClass=this.currentQuestion.qtype
+
+  },
+  onBeforeUnmount()
+  {
+    clearInterval(this.timer.value);
   },
   methods: {
     startTimer() {
@@ -207,7 +234,7 @@ export default {
         this.currentQuestion = this.questions[this.currentQuestionIndex];
         this.showPE()
       }
-      this.currentQuestionClass=this.currentQuestion.qtype
+      this.GetCurrentInstanceValue();
     },
     ShiftBeforeQuestion(){
       if(this.currentQuestionIndex>0)
@@ -216,7 +243,7 @@ export default {
         this.currentQuestion = this.questions[this.currentQuestionIndex];
       }
       this.showPE()
-      this.currentQuestionClass=this.currentQuestion.qtype
+      this.GetCurrentInstanceValue();
     },
     ShiftNextQuestion(){
       if(this.currentQuestionIndex<this.questions.length-1)
@@ -226,6 +253,7 @@ export default {
       }
       this.showPE()
       this.currentQuestionClass=this.currentQuestion.qtype
+      this.GetCurrentInstanceValue();
     },
     SaveCurrentQuestion(){
       this.isQuestionCompleted[this.currentQuestionIndex] = true;
@@ -251,7 +279,6 @@ export default {
         {
           this.UserScore+=this.questions[i].point;
           this.UserResultSure[i] = 1;
-
         }
       }
       this.visable = true;
@@ -288,6 +315,26 @@ export default {
       else{
         this.Pvisable = false;
         this.Evisable = true;
+      }
+    }
+    ,GetCurrentInstanceValue()
+    {
+      this.currentQuestionClass=this.currentQuestion.qtype
+      this.choice_a=this.currentQuestion.a
+      this.choice_b=this.currentQuestion.b
+      this.choice_c=this.currentQuestion.c
+      this.choice_d=this.currentQuestion.d
+      if (this.currentQuestionClass===0) {
+        this.currentQuestionUserResult = this.result0;
+      }
+      else if (this.currentQuestionClass===1) {
+        this.currentQuestionUserResult = this.result1;
+      }
+      else if (this.currentQuestionClass===2) {
+        this.currentQuestionUserResult = this.result2;
+      }
+      else{
+
       }
     }
   },computed:{
