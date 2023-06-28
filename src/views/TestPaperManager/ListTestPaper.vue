@@ -6,7 +6,7 @@
         <el-table-column label="试卷ID" prop="eid"  />
         <el-table-column label="试卷名字" prop="ename" />
         <el-table-column label="描述" prop="edescribe" />
-        <el-table-column label="教师名字" prop="tname"  />
+        <el-table-column label="教师名字" prop="teacher.tname"  />
         <el-table-column align="right" >
           <template #header>
             <div style="display: flex; align-items: center;text-align: left">
@@ -201,12 +201,6 @@ export default {
         // ElMessageBox.alert(res.data.msg, '提示', {
         //   confirmButtonText: '确认',})
       })
-      ElNotification({
-        title: '删除',
-        message: '删除成功',
-        type: 'error',
-        position: 'bottom-left',
-      })
       this.SearchTestPaperData(this.currentPage);
 
     },
@@ -258,6 +252,7 @@ export default {
       }).then((res) => {
         this.TestPaperData = res.data;
         this.total=res.data.count
+        console.log("res.data",res.data)
       })
       this.loading=false
     }
@@ -282,7 +277,7 @@ export default {
         break
       }
     }
-    console.log(this.$cookies.get("user"));
+    console.log(this.$cookies.get("data"));
     console.log(this.$cookies.get("role"))
   }
 };

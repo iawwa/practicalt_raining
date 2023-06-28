@@ -135,7 +135,7 @@ export default
   },mounted()
   {
     let url="";
-    console.log("this.$cookies.get(\"data\")",this.$cookies.get("data"))
+    console.log("this.$cookies.get(\"data\")：",this.$cookies.get("data"))
     this.role=this.$cookies.get("role")
     switch(this.role){
       case "student":

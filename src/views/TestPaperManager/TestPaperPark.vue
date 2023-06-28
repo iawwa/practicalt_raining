@@ -28,7 +28,7 @@
             </el-aside>
             <el-main style="width: 205px;display: flex; flex-direction: column;">
               <el-text style="text-align: center;color: black;font-size: 20px;font-family: 'Ma Shan Zheng', cursive;">{{ subItem.ename }}</el-text>
-              <el-text style="text-align: center;font-family: 'ZCOOL XiaoWei', cursive;">{{subItem.tname}}</el-text>
+              <el-text style="text-align: center;font-family: 'ZCOOL XiaoWei', cursive;">{{subItem.teacher.tname}}</el-text>
               <el-text style="text-align: center;">{{subItem.edescribe}}</el-text>
             </el-main>
           </el-container>

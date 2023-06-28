@@ -130,7 +130,9 @@ export default {
           // sid:10010001
           // sname:"张三"
           // userName:"s0001
-          this.$cookies.set("data", res.data.data);
+
+          console.log("res.data",res.data)
+          this.$cookies.set("data",res.data.data);
           this.$cookies.set("role",res.data.role);
           this.$router.push({ path: '/home'});
 
@@ -140,11 +142,12 @@ export default {
     },
     register() {
 
-
     },
     changeRolling() {
       this.isRolling = !this.isRolling
     }
+  },mounted() {
+    this.$cookies.remove();
   }
 }
 
