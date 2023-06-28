@@ -25,10 +25,16 @@
             <transition name="fade-in-linear">
               <div v-if="currentQuestionClass==0">
                 <el-radio-group v-model="result0" class="ml-4">
-                  <el-radio label="a" size="large">{{choice_a}}</el-radio>
-                  <el-radio label="b" size="large">{{choice_b}}</el-radio>
+                  <el-radio label="a" size="large">√</el-radio>
+                  <el-radio label="b" size="large">×</el-radio>
                 </el-radio-group>
-              <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
+                <p v-if="visable" style="font-weight: bold;">
+                  正确答案:
+                  <template v-if="currentQuestion.answer === 'a'">
+                    <span v-if="currentQuestionClass === '0' && currentQuestion.answer === 'a'" >√</span>
+                    <span v-else-if="currentQuestionClass === '0' && currentQuestion.answer === 'b'" >×</span>
+                  </template>
+                </p>
               </div>
             </transition>
             <transition name="fade-in-linear">
@@ -259,7 +265,15 @@ export default {
       //判断当前题型以获得用户的答案
       if(this.currentQuestionClass==="0")
       {
-        this.currentQuestionUserResult = this.result0
+        if(this.result0==="a")
+        {
+          this.currentQuestionUserResult ="√";
+        }
+        else if(this.result0==="b")
+        {
+          this.currentQuestionUserResult ="×";
+        }
+        else{}
       }
       else if(this.currentQuestionClass==="1")
       {
@@ -290,7 +304,18 @@ export default {
     SubmitAnswer() {
       for (var i=0; i<this.questions.length; i++)
       {
-        if(this.UserResult[i] == this.questions[i].answer)
+        let answer_temp=this.questions[i].answer
+        if(this.questions[i].qtype=="0")
+        {
+          if(this.questions[i].answer==="a")
+          {
+            answer_temp="√"
+          }
+          else{
+            answer_temp="×"
+          }
+        }
+        if(this.UserResult[i] == answer_temp)
         {
           this.UserScore+=this.questions[i].point;
           this.UserResultSure[i] = 1;
