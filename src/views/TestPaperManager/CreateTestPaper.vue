@@ -10,6 +10,7 @@
     </el-header>
 
     <el-main style="margin-top: 30px;height:auto">
+
       <el-container v-if="current_Page==0" style="padding-top: 1%;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
         <el-header>
           <el-text>试卷名称:</el-text>
@@ -20,37 +21,38 @@
           </el-text>
           <el-input type="textarea" :rows="3" input-style="width: 500px" v-model="questionData.edescribe"></el-input>
         </el-main>
-  </el-container>
+      </el-container>
 
       <el-container v-if="current_Page==1">
-        <el-header>
-          <el-upload
-              style="width: 200px"
-              class="upload-demo"
+        <el-tabs type="border-card" style="width: 100%;height: auto">
+          <el-tab-pane label="上传头像" > <el-upload
               :auto-upload="false"
               :on-preview="handlePreview"
               :on-remove="handleRemove"
               :file-list="fileList"
+              :show-file-list="false"
               :on-change="onchange"
               list-type="picture"
           >
-            <el-button v-if="!isPiced" size="small" type="primary">点击上传</el-button>
+            <img style="width: 80px; height: 80px" v-if="imageUrl" :src="imageUrl" />
+            <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
           </el-upload>
-        </el-header>
+          </el-tab-pane>
+          <el-tab-pane label="默认头像">
+            <el-radio-group v-model="selectedDefaultImage" style="width: auto;height: auto">
+              <el-radio :label="0">
+                <img :src="defaultImages[0]" style=";width: 80px; height: 80px" alt="Default Image 1">
+              </el-radio>
+              <el-radio :label="1">
+                <img :src="defaultImages[1]" style="width: 80px; height: 80px" alt="Default Image 2">
+              </el-radio>
+              <el-radio :label="2">
+                <img :src="defaultImages[2]" style="width: 80px; height: 80px" alt="Default Image 3">
+             </el-radio>
+            </el-radio-group>
+          </el-tab-pane>
+        </el-tabs>
 
-        <el-main>
-          <el-radio-group v-model="selectedDefaultImage" style="margin-top: 5px">
-            <el-radio :label="0">
-              <img :src="defaultImages[0]" style="width: 80px; height: 80px" alt="Default Image 1">
-            </el-radio>
-            <el-radio :label="1">
-              <img :src="defaultImages[1]" style="width: 80px; height: 80px" alt="Default Image 2">
-            </el-radio>
-            <el-radio :label="2">
-              <img :src="defaultImages[2]" style="width: 80px; height: 80px" alt="Default Image 3">
-            </el-radio>
-          </el-radio-group>
-        </el-main>
       </el-container>
 
 
@@ -185,6 +187,7 @@ export default {
       // 是否显示默认图片
       isShowDefaultImage: false,
       current_Page: 0,
+      imageUrl:"",
     };
   },
   mounted() {},
@@ -201,6 +204,7 @@ export default {
     onchange(file, fileList) {
       this.fileList = fileList; // 每一个改变都会将el-upload里面的图片传递的参数复制到this.filelist去
       this.isPiced = this.fileList.length > 0;
+      this.imageUrl = URL.createObjectURL(this.fileList[0].raw);
     },
     addQuestion() {
       this.questionData.questions.push({
