@@ -402,16 +402,16 @@ export default {
 
 .completed-question {
   background-color: #5db0ec !important;
-  color: white;
+  color: white !important;
 }
 .correct-question {
   background-color: limegreen !important;
-  color: white;
+  color: white !important;
 }
 
 .incorrect-question {
   background-color: indianred !important;
-  color: white;
+  color: white !important;
 }
 
 </style>

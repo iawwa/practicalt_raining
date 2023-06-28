@@ -1,8 +1,14 @@
 <template>
 
   <div class="common-layout" style="height: 100%;overflow: hidden">
-    <el-container class="layout-container-demo">
-      <el-header  style="display: flex;height: 100px;background-color: #8c2222;position: relative;color: var(--el-text-color-primary);">
+    <el-container class="layout-container-demo" >
+      <el-header  style="display: flex;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      margin-bottom: 2px;
+      height: 100px;
+      background-color: #8c2222;
+      position: relative;
+      color: var(--el-text-color-primary);">
         <el-container>
           <el-aside style="width: 30%;">
             <el-image
@@ -17,10 +23,10 @@
             >
             </el-image>
           </el-aside>
-          <el-main style="width: 65%;height: auto">
+          <el-main style="width: auto;height: auto">
             <el-text style="color: white;margin-left: 100px;text-align: center">{{role}}</el-text>
           </el-main>
-          <el-aside style="width: 5%;">
+          <el-aside style="width: auto;">
             <div class="toolbar" style="padding: 25px">
               <el-dropdown>
                 <el-icon style="margin-right: 8px; margin-top: 1px;border: 0px">
@@ -41,12 +47,15 @@
 
       <el-container >
 
-        <el-aside width="200px" style="color: var(--el-text-color-primary);background-color: white;">
+        <el-aside width="200px" style="color: var(--el-text-color-primary);
+        margin: 2px;
+        background-color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
           <el-scrollbar>
           <el-menu :default-openeds="[]">
 
 
-            <el-sub-menu index="1">
+            <el-sub-menu index="1" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
               <template #title>
                 <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Firefox.ico"></el-icon >个人中心
               </template>
@@ -58,7 +67,7 @@
 
             </el-sub-menu>
 
-            <el-sub-menu index="2">
+            <el-sub-menu index="2" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
               <template #title>
                 <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Documents.ico"></el-icon>课程中心
               </template>
@@ -68,7 +77,7 @@
             </el-sub-menu>
 
 
-            <el-sub-menu index="3">
+            <el-sub-menu index="3" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
               <template #title>
                 <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Default App.ico"></el-icon>考试测评
               </template>
@@ -80,7 +89,7 @@
               </el-menu-item-group>
             </el-sub-menu>
 
-            <el-sub-menu index="4">
+            <el-sub-menu index="4" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
               <template #title>
                 <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Apps.ico"></el-icon>班级中心
               </template>

@@ -1,23 +1,28 @@
 <template>
   <el-container style="width: 100%">
     <el-header>
-    <el-steps :active="current_Page" align-center style="margin-top: 10px">
-      <el-step @click.native="current_Page=0" :icon="ChatSquare" style="cursor: pointer" title="Step 1" description="试卷信息" />
-      <el-step @click.native="current_Page=1" :icon="Picture" style="cursor: pointer" title="Step 2" description="试卷封面" />
-      <el-step @click.native="current_Page=2" :icon="Edit" style="cursor: pointer" title="Step 3" description="题目信息" />
-      <el-step @click.native="current_Page=3" :icon="Upload" style="cursor: pointer" title="Step 4" description="检查提交" />
+    <el-steps :active="current_Page" align-center style="margin-top: 10px;padding-top: 0px;margin-bottom: 0px;">
+      <el-step @click.native="current_Page=0" :icon="ChatSquare" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer;" title="Step 1" description="试卷信息" />
+      <el-step @click.native="current_Page=1" :icon="Picture" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 2" description="试卷封面" />
+      <el-step @click.native="current_Page=2" :icon="Edit" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 3" description="题目信息" />
+      <el-step @click.native="current_Page=3" :icon="Upload" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 4" description="检查提交" />
     </el-steps>
     </el-header>
 
-    <el-main style="margin-top: 10px;">
-    <div v-if="current_Page==0" style="border: 3px solid #409EFF">
-      试卷名称:
-      <el-input input-style="width: 100px" v-model="questionData.ename"></el-input>
-      试卷描述:
-      <el-input type="textarea" :rows="3" input-style="width: 500px" v-model="questionData.edescribe"></el-input>
-    </div>
+    <el-main style="margin-top: 30px;height:auto">
+      <div v-if="current_Page === 0" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+        <div>
+          试卷名称:
+          <el-input input-style="width: 100px" v-model="questionData.ename"></el-input>
+        </div>
+        <div>
+          试卷描述:
+          <el-input type="textarea" :rows="3" input-style="width: 500px" v-model="questionData.edescribe"></el-input>
+        </div>
+      </div>
 
-    <div v-if="current_Page==1">
+
+      <div v-if="current_Page==1">
       <el-form style="width: 900px; display: flex; height: 150px;">
         <el-upload
             style="width: 200px"
@@ -74,6 +79,8 @@
     <div v-if="current_Page==3">
       <el-button style="margin-left: 80px" type="success" @click="createQuestion">创建题目</el-button>
     </div>
+
+
     </el-main>
   </el-container>
 </template>
@@ -100,11 +107,6 @@ export default {
     },
     Picture() {
       return Picture
-    },
-    adjustContainerHeight() {
-      const windowHeight = window.innerHeight;
-      const minHeight = 650; // 设置最小高度为650px
-      this.containerHeight = `${windowHeight < minHeight ? minHeight : 'auto'}`;
     },
   },
   data() {
