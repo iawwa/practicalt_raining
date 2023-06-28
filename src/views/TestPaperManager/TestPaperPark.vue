@@ -1,5 +1,24 @@
 <template>
  <el-container>
+   <el-header>
+         <el-input
+             v-model="search"
+             placeholder="查询"
+             class="input-with-select;"
+             style="padding-top: 10px"
+         >
+           <template #prepend>
+             <el-select v-model="search_selectd.chose" placeholder="Select"  style="width: 75px;">
+               <el-option label="试卷" value="1" />
+               <el-option label="教师" value="2" />
+               <el-option label="描述" value="3" />
+             </el-select>
+           </template>
+           <template #append>
+             <el-button :icon="Search" @click="SearchTestPaperData()" style="background-color: greenyellow" />
+           </template>
+         </el-input>
+   </el-header>
    <el-main style="height:auto;padding: 0px">
     <div v-for="(item, index) in TestPaperData.data" :key="index" style="background-color: #ffffff; display: flex;">
       <div class="row" v-if="index % 3 === 0">
