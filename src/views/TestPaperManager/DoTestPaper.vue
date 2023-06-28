@@ -2,6 +2,8 @@
   <el-container style="background-color: #cccccc;height: 650px">
     <el-header style="width: 100%; height: 100px; margin-bottom: 10px; background-color: white">
       <el-text>{{ename}}</el-text>
+      <el-text>剩余时间: {{ timerFormatted }}</el-text>
+
     </el-header>
     <el-container style="background-color: white">
       <el-aside style="width:70%;height: auto;">
@@ -64,7 +66,10 @@
               ]"
                 @click="goToQuestion(index)"
                 round
-                style="width: 40px; height: 40px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+                style="width: 40px; height: 40px;
+                 overflow: hidden;
+                 margin-top: 10px;
+                 text-overflow: ellipsis; white-space: nowrap;"
             >
               {{ index + 1 }}
             </el-button>
@@ -78,7 +83,7 @@
 
 <script lang="ts">
 import API from "../../axios/request";
-import { ElProgress } from 'element-plus';
+import {ElNotification, ElProgress} from 'element-plus';
 import {Check, Delete} from "@element-plus/icons-vue";
 export default {
   data() {
@@ -111,10 +116,12 @@ export default {
       Evisable: false,
       // 用于跟踪每个题目的完成状态
       isQuestionCompleted: [],
-
+    //timer
+      timer:900, // 15 minutes in seconds
     };
   },
   mounted() {
+    this.startTimer();
     this.eid = this.$route.query.eid;
     this.ename=this.$route.query.ename;
     this.sid=this.$cookies.get("data").sid
@@ -141,6 +148,15 @@ export default {
 
   },
   methods: {
+    startTimer() {
+      const timerInterval = setInterval(() => {
+        this.timer--;
+        if (this.timer === 0) {
+          this.SubmitAnswer();
+          clearInterval(timerInterval);
+        }
+      }, 1000);
+    },
     //通过右边按钮切换题目
     goToQuestion(index)
     {
@@ -178,6 +194,11 @@ export default {
       }
 
       // console.log("this.currentQuestionIndex",this.currentQuestionIndex)
+      ElNotification.success({
+        title: '保存',
+        message: '保存成功',
+        offset: 100,
+      })
     },
     SubmitAnswer() {
       for (var i=0; i<this.questions.length; i++)
@@ -194,6 +215,11 @@ export default {
       this.isSubmitButtonDisabled = true;
       this.UploadStudentScore();
       this.showPE()
+      ElNotification.success({
+        title: '提交',
+        message: '提交成功',
+        offset: 100,
+      })
     },
     UploadStudentScore()
     {
@@ -232,6 +258,11 @@ export default {
         progress_line=(this.currentDonNumb) / this.questions.length * 100;
         return Math.floor(progress_line);
       },
+    timerFormatted() {
+      const minutes = Math.floor(this.timer / 60);
+      const seconds = this.timer % 60;
+      return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+    },
     },
 
 };

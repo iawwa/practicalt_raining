@@ -122,7 +122,7 @@
 
 <script lang="ts">
 import API from "../../axios/request";
-import {Action, ElButton, ElDialog, ElInput, ElMessage, ElMessageBox} from "element-plus";
+import {Action, ElButton, ElDialog, ElInput, ElMessage, ElMessageBox, ElNotification} from "element-plus";
 import {CircleCloseFilled, Search} from "@element-plus/icons-vue";
 
 
@@ -198,10 +198,17 @@ export default {
           eid: eid,
         }
       }).then((res) => {
-        ElMessageBox.alert(res.data.msg, '提示', {
-          confirmButtonText: '确认',})
+        // ElMessageBox.alert(res.data.msg, '提示', {
+        //   confirmButtonText: '确认',})
+      })
+      ElNotification({
+        title: '删除',
+        message: '删除成功',
+        type: 'error',
+        position: 'bottom-left',
       })
       this.SearchTestPaperData(this.currentPage);
+
     },
     handleCurrentChange(number)
     {

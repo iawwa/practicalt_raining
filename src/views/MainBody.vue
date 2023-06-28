@@ -102,6 +102,7 @@
 
 <script lang="ts">
 import User_pic from "../components/user_pic.vue";
+import {ElNotification} from "element-plus";
 
 
 export default
@@ -113,6 +114,7 @@ export default
       is_studnet:false,
       is_admin:false,
       is_teacher:false,
+      username:"",
     }
   },methods:{
   },mounted()
@@ -122,18 +124,28 @@ export default
       case "student":
       {
         this.is_studnet=true
+        this.username=this.$cookies.get("data").sname
         break
+
       }
       case "teacher":
       {
         this.is_teacher=true
+        this.username=this.$cookies.get("data").tname
         break
+
       }
       case "manager":{
         this.is_admin=true
+        this.username=this.$cookies.get("data").mname
         break
+
       }
     }
+    ElNotification({
+      title: '欢迎',
+      message: "欢迎！"+this.username+"!",
+    })
   },components: {
     User_pic,
   },computed: {
