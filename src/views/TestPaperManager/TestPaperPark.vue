@@ -1,6 +1,6 @@
 <template>
  <el-container>
-   <el-main style="height:590px;padding: 0px">
+   <el-main style="height:auto;padding: 0px">
     <div v-for="(item, index) in TestPaperData.data" :key="index" style="background-color: #ffffff; display: flex;">
       <div class="row" v-if="index % 3 === 0">
         <div v-for="subItem in TestPaperData.data.slice(index, index + 3)" :key="subItem.id" class="item">
@@ -48,6 +48,8 @@
     </div>
    </el-main>
    <el-footer>
+     <el-affix position="bottom" :offset="5">
+
       <el-pagination
           :background="true"
           :page-size="pageSize"
@@ -57,6 +59,7 @@
           class="pagination"
           style="margin-top: auto;"
       />
+     </el-affix>
    </el-footer>
  </el-container>
 

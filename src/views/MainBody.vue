@@ -17,7 +17,7 @@
             >
             </el-image>
           </el-aside>
-          <el-main style="width: 65%;">
+          <el-main style="width: 65%;height: auto">
             <el-text style="color: white;margin-left: 100px;text-align: center">{{role}}</el-text>
           </el-main>
           <el-aside style="width: 5%;">
@@ -207,6 +207,7 @@ a{
   /* 添加阴影效果 */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
+
 
 </style>
 
