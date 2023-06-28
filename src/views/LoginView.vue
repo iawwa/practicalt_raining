@@ -47,6 +47,21 @@
               <el-form-item >
                 <el-input v-model="password" type="password" placeholder="请输入密码" />
               </el-form-item>
+              <div style="width: auto;height: 150px">
+                <el-upload
+                    style="width: 200px"
+                    class="upload-demo"
+                    :auto-upload="false"
+                    :on-preview="handlePreview"
+                    :on-remove="handleRemove"
+                    :file-list="fileList"
+                    :on-change="onchange"
+                    list-type="picture"
+
+                >
+                  <el-icon v-if="!isPiced" ><Plus /></el-icon>
+                </el-upload>
+              </div>
               <el-form-item >
                 <el-select v-model="selectedRole" placeholder="请选择用户身份">
                   <el-option label="学生" value="student"></el-option>
@@ -88,12 +103,26 @@ export default {
       password: '',
       selectedRole: '',
       isRolling: false,
+      fileList: [],
+      isPiced: false,
     }
   },
   methods: {
+    handleRemove(file, fileList) {
+      // 文件列表移除文件时的钩子
+      this.fileList = fileList; // 每一个改变都会将el-upload里面的图片传递的参数复制到this.filelist去
+      this.isPiced = this.fileList.length > 0;
+    },
+    handlePreview(file) {
+      // 点击文件列表中已上传的文件时的钩子
+      // console.log(file);
+    },
+    onchange(file, fileList) {
+      this.fileList = fileList; // 每一个改变都会将el-upload里面的图片传递的参数复制到this.filelist去
+      this.isPiced = this.fileList.length > 0;
+    },
     login() {
       let url="";
-      let msg="";
       switch (this.selectedRole) {
         case "student":
           url="/Stu"
@@ -135,12 +164,43 @@ export default {
           this.$cookies.set("data",res.data.data);
           this.$cookies.set("role",res.data.role);
           this.$router.push({ path: '/home'});
-
         }
 
       })
     },
     register() {
+      let url="";
+      let msg="";
+      switch (this.selectedRole) {
+        case "student":
+          url="/loginInStu"
+          break;
+        case "teacher":
+          url="/loginInTea"
+          break;
+        case "manager":
+          url="/loginInMan"
+          break;
+        default:
+          break;
+      }
+      console.log(this.userName, this.password, this.selectedRole)
+      const requestData = new FormData();
+      requestData.append('multipartFile', this.fileList[0].raw);
+      API({
+        url: url,
+        method: "post",
+        params: {
+          userName:this.userName,
+          pwd:this.password,
+          role:this.selectedRole,
+        },
+        data: requestData
+      }).then((res) => {
+          console.log("res.data.msg", res.data.msg)
+          console.log("res.data",res.data)
+        this.$router.push({ path: '/login'});
+      })
 
     },
     changeRolling() {
