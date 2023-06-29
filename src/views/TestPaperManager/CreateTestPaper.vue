@@ -107,8 +107,8 @@
                 <el-select v-if="question.qtype == '1'" v-model="question.answer" placeholder="答案" style="width: 100px;">
                   <el-option label="A" value="a"></el-option>
                   <el-option label="B" value="b"></el-option>
-                  <el-option label="C" value="a"></el-option>
-                  <el-option label="D" value="b"></el-option>
+                  <el-option label="C" value="c"></el-option>
+                  <el-option label="D" value="d"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="分值">
