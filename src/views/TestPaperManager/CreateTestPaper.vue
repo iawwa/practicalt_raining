@@ -2,9 +2,30 @@
   <el-container style="width: 100%" >
     <el-header>
       <el-steps class="MyElSteps" :active="current_Page" align-center style="margin-top: 10px;padding-top: 0px;margin-bottom: 0px;">
-        <el-step class="MyElStep" @click.native="current_Page=0" :icon="ChatSquare" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer;" title="Step 1" description="试卷信息" />
-        <el-step @click.native="current_Page=1" :icon="Picture" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 2" description="试卷封面" />
+        <el-tooltip
+            class="box-item"
+            effect="dark"
+            content="填写试卷名字描述等信息。"
+            placement="top"
+        >
+        <el-step  class="MyElStep" @click.native="current_Page=0" :icon="ChatSquare" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer;" title="Step 1" description="试卷信息" />
+        </el-tooltip>
+        <el-tooltip
+            class="box-item"
+            effect="dark"
+            content="上传或者使用默认提供的图片作为默认试卷图片上传。"
+            placement="top"
+        >
+          <el-step @click.native="current_Page=1" :icon="Picture" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 2" description="试卷封面" />
+        </el-tooltip>
+          <el-tooltip
+              class="box-item"
+              effect="dark"
+              content="撰写主要题目信息。"
+              placement="top"
+          >
         <el-step @click.native="current_Page=2" :icon="Edit" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 3" description="题目信息" />
+          </el-tooltip>
       </el-steps>
     </el-header>
 
@@ -77,6 +98,13 @@
               <el-form-item label="题目描述">
                 <el-input v-model="question.qdescribe" style="padding-right: 5%" placeholder="题目描述"></el-input>
               </el-form-item>
+
+              <el-tooltip
+                  class="box-item"
+                  effect="dark"
+                  content="选择相应类型会自动调整模板。"
+                  placement="left-start"
+              >
               <el-form-item label="题目类型">
                 <el-select v-model="question.qtype" placeholder="题目类型" style="width: 100px;">
                   <el-option label="判断题" value="0"></el-option>
@@ -84,6 +112,8 @@
                   <el-option label="填空题" value="2"></el-option>
                 </el-select>
               </el-form-item>
+              </el-tooltip>
+
               <template v-if="(question.qtype == '1')">
                 <el-form-item label="选项A">
                   <el-input v-model="question.a" style="padding-right: 5%" placeholder="答案"></el-input>
@@ -278,6 +308,7 @@ export default {
       ElNotification({
         title: 'Add',
         message: '添加一列',
+        customClass:"AddMessage",
       });
       console.log('selectedDefaultImage', this.selectedDefaultImage);
     },
@@ -370,4 +401,21 @@ export default {
   background-color: #ADAD! important;
   color: #8c2222 !important;
 }
+.AddMessage
+{
+  width: auto;
+}
+
+:deep(.el-step__head.is-success) {
+  color: rgb(95, 250, 52);
+  border-color: rgb(95, 250, 52);
+}
+:deep(.el-step__title.is-success) {
+  font-weight: bold;
+  color: rgb(95, 250, 52);
+}
+:deep(.el-step__description.is-success) {
+  color: rgb(95, 250, 52);
+}
+
 </style>

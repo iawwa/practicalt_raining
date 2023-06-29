@@ -1,378 +1,411 @@
 <template>
+  <el-container style="width: 100%" >
+    <el-header>
+      <el-steps class="MyElSteps" :active="current_Page" align-center style="margin-top: 10px;padding-top: 0px;margin-bottom: 0px;">
+        <el-tooltip
+            class="box-item"
+            effect="dark"
+            content="填写试卷名字描述等信息。"
+            placement="top"
+        >
+          <el-step  class="MyElStep" @click.native="current_Page=0" :icon="ChatSquare" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer;" title="Step 1" description="试卷信息" />
+        </el-tooltip>
+        <el-tooltip
+            class="box-item"
+            effect="dark"
+            content="上传或者使用默认提供的图片作为默认试卷图片上传。"
+            placement="top"
+        >
+          <el-step @click.native="current_Page=1" :icon="Picture" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 2" description="试卷封面" />
+        </el-tooltip>
+        <el-tooltip
+            class="box-item"
+            effect="dark"
+            content="撰写主要题目信息。"
+            placement="top"
+        >
+          <el-step @click.native="current_Page=2" :icon="Edit" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 3" description="题目信息" />
+        </el-tooltip>
+      </el-steps>
+    </el-header>
 
-  <el-container style=" height: 100%;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);margin: 10px">
-    <el-main style="padding: 0px;height: auto">
-      <el-table
-          :data="TestPaperData.data"
-          v-loading="loading"
-          :row-class-name="rowClassName"
-          style="width: 100%;height:auto;">
-        <el-table-column label="试卷ID" prop="eid"  />
-        <el-table-column label="试卷名字" prop="ename" />
-        <el-table-column label="描述" prop="edescribe" />
-        <el-table-column label="教师名字" prop="teacher.tname"  />
-        <el-table-column align="right" >
-          <template #header>
-            <div style="display: flex; align-items: center;text-align: left">
-              <el-input
-                  v-model="search"
-                  placeholder="查询"
-                  class="input-with-select"
+    <el-main style="margin-top: 30px;height:auto">
+      <Transition name="el-fade-in-linear">
+        <el-container v-if="current_Page==0" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+          <!--        <el-header>-->
+          <!--          <el-text>试卷名称:</el-text>-->
+          <!--          <el-input input-style="width: 100px" v-model="questionData.ename"></el-input>-->
+          <!--        </el-header>-->
+          <el-main>
+            <el-form style="align-content: center;" v-if="current_Page==0" >
+              <el-form-item label="试卷名称">
+                <el-input v-model="questionData.ename"></el-input>
+              </el-form-item>
+              <el-form-item label="试卷描述">
+                <el-input  type="textarea" :rows="20" v-model="questionData.edescribe"></el-input>
+              </el-form-item>
+            </el-form>
+          </el-main>
+        </el-container>
+      </Transition>
+
+      <Transition name="el-fade-in-linear">
+        <el-container v-if="current_Page==1" style="height: 800px">
+          <el-tabs type="border-card" style="width: 100%;height: auto">
+            <el-tab-pane label="上传头像" >
+              <el-upload
+                  :auto-upload="false"
+                  :on-preview="handlePreview"
+                  :on-remove="handleRemove"
+                  :file-list="fileList"
+                  :show-file-list="false"
+                  :on-change="onchange"
+                  list-type="picture"
+                  class="avatar-uploader"
               >
-                <template #prepend>
-                  <el-select v-model="search_selectd.chose" placeholder="Select"  style="width: 75px;">
-                    <el-option label="试卷" value="1" />
-                    <el-option label="教师" value="2" />
-                    <el-option label="描述" value="3" />
+                <img  class="avatar" v-if="imageUrl" :src="imageUrl" />
+                <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+              </el-upload>
+            </el-tab-pane>
+            <el-tab-pane label="默认头像">
+              <el-radio-group v-model="selectedDefaultImage" style="width: auto;">
+                <el-radio  class="MyElRadioButton" :label="0" >
+                  <img :src="defaultImages[0]" alt="Default Image 1">
+                </el-radio>
+
+                <el-radio class="MyElRadioButton" :label="1">
+                  <img :src="defaultImages[1]" alt="Default Image 2">
+                </el-radio>
+
+                <el-radio class="MyElRadioButton" :label="2">
+                  <img :src="defaultImages[2]" alt="Default Image 3">
+                </el-radio>
+
+              </el-radio-group>
+            </el-tab-pane>
+          </el-tabs>
+
+        </el-container>
+      </Transition>
+
+      <Transition name="el-fade-in-linear">
+        <div v-if="current_Page === 2">
+          <div v-for="(question, index) in questionData.questions" :key="index" style="margin-top: 10px;">
+            <el-form :model="question" label-width="100px" style="margin-top: 10px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);padding-bottom: 5px">
+              <el-form-item font-weight="bold" label="题号">
+                {{index+1}}
+              </el-form-item>
+              <el-form-item label="题目描述">
+                <el-input v-model="question.qdescribe" style="padding-right: 5%" placeholder="题目描述"></el-input>
+              </el-form-item>
+
+              <el-tooltip
+                  class="box-item"
+                  effect="dark"
+                  content="选择相应类型会自动调整模板。"
+                  placement="left-start"
+              >
+                <el-form-item label="题目类型">
+                  <el-select v-model="question.qtype" placeholder="题目类型" style="width: 100px;">
+                    <el-option label="判断题" value="0"></el-option>
+                    <el-option label="单选题" value="1"></el-option>
+                    <el-option label="填空题" value="2"></el-option>
                   </el-select>
-                </template>
-                <template #append>
-                  <el-button :icon="Search" @click="SearchTestPaperData()" style="background-color: #931414;color: white" />
-                </template>
-              </el-input>
+                </el-form-item>
+              </el-tooltip>
 
-            </div>
-
-
-          </template>
-
-          <template #default="scope">
-            <el-button
-                size="small"
-                type="success"
-                style="border: 0px;background-color: #298123"
-                @click="handleOpen(scope.row.eid,scope.row.ename)">打开
-            </el-button>
-            <el-button
-                :disabled="!(is_admin||is_teacher)"
-                size="small"
-                style="background-color: white;border: 1px solid #8c2222;color: black"
-                type="default"
-                @click="handleEdit(scope.row.eid, scope.row.ename,scope.row.edescribe)">编辑</el-button>
-
-            <el-popconfirm
-                width="220"
-                confirm-button-text="确认"
-                cancel-button-text="不"
-                icon="el-icon-info"
-                icon-color="#626AEF"
-                title="你确认要删除吗"
-                @confirm="handleDelete(scope.row.eid)"
-            >
-              <template #reference>
-                <el-button
-                    size="small"
-                    type="danger"
-                    :disabled="!(is_admin||is_teacher)"
-                    style="background-color:#8c2222;border: 0px"
-                >删除</el-button>
+              <template v-if="(question.qtype == '1')">
+                <el-form-item label="选项A">
+                  <el-input v-model="question.a" style="padding-right: 5%" placeholder="答案"></el-input>
+                </el-form-item>
+                <el-form-item label="选项B">
+                  <el-input v-model="question.b" style="padding-right: 5%" placeholder="答案"></el-input>
+                </el-form-item>
+                <el-form-item label="选项C">
+                  <el-input v-model="question.c" style="padding-right: 5%" placeholder="答案"></el-input>
+                </el-form-item>
+                <el-form-item label="选项D">
+                  <el-input v-model="question.d" style="padding-right: 5%" placeholder="答案"></el-input>
+                </el-form-item>
               </template>
-            </el-popconfirm>
-
-
-          </template>
-        </el-table-column>
-      </el-table>
-
-    </el-main>
-
-
-    <el-footer >
-      <el-affix position="bottom" :offset="5">
-        <el-pagination
-            style="margin-top: 0px;padding-top: 0px"
-            :background="true"
-            :page-size="pageSize"
-            :total="total"
-            layout=" prev, pager, next"
-            @current-change="handleCurrentChange"
-            class="pagination"
-        />
-      </el-affix>
-    </el-footer>
-
-
-  </el-container>
-  <transition name="el-fade-in">
-    <el-dialog v-model="visible" style="height: auto;width: 600px;border-radius: 10px 10px 10px 10px" :show-close="false" custom-class="my-dialog">
-      <template #header="{ close, titleId, titleClass }">
-        <div class="my-header">
-          <el-form class="my-form">
-            <div class="form-row">
-              <el-text class="form-label">试卷ID:</el-text>
-              <el-text class="form-input">{{ editParm.currentTestPageID }}</el-text>
-            </div>
-            <div class="form-row">
-              <el-text class="form-label">试卷名字:</el-text>
-              <el-input
-                  style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
-                  type="text" v-model="editParm.currentTestPageName" placeholder="请输入试卷名字"></el-input>
-            </div>
-            <div class="form-row">
-              <el-text class="form-label">试卷描述:</el-text>
-              <el-input
-                  class="form-textarea"
-                  style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
-                  type="textarea"
-                  v-model="editParm.currentTestPageDescribe"
-                  placeholder="请输入试卷描述"
-                  :rows="7"
-              ></el-input>
-            </div>
-            <div class="button-row">
-              <el-button
-                  class="MyElButton"
-                  round
-                  style="float: right;
-              background-color: #298123;
-              color: white;
-              border: 0px;
-              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
-                  type="primary"
-                  @click="submitUpdate"><el-icon><Check /></el-icon></el-button>
-
-              <el-button
-                  round
-                  class="MyElButton"
-                  style="float: right;
+              <el-form-item label="答案">
+                <el-input v-if="question.qtype =='2'" v-model="question.answer" style="padding-right: 5%" placeholder="答案"></el-input>
+                <el-select v-if="question.qtype == '0'" v-model="question.answer" placeholder="答案" style="width: 100px;">
+                  <el-option label="√" value="a"></el-option>
+                  <el-option label="×" value="b"></el-option>
+                </el-select>
+                <el-select v-if="question.qtype == '1'" v-model="question.answer" placeholder="答案" style="width: 100px;">
+                  <el-option label="A" value="a"></el-option>
+                  <el-option label="B" value="b"></el-option>
+                  <el-option label="C" value="c"></el-option>
+                  <el-option label="D" value="d"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="分值">
+                <el-input-number v-model="question.point" controls-position="right" :min="0" :step="1" placeholder="分值"></el-input-number>
+              </el-form-item>
+              <el-form-item>
+                <el-button
+                    round
+                    style="float: right;
               background-color: #8c2222;
               color: white;
               border: 0px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
-                  type="primary"
-                  @click="close"><el-icon><Close /></el-icon></el-button>
-            </div>
-          </el-form>
+                    type="primary"
+                    @click="removeQuestion(index)">Del</el-button>
+              </el-form-item>
+            </el-form>
+          </div>
+          <el-affix position="bottom" :offset="100" >
+            <el-button
+                round
+                style="float: right;
+              background-color: #298123;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+                type="primary"
+                @click="createQuestion">Upload</el-button>
+            <el-button
+                round
+                style="float: right;
+              background-color: #8c2222;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+                type="primary"
+                @click="addQuestion">Add</el-button>
+          </el-affix>
         </div>
-      </template>
-    </el-dialog>
-
-
-  </transition>
+      </Transition>
+      <el-affix position="bottom" :offset="30" style="display: flex">
+        <el-button
+            round
+            style="float: right;
+              background-color: #856629;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+            :disabled="current_Page>=2"
+            type="primary"
+            @click="current_Page+=1">Next</el-button>
+        <el-button
+            round
+            style="float: right;
+              background-color: #d75959;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+            :disabled="current_Page<=0"
+            type="primary"
+            @click="current_Page-=1">Previous</el-button>
+      </el-affix>
+    </el-main>
+    <el-backtop :bottom="100">
+      <div
+          style="
+        height: 100%;
+        width: 100%;
+        background-color: var(--el-bg-color-overlay);
+        box-shadow: var(--el-box-shadow-lighter);
+        text-align: center;
+        line-height: 40px;
+        color: #8f2222;
+        border-radius: 50%;
+      "
+      >
+        UP
+      </div>
+    </el-backtop>
+  </el-container>
 </template>
 
-
-
 <script lang="ts">
-import API from "../../axios/request";
-import {Action, ElButton, ElDialog, ElInput, ElMessage, ElMessageBox, ElNotification} from "element-plus";
-import {CircleCloseFilled, Search} from "@element-plus/icons-vue";
-
-
+import { ElMessage, ElMessageBox, ElNotification } from 'element-plus';
+import API from '../../axios/request';
+import {ChatSquare, Edit, Picture, Plus, Upload} from '@element-plus/icons-vue';
+import defaultImage1 from '@/assets/images/TestPaperPic/1.png';
+import defaultImage2 from '@/assets/images/TestPaperPic/2.png';
+import defaultImage3 from '@/assets/images/TestPaperPic/3.png';
 
 export default {
+  components: { Plus },
+  computed: {
+    ChatSquare() {
+      return ChatSquare
+    },
+    Upload() {
+      return Upload
+    },
+    Edit() {
+      return Edit
+    },
+    Picture() {
+      return Picture
+    },
+  },
   data() {
     return {
-      // 0:管理员1:教师2:学生
-      is_studnet:false,
-      is_admin:false,
-      is_teacher:false,
-      search_selectd:{
-        keyword:"",
-        tname:"",
-        keydescribe:"",
-        chose:"1",
+      questionData: {
+        ename: '',
+        edescribe: '',
+        questions: [
+          {
+            eid: 0,
+            qid: 0,
+            qdescribe: '',
+            answer: '',
+            point: 0,
+            qtype:"",
+            a:"",
+            b:"",
+            c:"",
+            d:"",
+          },
+        ],
       },
-      visible:false,
-      search: "",
-      TestPaperData:"",
-      total:0,
-      currentPage:1,
-      pageSize:12,
-      editParm:{
-        currentTestPageID:1,
-        currentTestPageName:"",
-        currentTestPageDescribe:"",
-      },
-      loading:true,
-    }
+      // 用来接收缓存中的图片
+      fileList: [],
+      isPiced: false,
+      defaultImages: [defaultImage1, defaultImage2, defaultImage3],
+      selectedDefaultImage: 0,
+      // 是否显示默认图片
+      isShowDefaultImage: false,
+      current_Page: 0,
+      imageUrl:"",
+    };
   },
-  computed: {
-    Search() {
-      return Search
-    },
-    ElInput,ElButton, CircleCloseFilled, ElDialog,
-  },
+  mounted() {},
   methods: {
-    rowClassName({ rowIndex }) {
-      return rowIndex % 2 === 0 ? 'row-color-even' : 'row-color-odd';
+    handleRemove(file, fileList) {
+      // 文件列表移除文件时的钩子
+      this.fileList = fileList; // 每一个改变都会将el-upload里面的图片传递的参数复制到this.filelist去
+      this.isPiced = this.fileList.length > 0;
     },
-    // 打开试卷
-    handleOpen(eid,ename) {
-      this.$router.push({ path: '/DoTestPaper', query: { eid,ename } });
+    handlePreview(file) {
+      // 点击文件列表中已上传的文件时的钩子
+      // console.log(file);
     },
-    // 编辑
-    handleEdit(a,b,c) {
-      this.visible = true
-      this.editParm.currentTestPageID=a
-      this.editParm.currentTestPageName=b
-      this.editParm.currentTestPageDescribe=c
+    onchange(file, fileList) {
+      this.fileList = fileList; // 每一个改变都会将el-upload里面的图片传递的参数复制到this.filelist去
+      this.isPiced = this.fileList.length > 0;
+      this.imageUrl = URL.createObjectURL(this.fileList[0].raw);
     },
-    submitUpdate(){
-      this.visible=false
-      API({
-        url: '/updateExamination',
-        method: 'get',
-        params: {
-          eid: this.editParm.currentTestPageID,
-          ename:this.editParm.currentTestPageName,
-          edescribe:this.editParm.currentTestPageDescribe,
-        }
-      }).then((res) => {
-        ElMessageBox.alert(res.data.msg, '提示', {
-          confirmButtonText: '确认',})
-      })
+    addQuestion() {
+      this.questionData.questions.push({
+        eid: 0,
+        qid: 0,
+        qdescribe: '',
+        answer: '',
+        point: 0,
+        qtype:"",
+        a:"",
+        b:"",
+        c:"",
+        d:"",
+      });
+      ElNotification({
+        title: 'Add',
+        message: '添加一列',
+        customClass:"AddMessage",
+      });
+      console.log('selectedDefaultImage', this.selectedDefaultImage);
+    },
+    removeQuestion(index) {
+      this.questionData.questions.splice(index, 1);
+    },
+    createQuestion() {
+      const url = '/createExamination'; // 后端接口的URL
+      const requestData = new FormData();
 
-      this.SearchTestPaperData(this.currentPage);
-
-    },
-    handleDelete(eid) {
-      API({
-        url: '/deleteExamination',
-        method: 'delete',
-        params: {
-          eid: eid,
-        }
-      }).then((res) => {
-        // ElMessageBox.alert(res.data.msg, '提示', {
-        //   confirmButtonText: '确认',})
-      })
-      this.SearchTestPaperData(this.currentPage);
-
-    },
-    handleCurrentChange(number)
-    {
-      this.currentPage=number
-      this.SearchTestPaperData(number)
-    },
-    SearchTestPaperData(default_current_page=this.currentPage) {
-      this.loading=true
-      switch (this.search_selectd.chose)
-      {
-        case "1":
-        {
-          this.search_selectd.keyword=this.search
-          this.search_selectd.keydescribe=""
-          this.search_selectd.tname=""
-          break;
-        }
-        case "2":
-        {
-          this.search_selectd.tname=this.search
-          this.search_selectd.keydescribe=""
-          this.search_selectd.keyword=""
-          break;
-        }
-        case "3":
-        {
-          this.search_selectd.keydescribe=this.search
-          this.search_selectd.tname=""
-          this.search_selectd.keyword=""
-          break;
-        }
-        default:
-        {
-          break;
-        }
+      requestData.append('ename', this.questionData.ename);
+      requestData.append('edescribe', this.questionData.edescribe);
+      requestData.append('questions', JSON.stringify(this.questionData.questions));
+      requestData.append('defaultImageIndex', this.selectedDefaultImage);
+      if (this.fileList.length > 0) {
+        requestData.append('multipartFile', this.fileList[0].raw);
       }
       API({
-        url: '/selectExamination',
-        method: 'get',
-        params: {
-          page: default_current_page,
-          limit: this.pageSize,
-          keyword: this.search_selectd.keyword,
-          tname: this.search_selectd.tname,
-          keydescribe: this.search_selectd.keydescribe,
-        }
-      }).then((res) => {
-        this.TestPaperData = res.data;
-        this.total=res.data.count
-        console.log("res.data",res.data)
-      })
-      this.loading=false
-    }
+        url: url,
+        method: 'post',
+        data: requestData,
+        headers: {
+          'Content-Type': 'multipart/form-data', // 设置请求头为 multipart/form-data
+        },
+      }).then((res) =>
+          ElMessageBox.alert(res.data.msg, '提示', {
+            confirmButtonText: '确认',
+          })
+      );
+      console.log(this.questionData);
+    },
   },
-  mounted() {
-    // 在mounted钩子中调用getData
-    this.SearchTestPaperData(1);
-    let current_role=this.$cookies.get("role");
-    switch(current_role){
-      case "student":
-      {
-        this.is_studnet=true
-        break
-      }
-      case "teacher":
-      {
-        this.is_teacher=true
-        break
-      }
-      case "manager":{
-        this.is_admin=true
-        break
-      }
-    }
-    console.log(this.$cookies.get("data"));
-    console.log(this.$cookies.get("role"))
-  }
 };
-
-
-
 </script>
 
 <style scoped>
-.my-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+.avatar-uploader .avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+</style>
+
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
 }
 
-.my-dialog {
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
+
+
+.MyElRadioButton img
+{
+  width: 180px;
+  height: 180px;
+}
+.MyElRadioButton
+{
+  color: white;
+  padding-top: 0px;
+  background-color: white;
+  height: auto;
+}
+.MyElRadioButton :hover
+{
+  padding: 0px;
+  background-color: white;
+}
+.MyElRadioButton.is-active
+{
+  padding: 0px;
+  background-color: white !important;
+}
+:deep(.MyElStep){
+  background-color: #ADAD! important;
+  color: #8c2222 !important;
+}
+.AddMessage
+{
   width: auto;
 }
 
-.my-header {
-  padding: 20px;
-}
 
-.my-form {
-  display: grid;
-  gap: 20px;
-}
-
-.form-row {
-  display: flex;
-  align-items: center;
-}
-
-.form-label {
-  font-size: 16px;
-  width: 100px;
-}
-
-.form-input {
-  font-size: 16px;
-  flex-grow: 1;
-}
-
-.form-textarea {
-  width: 400px;
-  resize: vertical;
-}
-
-.button-row {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.el-table .row-color-even {
-  --el-table-tr-bg-color: var(--el-color-warning-light-9);
-}
-.el-table .row-color-odd {
-  --el-table-tr-bg-color: var(--el-color-warning-light-9);
-}
 
 </style>
