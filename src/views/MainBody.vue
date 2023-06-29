@@ -72,37 +72,37 @@
 
 
             <el-sub-menu index="1" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
-              <template #title>
+              <template #title class="MyElMenutitle">
                 <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Firefox.ico"></el-icon >个人中心
               </template>
-              <router-link to="/PersonInfo"><el-menu-item index="1-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>用户信息管理</el-menu-item></router-link>
-              <router-link to="/ResetPassword"><el-menu-item index="1-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Computer Blue.ico"></el-icon>修改密码</el-menu-item></router-link>
-              <router-link to="/ResetHeadPic"><el-menu-item index="1-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Pictures.ico"></el-icon>修改头像</el-menu-item></router-link>
-              <router-link to="/ResetInfo"><el-menu-item index="1-4"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Get Info.ico"></el-icon>信息修改</el-menu-item></router-link>
+              <router-link to="/PersonInfo"><el-menu-item class="MyElMenuItem" index="1-1"><el-icon><img style="width: 30px;height: 30px;back" src="src/assets/Icons/Home.ico"></el-icon>用户信息管理</el-menu-item></router-link>
+              <router-link to="/ResetPassword"><el-menu-item class="MyElMenuItem" index="1-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Computer Blue.ico"></el-icon>修改密码</el-menu-item></router-link>
+              <router-link to="/ResetHeadPic"><el-menu-item class="MyElMenuItem" index="1-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Pictures.ico"></el-icon>修改头像</el-menu-item></router-link>
+              <router-link to="/ResetInfo"><el-menu-item class="MyElMenuItem" index="1-4"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Get Info.ico"></el-icon>信息修改</el-menu-item></router-link>
 
 
             </el-sub-menu>
 
             <el-sub-menu index="2" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
-              <template #title>
+              <template #title class="MyElMenutitle">
                 <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Apps.ico"></el-icon>班级中心
               </template>
               <el-menu-item-group>
-                <router-link to=""><el-menu-item index="2-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Developer Folder.ico"></el-icon>所有班级</el-menu-item></router-link>
-                <router-link to=""><el-menu-item index="2-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Public.ico"></el-icon>我的班级</el-menu-item></router-link>
-                <router-link to=""><el-menu-item index="2-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Desktop.ico"></el-icon>我的课程</el-menu-item></router-link>
+                <router-link to=""><el-menu-item class="MyElMenuItem" index="2-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Developer Folder.ico"></el-icon>所有班级</el-menu-item></router-link>
+                <router-link to=""><el-menu-item class="MyElMenuItem" index="2-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Public.ico"></el-icon>我的班级</el-menu-item></router-link>
+                <router-link to=""><el-menu-item class="MyElMenuItem" index="2-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Desktop.ico"></el-icon>我的课程</el-menu-item></router-link>
               </el-menu-item-group>
             </el-sub-menu>
 
             <el-sub-menu index="3" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
-              <template #title>
+              <template #title class="MyElMenutitle">
                 <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Default App.ico"></el-icon>考试测评
               </template>
               <el-menu-item-group>
-                <router-link v-if="is_studnet" to="/TestPaperPark"><el-menu-item index="3-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>考试中心</el-menu-item></router-link>
-                <router-link v-if="is_admin||is_teacher" to="/CreateTestPaper"><el-menu-item index="3-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Burn Folder.ico"></el-icon>新增试卷</el-menu-item></router-link>
-                <router-link v-if="is_admin||is_teacher" to="/ListTestPaper"><el-menu-item index="3-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Library Sidebar.ico"></el-icon>查看试卷</el-menu-item></router-link>
-                <router-link v-if="is_studnet" to="/IHaveDoTestPaper"><el-menu-item index="3-4"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Favorites.ico"></el-icon>我的足迹</el-menu-item></router-link>
+                <router-link v-if="is_studnet" to="/TestPaperPark"><el-menu-item class="MyElMenuItem" index="3-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>考试中心</el-menu-item></router-link>
+                <router-link v-if="is_admin||is_teacher" to="/CreateTestPaper"><el-menu-item class="MyElMenuItem" index="3-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Burn Folder.ico"></el-icon>新增试卷</el-menu-item></router-link>
+                <router-link v-if="is_admin||is_teacher" to="/ListTestPaper"><el-menu-item class="MyElMenuItem" index="3-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Library Sidebar.ico"></el-icon>查看试卷</el-menu-item></router-link>
+                <router-link v-if="is_studnet" to="/IHaveDoTestPaper"><el-menu-item class="MyElMenuItem" index="3-4"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Favorites.ico"></el-icon>我的足迹</el-menu-item></router-link>
               </el-menu-item-group>
             </el-sub-menu>
 
@@ -254,6 +254,35 @@ a{
   color: white;
 }
 
+.MyElMenuItem
+{
+  background-color:white;
+  color: black;
+}
+.MyElMenuItem:hover
+{
+ background-color: #f8f8f8;
+
+}
+.MyElMenuItem:focus
+{
+ background-color: #cccccc;
+
+}
+.MyElMenutitle
+{
+  background-color:white;
+}
+.MyElMenutitle:hover
+{
+  background-color:#f8f8f8;
+  color: #f8f8f8;
+}
+.MyElMenutitle:focus
+{
+  background-color:#cccccc;
+  color: black;
+}
 </style>
 
 
