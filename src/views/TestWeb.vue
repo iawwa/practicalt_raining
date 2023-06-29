@@ -18,21 +18,32 @@ import API from "../axios/request";
 export default {
   data() {
     return {
+      //定义变量
       TestPaperData:"",
     }
   },
+  methods:
+  {
+    //定义函数的地方如下
+   searcha()
+    {
+      API({
+        url: '/selectExamination',
+        method: 'get',
+        params: {
+          page: 0,
+          limit: 10,
+        }
+      }).then((res) => {
+        this.TestPaperData = res.data;
+        console.log("res.data",res.data)
+      })
+    }
+  }
+  ,
   mounted() {
-    API({
-      url: '/selectExamination',
-      method: 'get',
-      params: {
-        page: 0,
-        limit: 10,
-      }
-    }).then((res) => {
-      this.TestPaperData = res.data;
-      console.log("res.data",res.data)
-    })
+    //初始化的会做的东西也就是第一次进页面
+    this.searcha()
   }
 }
 </script>
