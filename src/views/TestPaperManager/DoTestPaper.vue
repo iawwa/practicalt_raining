@@ -1,7 +1,12 @@
 <template>
   <el-container style="height: 650px">
-    <el-header style="width: 100%; height: 100px; margin-bottom: 10px; background-color: white;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
-      <el-text>{{ename}}</el-text>
+    <el-header style="display:flex;width: 100%; height: 100px; margin-bottom: 10px; background-color: white;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+      <el-text
+          style="width: 80%;
+          font-family: 'Ma Shan Zheng', cursive;
+          font-size:60px;
+          color: #8c2222;
+          text-align: center">{{ename}}</el-text>
       <el-text>剩余时间: {{ timerFormatted }}</el-text>
 
     </el-header>
@@ -16,10 +21,8 @@
           </div>
           <div style="margin-bottom: 10px;">
             <transition name="fade-in-linear">
-              <p style="font-weight: bold;">问题: {{ currentQuestion.qdescribe }}</p>
+              <p style="font-weight: bold;">问题: {{ currentQuestion.qdescribe }}({{ currentQuestion.point }}分)</p>
             </transition>
-            <p>分值: {{ currentQuestion.point }}</p>
-
 
             <!-- 判断题-->
             <transition name="fade-in-linear">
@@ -102,7 +105,6 @@
         <el-progress
             :percentage="progressPercentage"
             :stroke-width="15"
-            striped
             striped-flow
             :duration="10"
             :format="format"
