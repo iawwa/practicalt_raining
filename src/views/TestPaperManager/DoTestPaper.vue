@@ -1,5 +1,5 @@
 <template>
-  <el-container style="height: 650px">
+  <el-container style="height:auto">
     <el-header style="display:flex;width: 100%; height: 100px; margin-bottom: 10px; background-color: white;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
       <el-text
           style="width: 80%;
@@ -12,7 +12,7 @@
     </el-header>
     <el-container style="background-color: white">
       <el-aside style="width:70%;height: auto;margin-right: 3px">
-        <el-card style="height: 100vh">
+        <el-card style="height: auto">
           <div slot="header" style="font-weight: bold;">
             题号: {{ currentQuestionIndex + 1 }}
             <transition name="fade-in-linear">
@@ -90,10 +90,11 @@
           </div>
 
           <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+
             <el-button
                 round
                 style="float: right;
-              background-color: #8c2222;
+              background-color: #d75959;
               color: white;
               border: 0px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
@@ -102,7 +103,7 @@
             <el-button
                 round
                 style="float: right;
-              background-color: #8c2222;
+              background-color: #856629;
               color: white;
               border: 0px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
@@ -121,17 +122,20 @@
             <el-button
                 round
                 style="float: right;
-              background-color: #8c2222;
+              background-color: #298123;
               color: white;
               border: 0px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
                 type="primary"
                 :disabled="isSubmitButtonDisabled||!isStudent"
                 @click="SubmitAnswer">提交</el-button>
+
           </div>
         </el-card>
       </el-aside>
-      <el-main style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);margin-left: 3px;margin-right: 5px">
+      <el-main style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      height: auto;
+      margin-left: 3px;margin-right: 5px">
         <el-progress
             :percentage="progressPercentage"
             :stroke-width="15"
