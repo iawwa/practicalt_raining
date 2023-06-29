@@ -92,7 +92,6 @@
 
   </el-container>
   <transition name="el-fade-in">
-
     <el-dialog v-model="visible" style="height: auto;width: 600px;border-radius: 10px 10px 10px 10px" :show-close="false" custom-class="my-dialog">
       <template #header="{ close, titleId, titleClass }">
         <div class="my-header">
@@ -157,158 +156,158 @@
       </template>
 
     </el-dialog>
-
   </transition>
 
   <transition name="el-fade-in">
-  <el-dialog v-model="visible2" style="height: auto;border-radius: 10px 10px 10px 10px" :show-close="false" custom-class="my-dialog">
-    <el-table
-        :data="questions"
-        style="width: 100%;height:auto;">
-      <el-table-column label="试卷号" prop="eid" />
-      <el-table-column label="题目号" prop="qid"  />
-      <el-table-column label="题目类型" prop="qtype"  />
-      <el-table-column label="题目正文" prop="qdescribe"  />
-      <el-table-column label="答案" prop="answer" />
-      <el-table-column label="A" prop="a"  />
-      <el-table-column label="B" prop="b"  />
-      <el-table-column label="C" prop="c"  />
-      <el-table-column label="D" prop="d"  />
-<!--   Integer eid, Integer qid, String qdescribe, String answer,Integer point,Integer qtype,String a,String b,String c,String d-->
-      <el-table-column align="right" >
-        <template #default="scope">
-          <el-button
-              size="small"
-              style="background-color: white;border: 1px solid #8c2222;color: black"
-              type="default"
-              @click="EditQuestion(scope.row.eid, scope.row.qid,scope.row.qdescribe,scope.row.answer,scope.row.point,scope.row.qtype,scope.row.a,scope.row.b,scope.row.c,scope.row.d)">编辑</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-<!--    eid, Integer qid, String qdescribe, String answer,Integer point-->
-
-  </el-dialog>
-  </transition>
-    <transition name="el-fade-in">
-  <el-dialog v-model="visible3" style="padding: 0px;height: auto;border-radius: 10px 10px 10px 10px" :show-close="false" custom-class="my-dialog">
-    <template #header="{ close, titleId, titleClass }">
-      <div class="my-header">
-        <el-form class="my-form">
-          <div class="form-row">
-            <el-text class="form-label">试卷ID:</el-text>
-            <el-text class="form-input">{{ questEditParm.currentQuestionEid }}</el-text>
-          </div>
-          <div class="form-row">
-            <el-text class="form-label">题号:</el-text>
-            <el-text class="form-input">{{ questEditParm.currentQuestionQID }}</el-text>
-          </div>
-
-          <div class="form-row">
-            <el-text class="form-label">题目类型:</el-text>
-            <el-select v-model="questEditParm.currentQuestionQtype" placeholder="题目类型" style="width: 100px;">
-              <el-option label="判断题" value="0"></el-option>
-              <el-option label="单选题" value="1"></el-option>
-              <el-option label="填空题" value="2"></el-option>
-            </el-select>
-          </div>
-
-          <div class="form-row">
-            <el-text class="form-label">题目正文:</el-text>
-            <el-input
-                class="form-textarea"
-                style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
-                type="textarea"
-                v-model="questEditParm.currentQuestionDescribe"
-                placeholder="请输入题目描述"
-                :rows="7"
-            ></el-input>
-          </div>
-
-          <div class="form-row">
-            <el-text class="form-label">题目答案:</el-text>
-            <el-input
-                v-if="questEditParm.currentQuestionQtype==2"
-                style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
-                type="text" v-model="questEditParm.currentQuestionAnswer" placeholder="请输入题目答案"></el-input>
-            <el-select v-if="questEditParm.currentQuestionQtype==0" v-model="questEditParm.currentQuestionAnswer" placeholder="答案" style="width: 100px;">
-              <el-option label="√" value="a"></el-option>
-              <el-option label="×" value="b"></el-option>
-            </el-select>
-            <el-select v-if="questEditParm.currentQuestionQtype==1" v-model="questEditParm.currentQuestionAnswer" placeholder="答案" style="width: 100px;">
-              <el-option label="A" value="a"></el-option>
-              <el-option label="B" value="b"></el-option>
-              <el-option label="C" value="c"></el-option>
-              <el-option label="D" value="d"></el-option>
-            </el-select>
-          </div>
-
-          <div class="form-row">
-            <el-text class="form-label">题目分数:</el-text>
-            <el-input-number
-                :min="0"
-                style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
-                 v-model="questEditParm.currentQuestionPoint" placeholder="请输入题目答案"></el-input-number>
-          </div>
-
-
-
-          <div class="form-row" v-if="questEditParm.currentQuestionQtype==1">
-            <el-text class="form-label">A:</el-text>
-            <el-input
-                style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
-                type="text" v-model="questEditParm.currentQuestionA" placeholder="内容"></el-input>
-          </div>
-          <div class="form-row" v-if="questEditParm.currentQuestionQtype==1">
-            <el-text class="form-label">B:</el-text>
-            <el-input
-                style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
-                type="text" v-model="questEditParm.currentQuestionB" placeholder="内容"></el-input>
-        </div>
-          <div class="form-row" v-if="questEditParm.currentQuestionQtype==1">
-            <el-text class="form-label">C:</el-text>
-            <el-input
-                style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
-                type="text" v-model="questEditParm.currentQuestionC" placeholder="内容"></el-input>
-        </div>
-          <div class="form-row" v-if="questEditParm.currentQuestionQtype==1">
-            <el-text class="form-label">D:</el-text>
-            <el-input
-                style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
-                type="text" v-model="questEditParm.currentQuestionD" placeholder="内容"></el-input>
-          </div>
-
-
-
-          <div class="button-row">
+    <el-dialog v-model="visible2" style="width: 60%;height: auto;border-radius: 10px 10px 10px 10px" :show-close="false" custom-class="my-dialog">
+      <el-table
+          :data="questions"
+          style="width: 100%;height:auto;">
+        <el-table-column label="试卷号" prop="eid" />
+        <el-table-column label="题目号" prop="qid"  />
+        <el-table-column label="题目类型" prop="qtype"  />
+        <el-table-column label="题目正文" prop="qdescribe"  />
+        <el-table-column label="答案" prop="answer" />
+        <el-table-column label="A" prop="a"  />
+        <el-table-column label="B" prop="b"  />
+        <el-table-column label="C" prop="c"  />
+        <el-table-column label="D" prop="d"  />
+        <!--   Integer eid, Integer qid, String qdescribe, String answer,Integer point,Integer qtype,String a,String b,String c,String d-->
+        <el-table-column align="right" >
+          <template #default="scope">
             <el-button
-                class="MyElButton"
-                round
-                style="float: right;
+                size="small"
+                style="background-color: white;border: 1px solid #8c2222;color: black"
+                type="default"
+                @click="EditQuestion(scope.row.eid, scope.row.qid,scope.row.qdescribe,scope.row.answer,scope.row.point,scope.row.qtype,scope.row.a,scope.row.b,scope.row.c,scope.row.d)">编辑</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <!--    eid, Integer qid, String qdescribe, String answer,Integer point-->
+
+    </el-dialog>
+  </transition>
+  
+  <transition name="el-fade-in">
+    <el-dialog v-model="visible3" style="padding: 0px;height: auto;border-radius: 10px 10px 10px 10px" :show-close="false" custom-class="my-dialog">
+      <template #header="{ close, titleId, titleClass }">
+        <div class="my-header">
+          <el-form class="my-form">
+            <div class="form-row">
+              <el-text class="form-label">试卷ID:</el-text>
+              <el-text class="form-input">{{ questEditParm.currentQuestionEid }}</el-text>
+            </div>
+            <div class="form-row">
+              <el-text class="form-label">题号:</el-text>
+              <el-text class="form-input">{{ questEditParm.currentQuestionQID }}</el-text>
+            </div>
+
+            <div class="form-row">
+              <el-text class="form-label">题目类型:</el-text>
+              <el-select v-model="questEditParm.currentQuestionQtype" placeholder="题目类型" style="width: 100px;">
+                <el-option label="判断题" value="0"></el-option>
+                <el-option label="单选题" value="1"></el-option>
+                <el-option label="填空题" value="2"></el-option>
+              </el-select>
+            </div>
+
+            <div class="form-row">
+              <el-text class="form-label">题目正文:</el-text>
+              <el-input
+                  class="form-textarea"
+                  style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
+                  type="textarea"
+                  v-model="questEditParm.currentQuestionDescribe"
+                  placeholder="请输入题目描述"
+                  :rows="7"
+              ></el-input>
+            </div>
+
+            <div class="form-row">
+              <el-text class="form-label">题目答案:</el-text>
+              <el-input
+                  v-if="questEditParm.currentQuestionQtype==2"
+                  style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
+                  type="text" v-model="questEditParm.currentQuestionAnswer" placeholder="请输入题目答案"></el-input>
+              <el-select v-if="questEditParm.currentQuestionQtype==0" v-model="questEditParm.currentQuestionAnswer" placeholder="答案" style="width: 100px;">
+                <el-option label="√" value="a"></el-option>
+                <el-option label="×" value="b"></el-option>
+              </el-select>
+              <el-select v-if="questEditParm.currentQuestionQtype==1" v-model="questEditParm.currentQuestionAnswer" placeholder="答案" style="width: 100px;">
+                <el-option label="A" value="a"></el-option>
+                <el-option label="B" value="b"></el-option>
+                <el-option label="C" value="c"></el-option>
+                <el-option label="D" value="d"></el-option>
+              </el-select>
+            </div>
+
+            <div class="form-row">
+              <el-text class="form-label">题目分数:</el-text>
+              <el-input-number
+                  :min="0"
+                  style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
+                  v-model="questEditParm.currentQuestionPoint" placeholder="请输入题目答案"></el-input-number>
+            </div>
+
+
+
+            <div class="form-row" v-if="questEditParm.currentQuestionQtype==1">
+              <el-text class="form-label">A:</el-text>
+              <el-input
+                  style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
+                  type="text" v-model="questEditParm.currentQuestionA" placeholder="内容"></el-input>
+            </div>
+            <div class="form-row" v-if="questEditParm.currentQuestionQtype==1">
+              <el-text class="form-label">B:</el-text>
+              <el-input
+                  style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
+                  type="text" v-model="questEditParm.currentQuestionB" placeholder="内容"></el-input>
+            </div>
+            <div class="form-row" v-if="questEditParm.currentQuestionQtype==1">
+              <el-text class="form-label">C:</el-text>
+              <el-input
+                  style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
+                  type="text" v-model="questEditParm.currentQuestionC" placeholder="内容"></el-input>
+            </div>
+            <div class="form-row" v-if="questEditParm.currentQuestionQtype==1">
+              <el-text class="form-label">D:</el-text>
+              <el-input
+                  style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
+                  type="text" v-model="questEditParm.currentQuestionD" placeholder="内容"></el-input>
+            </div>
+
+
+
+            <div class="button-row">
+              <el-button
+                  class="MyElButton"
+                  round
+                  style="float: right;
               background-color: #298123;
               color: white;
               border: 0px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
-                type="primary"
-                @click="SubmitQuestionEdit"><el-icon><Check /></el-icon></el-button>
+                  type="primary"
+                  @click="SubmitQuestionEdit"><el-icon><Check /></el-icon></el-button>
 
-            <el-button
-                round
-                class="MyElButton"
-                style="float: right;
+              <el-button
+                  round
+                  class="MyElButton"
+                  style="float: right;
               background-color: #8c2222;
               color: white;
               border: 0px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
-                type="primary"
-                @click="close"><el-icon><Close /></el-icon></el-button>
-          </div>
-        </el-form>
+                  type="primary"
+                  @click="close"><el-icon><Close /></el-icon></el-button>
+            </div>
+          </el-form>
 
-      </div>
-    </template>
+        </div>
+      </template>
 
-  </el-dialog>
-    </transition>
+    </el-dialog>
+  </transition>
 </template>
 
 
@@ -383,17 +382,17 @@ export default {
     EditQuestion(a,b,c,d,e,f,g,h,i,k)
     {
 
-        this.visible3=true;
-        this.questEditParm.currentQuestionEid=a;
-        this.questEditParm.currentQuestionQID=b;
-        this.questEditParm.currentQuestionDescribe=c;
-        this.questEditParm.currentQuestionAnswer=d;
-        this.questEditParm.currentQuestionPoint=e;
-        this.questEditParm.currentQuestionQtype=f;
-        this.questEditParm.currentQuestionA=g;
-        this.questEditParm.currentQuestionB=h;
-        this.questEditParm.currentQuestionC=i;
-        this.questEditParm.currentQuestionD=k;
+      this.visible3=true;
+      this.questEditParm.currentQuestionEid=a;
+      this.questEditParm.currentQuestionQID=b;
+      this.questEditParm.currentQuestionDescribe=c;
+      this.questEditParm.currentQuestionAnswer=d;
+      this.questEditParm.currentQuestionPoint=e;
+      this.questEditParm.currentQuestionQtype=f;
+      this.questEditParm.currentQuestionA=g;
+      this.questEditParm.currentQuestionB=h;
+      this.questEditParm.currentQuestionC=i;
+      this.questEditParm.currentQuestionD=k;
     },
     SubmitQuestionEdit()
     {
