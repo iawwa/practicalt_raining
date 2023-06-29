@@ -10,7 +10,7 @@
       position: relative;
       color: var(--el-text-color-primary);">
         <el-container>
-          <el-aside style="width: 30%;">
+          <el-aside style="width: 20%;">
             <el-image
                 :src="getImageUrl(circleUrl)"
                 style="
@@ -23,11 +23,25 @@
             >
             </el-image>
           </el-aside>
-          <el-main style="width: auto;height: auto">
-            <el-text style="color: white;margin-left: 100px;text-align: center">{{role}}</el-text>
+          <el-main>
+            <el-text style="color: white;text-align: center">{{role}}</el-text>
+            <!-- 循环公告 -->
+            <el-carousel style="margin-top: 15px" height="20px" interval="4000" indicator-position="none" arrow="never">
+              <el-carousel-item v-for="item in noticeList" :key="item.id">
+                <div class="notice-item">
+                  <span class="notice-title">{{ item.title }}</span>
+                  <span class="notice-content">{{ item.content }}</span>
+                </div>
+              </el-carousel-item>
+            </el-carousel>
+
           </el-main>
-          <el-aside style="width: auto;">
-            <div class="toolbar" style="padding: 25px">
+          <el-aside style="width: 22%;display: flex">
+
+            <div style="width:auto;float: left;text-align: center">
+              <img src="../../src/assets/images/title.png" width="240" height="92">
+            </div>
+            <div class="toolbar" style="margin-left: 5%;float: right">
               <el-dropdown>
                 <el-icon style="margin-right: 8px; margin-top: 1px;border: 0px">
                   <img src="src/assets/Icons/Utilities Sidebar.ico" style="width: 50px;height: 50px;" />
@@ -135,6 +149,24 @@ export default
       is_teacher:false,
       username:"",
       circleUrl:"",
+      // 循环公告的数据
+      noticeList: [
+        {
+          id: 1,
+          title: "重要通知：",
+          content: "请大家注意安全防范，不要随意点击陌生链接。"
+        },
+        {
+          id: 2,
+          title: "温馨提示：",
+          content: "请大家及时更新个人信息，以便我们更好地为您服务。"
+        },
+        {
+          id: 3,
+          title: "活动公告：",
+          content: "本月有幸运抽奖活动，快来参与吧！"
+        },
+      ]
     }
   },methods:{
     getImageUrl(blob) {
@@ -215,6 +247,22 @@ a{
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
+.notice-item {
+  display: flex;
+  align-items: center;
+}
+
+.notice-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+}
+
+.notice-content {
+  font-size: 14px;
+  margin-left: 10px;
+  color: white;
+}
 
 </style>
 
