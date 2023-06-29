@@ -78,10 +78,16 @@
                 <el-input v-model="question.qdescribe" style="padding-right: 5%" placeholder="题目描述"></el-input>
               </el-form-item>
               <el-form-item label="答案">
-                <el-input v-if="question.qtype != '0'" v-model="question.answer" style="padding-right: 5%" placeholder="答案"></el-input>
+                <el-input v-if="question.qtype =='2'" v-model="question.answer" style="padding-right: 5%" placeholder="答案"></el-input>
                 <el-select v-if="question.qtype == '0'" v-model="question.answer" placeholder="答案" style="width: 100px;">
                   <el-option label="√" value="a"></el-option>
                   <el-option label="×" value="b"></el-option>
+                </el-select>
+                <el-select v-if="question.qtype == '1'" v-model="question.answer" placeholder="答案" style="width: 100px;">
+                  <el-option label="A" value="a"></el-option>
+                  <el-option label="B" value="b"></el-option>
+                  <el-option label="C" value="a"></el-option>
+                  <el-option label="D" value="b"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="分值">
@@ -106,16 +112,16 @@
                     @click="removeQuestion(index)">Del</el-button>
               </el-form-item>
               <template v-if="(question.qtype == '1')">
-                <el-form-item label="选项a">
+                <el-form-item label="选项A">
                   <el-input v-model="question.a" style="padding-right: 5%" placeholder="答案"></el-input>
                 </el-form-item>
-                <el-form-item label="选项b">
+                <el-form-item label="选项B">
                   <el-input v-model="question.b" style="padding-right: 5%" placeholder="答案"></el-input>
                 </el-form-item>
-                <el-form-item label="选项c">
+                <el-form-item label="选项C">
                   <el-input v-model="question.c" style="padding-right: 5%" placeholder="答案"></el-input>
                 </el-form-item>
-                <el-form-item label="选项d">
+                <el-form-item label="选项D">
                   <el-input v-model="question.d" style="padding-right: 5%" placeholder="答案"></el-input>
                 </el-form-item>
               </template>
