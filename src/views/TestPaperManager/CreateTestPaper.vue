@@ -5,27 +5,33 @@
         <el-step @click.native="current_Page=0" :icon="ChatSquare" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer;" title="Step 1" description="试卷信息" />
         <el-step @click.native="current_Page=1" :icon="Picture" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 2" description="试卷封面" />
         <el-step @click.native="current_Page=2" :icon="Edit" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 3" description="题目信息" />
-        <el-step @click.native="current_Page=3" :icon="Upload" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 4" description="检查提交" />
       </el-steps>
     </el-header>
 
     <el-main style="margin-top: 30px;height:auto">
-
-      <el-container v-if="current_Page==0" style="padding-top: 1%;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
-        <el-header>
-          <el-text>试卷名称:</el-text>
-          <el-input input-style="width: 100px" v-model="questionData.ename"></el-input>
-        </el-header>
+  <Transition name="el-fade-in-linear">
+      <el-container v-if="current_Page==0" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+<!--        <el-header>-->
+<!--          <el-text>试卷名称:</el-text>-->
+<!--          <el-input input-style="width: 100px" v-model="questionData.ename"></el-input>-->
+<!--        </el-header>-->
         <el-main>
-          <el-text>试卷描述:
-          </el-text>
-          <el-input type="textarea" :rows="3" input-style="width: 500px" v-model="questionData.edescribe"></el-input>
+        <el-form style="align-content: center;" v-if="current_Page==0" >
+          <el-form-item label="试卷名称">
+            <el-input v-model="questionData.ename"></el-input>
+          </el-form-item>
+          <el-form-item label="试卷描述">
+            <el-input  type="textarea" :rows="20" v-model="questionData.edescribe"></el-input>
+          </el-form-item>
+        </el-form>
         </el-main>
       </el-container>
-
+  </Transition>
+      <Transition name="el-fade-in-linear">
       <el-container v-if="current_Page==1">
         <el-tabs type="border-card" style="width: 100%;height: auto">
-          <el-tab-pane label="上传头像" > <el-upload
+          <el-tab-pane label="上传头像" >
+            <el-upload
               :auto-upload="false"
               :on-preview="handlePreview"
               :on-remove="handleRemove"
@@ -33,29 +39,34 @@
               :show-file-list="false"
               :on-change="onchange"
               list-type="picture"
+              class="avatar-uploader"
           >
-            <img style="width: 80px; height: 80px" v-if="imageUrl" :src="imageUrl" />
+            <img  class="avatar" v-if="imageUrl" :src="imageUrl" />
             <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
           </el-upload>
           </el-tab-pane>
           <el-tab-pane label="默认头像">
-            <el-radio-group v-model="selectedDefaultImage" style="width: auto;height: auto">
-              <el-radio :label="0">
-                <img :src="defaultImages[0]" style=";width: 80px; height: 80px" alt="Default Image 1">
+            <el-radio-group v-model="selectedDefaultImage" style="width: auto;">
+              <el-radio  class="MyElRadioButton" :label="0" >
+                <img :src="defaultImages[0]" alt="Default Image 1">
               </el-radio>
-              <el-radio :label="1">
-                <img :src="defaultImages[1]" style="width: 80px; height: 80px" alt="Default Image 2">
+
+              <el-radio class="MyElRadioButton" :label="1">
+                <img :src="defaultImages[1]" alt="Default Image 2">
               </el-radio>
-              <el-radio :label="2">
-                <img :src="defaultImages[2]" style="width: 80px; height: 80px" alt="Default Image 3">
+
+              <el-radio class="MyElRadioButton" :label="2">
+                <img :src="defaultImages[2]" alt="Default Image 3">
              </el-radio>
+
             </el-radio-group>
           </el-tab-pane>
         </el-tabs>
 
       </el-container>
+      </Transition>
 
-
+      <Transition name="el-fade-in-linear">
       <div v-if="current_Page === 2">
         <div v-for="(question, index) in questionData.questions" :key="index" style="margin-top: 10px;">
           <el-form :model="question" label-width="100px" style="margin-top: 10px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);padding-bottom: 5px">
@@ -101,7 +112,16 @@
             </template>
           </el-form>
         </div>
-        <el-affix position="bottom" :offset="40" >
+        <el-affix position="bottom" :offset="100" >
+          <el-button
+              round
+              style="float: right;
+              background-color: #298123;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+              type="primary"
+              @click="createQuestion">上传提交</el-button>
           <el-button
               round
               style="float: right;
@@ -113,32 +133,28 @@
               @click="addQuestion">增加题目</el-button>
         </el-affix>
       </div>
-
-      <div v-if="current_Page==3">
-      <el-button  style="margin-left: 80px;" type="success" @click="createQuestion">创建题目</el-button>
-    </div>
-      <el-affix position="bottom" :offset="50" >
+      </Transition>
+      <el-affix position="bottom" :offset="30" style="display: flex">
         <el-button
             round
             style="float: right;
-              background-color: #8c2222;
+              background-color: #856629;
               color: white;
               border: 0px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
-            :disabled="current_Page>=3"
+            :disabled="current_Page>=2"
             type="primary"
-            @click="current_Page+=1">下一步</el-button>
+            @click="current_Page+=1">Next</el-button>
         <el-button
             round
             style="float: right;
-              background-color: #8c2222;
-              margin-left: 5px;
+              background-color: #d75959;
               color: white;
               border: 0px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
             :disabled="current_Page<=0"
             type="primary"
-            @click="current_Page-=1">上一步</el-button>
+            @click="current_Page-=1">Previous</el-button>
       </el-affix>
     </el-main>
     <el-backtop :bottom="100">
@@ -282,6 +298,57 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.avatar-uploader .avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+</style>
 
+<style>
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
+
+
+.MyElRadioButton img
+{
+  width: 180px;
+  height: 180px;
+}
+.MyElRadioButton
+{
+  color: white;
+  padding-top: 0px;
+  background-color: white;
+  height: auto;
+}
+.MyElRadioButton :hover
+{
+  padding: 0px;
+  background-color: white;
+}
+.MyElRadioButton.is-active
+{
+  padding: 0px;
+  background-color: white !important;
+}
 </style>
