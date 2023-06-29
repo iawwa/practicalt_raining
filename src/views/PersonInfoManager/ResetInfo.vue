@@ -53,22 +53,64 @@ export default {
       switch (this.userRole) {
         case "student":
           url = "/updateStu"
+          API({
+            url:url,
+            method:"get",
+            params:{
+              sname:this.formData.name,
+              sex:this.formData.sex,
+              age:this.formData.age,
+              email:this.formData.email,
+              phoneNumber: this.formData.phoneNumber
+            }
+          }).then((res)=>{
+            console.log("sname",this.sname)
+            console.log("res.data.msg",res.data.msg)
+            console.log("res.data",res.data)
+          })
           break;
         case "teacher":
           url = "/updateTea"
+          API({
+            url:url,
+            method:"get",
+            params:{
+              tname:this.formData.name,
+              sex:this.formData.sex,
+              age:this.formData.age,
+              email:this.formData.email,
+              phoneNumber: this.formData.phoneNumber
+            }
+          }).then((res)=>{
+            console.log("res.data.msg",res.data.msg)
+            console.log("res.data",res.data)
+          })
           break;
         case "manager":
           url = "/updateMan"
+          API({
+            url:url,
+            method:"get",
+            params:{
+              mname:this.formData.name,
+              sex:this.formData.sex,
+              age:this.formData.age,
+              email:this.formData.email,
+              phoneNumber: this.formData.phoneNumber
+            }
+          }).then((res)=>{
+            console.log("res.data.msg",res.data.msg)
+            console.log("res.data",res.data)
+          })
           break;
         default:
           break;
       }
-      console.log("formData", this.formData)
       API({
         url:url,
-        method:"post",
+        method:"get",
         params:{
-          tname:this.formData.name,
+          name:this.formData.name,
           sex:this.formData.sex,
           age:this.formData.age,
           email:this.formData.email,
