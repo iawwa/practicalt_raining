@@ -136,7 +136,7 @@
               border: 0px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
                 type="primary"
-                @click="createQuestion">上传提交</el-button>
+                @click="createQuestion">Upload</el-button>
             <el-button
                 round
                 style="float: right;
@@ -145,7 +145,7 @@
               border: 0px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
                 type="primary"
-                @click="addQuestion">增加题目</el-button>
+                @click="addQuestion">Add</el-button>
           </el-affix>
         </div>
       </Transition>
