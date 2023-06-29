@@ -299,8 +299,8 @@ export default {
       // console.log("this.currentQuestionIndex",this.currentQuestionIndex)
       ElNotification.success({
         title: '保存',
-        message: '保存成功',
         offset: 100,
+        customClass:"SaveSuccess",
       })
     },
     SubmitAnswer() {
@@ -415,5 +415,8 @@ export default {
   background-color: indianred !important;
   color: white !important;
 }
-
+.SaveSuccess
+{
+  width: auto;
+}
 </style>
