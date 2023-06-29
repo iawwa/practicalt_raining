@@ -437,7 +437,7 @@ export default {
 <style>
 
 .completed-question {
-  background-color: #5db0ec !important;
+  background-color: #4094d2 !important;
   color: white !important;
 }
 .correct-question {
@@ -453,4 +453,6 @@ export default {
 {
   width: auto;
 }
+
+
 </style>
