@@ -185,7 +185,7 @@
   </el-dialog>
   </transition>
     <transition name="el-fade-in">
-  <el-dialog v-model="visible3" style="height: auto;width: 600px;border-radius: 10px 10px 10px 10px" :show-close="false" custom-class="my-dialog">
+  <el-dialog v-model="visible3" style="padding: 0px;height: auto;width: 600px;border-radius: 10px 10px 10px 10px" :show-close="false" custom-class="my-dialog">
     <template #header="{ close, titleId, titleClass }">
       <div class="my-header">
         <el-form class="my-form">
@@ -524,5 +524,6 @@ export default {
   justify-content: flex-end;
   margin-top: 20px;
 }
+
 
 </style>
