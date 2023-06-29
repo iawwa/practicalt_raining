@@ -12,7 +12,7 @@
     </el-header>
     <el-container style="background-color: white">
       <el-aside style="width:70%;height: auto;margin-right: 3px">
-        <el-card style="height: auto">
+        <el-card style="height: 100vh">
           <div slot="header" style="font-weight: bold;">
             题号: {{ currentQuestionIndex + 1 }}
             <transition name="fade-in-linear">
@@ -90,14 +90,44 @@
           </div>
 
           <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-            <el-button type="primary" @click="ShiftBeforeQuestion">上一题</el-button>
-            <el-button type="primary" @click="ShiftNextQuestion">下一题</el-button>
-            <el-button type="primary" @click="SaveCurrentQuestion" :disabled="isSaveButtonDisabled">
-              保存当前答案
-            </el-button>
-            <el-button type="success" @click="SubmitAnswer" :disabled="isSubmitButtonDisabled||!isStudent">
-              提交
-            </el-button>
+            <el-button
+                round
+                style="float: right;
+              background-color: #8c2222;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+                type="primary"
+                @click="ShiftBeforeQuestion">上一题</el-button>
+            <el-button
+                round
+                style="float: right;
+              background-color: #8c2222;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+                type="primary"
+                @click="ShiftNextQuestion">下一题</el-button>
+            <el-button
+                round
+                style="float: right;
+              background-color: #8c2222;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+                type="primary"
+                :disabled="isSaveButtonDisabled"
+                @click="SaveCurrentQuestion">保存当前答案</el-button>
+            <el-button
+                round
+                style="float: right;
+              background-color: #8c2222;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+                type="primary"
+                :disabled="isSubmitButtonDisabled||!isStudent"
+                @click="SubmitAnswer">提交</el-button>
           </div>
         </el-card>
       </el-aside>

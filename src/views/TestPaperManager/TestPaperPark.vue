@@ -1,6 +1,6 @@
 <template>
- <el-container>
-   <el-header>
+ <el-container style="height: 90vh">
+   <el-header style="height: auto">
          <el-input
              v-model="search"
              placeholder="查询"
@@ -19,7 +19,7 @@
            </template>
          </el-input>
    </el-header>
-   <el-main style="height:auto;padding: 0px">
+   <el-main style="height:auto;padding: 1px">
     <div v-for="(item, index) in TestPaperData.data" :key="index" style="background-color: #ffffff; display: flex;">
       <div class="row" v-if="index % 3 === 0">
         <div v-for="subItem in TestPaperData.data.slice(index, index + 3)" :key="subItem.id" class="item">
@@ -67,7 +67,7 @@
     </div>
    </el-main>
    <el-footer>
-     <el-affix position="bottom" :offset="5">
+     <el-affix position="bottom" :offset="10">
 
       <el-pagination
           :background="true"

@@ -1,6 +1,6 @@
 <template>
 
-  <div class="common-layout" style="height: 100%;overflow: hidden">
+  <div class="common-layout" style="height: 100vh;overflow: hidden">
     <el-container class="layout-container-demo"  >
       <el-header  style="display: flex;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -61,7 +61,7 @@
 
       </el-header>
 
-      <el-container >
+      <el-container style="height:90vh">
 
         <el-aside width="200px" style="color: var(--el-text-color-primary);
         margin: 2px;
