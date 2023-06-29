@@ -38,12 +38,12 @@
             </el-carousel>
 
           </el-main>
-          <el-aside style="width: 40%; display: flex; align-items: center;padding: 0px">
-            <div style="width: 38%; text-align: center;margin-left:1%">
-              <img src="../../src/assets/images/title.png" width="240" height="92">
+          <el-aside style="width: 20%;float:left; display: flex; align-items: center; padding: 0px; overflow: hidden;margin-right: auto">
+            <div style="height: 240px;height: 92px;left: auto">
+              <img src="../../src/assets/images/title.png" style="width: 100%; height: 100%;">
             </div>
 
-            <div style="margin-right: 1%">
+            <div style="margin-left: 5%;margin-top: 5%">
               <el-dropdown>
                 <el-icon>
                   <img src="src/assets/Icons/Utilities Sidebar.ico" style="width: 50px; height: 50px;">
@@ -57,6 +57,7 @@
               </el-dropdown>
             </div>
           </el-aside>
+
 
         </el-container>
 
