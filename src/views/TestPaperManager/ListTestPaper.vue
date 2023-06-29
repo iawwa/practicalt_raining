@@ -33,8 +33,18 @@
           </template>
 
           <template #default="scope">
-            <el-button size="small" type="success" @click="handleOpen(scope.row.eid,scope.row.ename)">打开</el-button>
-            <el-button :disabled="!(is_admin||is_teacher)" size="small" type="default" @click="handleEdit(scope.row.eid, scope.row.ename,scope.row.edescribe)">编辑</el-button>
+            <el-button
+                size="small"
+                type="success"
+                style="border: 0px;background-color: #298123"
+                @click="handleOpen(scope.row.eid,scope.row.ename)">打开
+            </el-button>
+            <el-button
+                :disabled="!(is_admin||is_teacher)"
+                size="small"
+                style="background-color: white;border: 1px solid #8c2222;color: black"
+                type="default"
+                @click="handleEdit(scope.row.eid, scope.row.ename,scope.row.edescribe)">编辑</el-button>
 
             <el-popconfirm
                 width="220"
@@ -50,6 +60,7 @@
                     size="small"
                     type="danger"
                     :disabled="!(is_admin||is_teacher)"
+                    style="background-color:#8c2222;border: 0px"
                 >删除</el-button>
               </template>
             </el-popconfirm>
