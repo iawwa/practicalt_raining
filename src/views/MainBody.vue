@@ -20,7 +20,6 @@
                   border: 2px solid #dad5d5;
                   margin-top: 10px;
                   border-radius: 45%"
-
             >
             </el-image>
           </el-aside>
@@ -47,9 +46,9 @@
                   <img src="src/assets/Icons/Utilities Sidebar.ico" style="width: 50px; height: 50px;">
                 </el-icon>
                 <template #dropdown>
-                  <el-dropdown-menu>
-                    <router-link to="/login"><el-dropdown-item>注销</el-dropdown-item></router-link>
-                    <router-link to="/MyInfo"><el-dropdown-item>信息</el-dropdown-item></router-link>
+                  <el-dropdown-menu class="MyElDropdownMenu">
+                    <router-link class="MyRouterLink" to="/login"><el-dropdown-item>注销</el-dropdown-item></router-link>
+                    <router-link class="MyRouterLink" to="/MyInfo"><el-dropdown-item>信息</el-dropdown-item></router-link>
                   </el-dropdown-menu>
                 </template>
               </el-dropdown>
@@ -283,6 +282,27 @@ a{
   background-color:#cccccc;
   color: black;
 }
+.MyRouterLink
+{
+
+}
+.MyRouterLink:hover
+{
+
+}
+.MyRouterLink:focus
+{
+
+}
+.MyElDropdownMenu:focus
+{
+
+}
+.MyElDropdownMenu:hover
+{
+
+}
+
 </style>
 
 
