@@ -92,6 +92,7 @@
 
   </el-container>
   <transition name="el-fade-in">
+
     <el-dialog v-model="visible" style="height: auto;width: 600px;border-radius: 10px 10px 10px 10px" :show-close="false" custom-class="my-dialog">
       <template #header="{ close, titleId, titleClass }">
         <div class="my-header">
@@ -141,6 +142,14 @@
                   @click="close"><el-icon><Close /></el-icon></el-button>
             </div>
           </el-form>
+          <el-form v-for="ques in questions" :key="ques.qid">
+            <el-form-item>{{ ques.qid }}</el-form-item>
+            <el-form-item>{{ ques.answer }}</el-form-item>
+            <el-form-item>{{ ques.eid }}</el-form-item>
+            <el-form-item>{{ ques.point }}</el-form-item>
+            <el-form-item>{{ ques.qdescribe }}</el-form-item>
+            <el-form-item>{{ ques.qtype }}</el-form-item>
+          </el-form>
         </div>
       </template>
     </el-dialog>
@@ -183,6 +192,8 @@ export default {
         currentTestPageDescribe:"",
       },
       loading:true,
+      //存放当前题目
+      questions:[],
     }
   },
   computed: {
@@ -205,6 +216,16 @@ export default {
       this.editParm.currentTestPageID=a
       this.editParm.currentTestPageName=b
       this.editParm.currentTestPageDescribe=c
+      API({
+        url: '/selectQuestionByEid',
+        method: 'get',
+        params: {
+          eid: a,
+        }
+      }).then((res) => {
+        this.questions = res.data.data;
+        console.log("this.questions",this.questions)
+      });
     },
     submitUpdate(){
       this.visible=false
