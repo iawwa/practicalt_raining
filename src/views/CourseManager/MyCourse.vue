@@ -1,3 +1,0 @@
-<template>
-我的课程
-</template>

@@ -435,7 +435,6 @@ export default {
 };
 </script>
 <style>
-
 .completed-question {
   background-color: #4094d2 !important;
   color: white !important;
@@ -444,7 +443,6 @@ export default {
   background-color: limegreen !important;
   color: white !important;
 }
-
 .incorrect-question {
   background-color: indianred !important;
   color: white !important;
@@ -453,7 +451,4 @@ export default {
 {
   width: auto;
 }
-
-
-
 </style>

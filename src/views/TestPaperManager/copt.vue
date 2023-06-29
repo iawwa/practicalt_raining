@@ -1,9 +1,11 @@
 <template>
+
   <el-container style=" height: 100%;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);margin: 10px">
     <el-main style="padding: 0px;height: auto">
       <el-table
           :data="TestPaperData.data"
           v-loading="loading"
+          :row-class-name="rowClassName"
           style="width: 100%;height:auto;">
         <el-table-column label="试卷ID" prop="eid"  />
         <el-table-column label="试卷名字" prop="ename" />
@@ -364,6 +366,13 @@ export default {
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
+}
+
+.el-table .row-color-even {
+  --el-table-tr-bg-color: var(--el-color-warning-light-9);
+}
+.el-table .row-color-odd {
+  --el-table-tr-bg-color: var(--el-color-warning-light-9);
 }
 
 </style>

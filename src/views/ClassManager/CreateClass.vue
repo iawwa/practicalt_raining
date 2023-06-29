@@ -1,3 +1,0 @@
-<template>
-  create class
-</template>
