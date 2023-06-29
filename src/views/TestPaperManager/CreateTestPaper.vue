@@ -66,7 +66,11 @@
               <el-input v-model="question.qdescribe" style="padding-right: 5%" placeholder="题目描述"></el-input>
             </el-form-item>
             <el-form-item label="答案">
-              <el-input v-model="question.answer" style="padding-right: 5%" placeholder="答案"></el-input>
+              <el-input v-if="question.qtype != '0'" v-model="question.answer" style="padding-right: 5%" placeholder="答案"></el-input>
+              <el-select v-if="question.qtype == '0'" v-model="question.answer" placeholder="答案" style="width: 100px;">
+                <el-option label="√" value="a"></el-option>
+                <el-option label="×" value="b"></el-option>
+              </el-select>
             </el-form-item>
             <el-form-item label="分值">
               <el-input-number v-model="question.point" controls-position="right" :min="0" :step="1" placeholder="分值"></el-input-number>
@@ -77,7 +81,6 @@
                 <el-option label="单选题" value="1"></el-option>
                 <el-option label="填空题" value="2"></el-option>
               </el-select>
-              <el-text v-if="(question.qtype == '0')">判断题答案为√选a为，×填b</el-text>
             </el-form-item>
             <el-form-item>
               <el-button type="danger" style="width: 50px" icon="el-icon-delete" @click="removeQuestion(index)">删除</el-button>
