@@ -1,12 +1,12 @@
 <template>
-  <el-container style="background-color: #cccccc;height: 650px">
-    <el-header style="width: 100%; height: 100px; margin-bottom: 10px; background-color: white">
+  <el-container style="height: 650px">
+    <el-header style="width: 100%; height: 100px; margin-bottom: 10px; background-color: white;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
       <el-text>{{ename}}</el-text>
       <el-text>剩余时间: {{ timerFormatted }}</el-text>
 
     </el-header>
     <el-container style="background-color: white">
-      <el-aside style="width:70%;height: auto;">
+      <el-aside style="width:70%;height: auto;margin-right: 3px">
         <el-card style="height: auto">
           <div slot="header" style="font-weight: bold;">
             题号: {{ currentQuestionIndex + 1 }}
@@ -98,7 +98,7 @@
           </div>
         </el-card>
       </el-aside>
-      <el-main>
+      <el-main style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);margin-left: 3px;margin-right: 5px">
         <el-progress
             :percentage="progressPercentage"
             :stroke-width="15"
@@ -106,7 +106,7 @@
             striped-flow
             :duration="10"
             :format="format"
-            style="margin-bottom: 15px;width: 350px;"
+            style="margin-bottom: 15px;width: auto;"
         />
         <el-text>答题卡</el-text>
         <el-row>
