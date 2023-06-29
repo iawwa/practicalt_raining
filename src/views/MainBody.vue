@@ -71,7 +71,7 @@
           <el-menu :default-openeds="[]">
 
 
-            <el-sub-menu index="1" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+            <el-sub-menu index="1"  class="MyElMenutitle" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
               <template #title class="MyElMenutitle">
                 <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Firefox.ico"></el-icon >个人中心
               </template>
