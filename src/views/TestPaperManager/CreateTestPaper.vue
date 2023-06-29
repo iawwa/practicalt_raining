@@ -117,8 +117,29 @@
       <div v-if="current_Page==3">
       <el-button  style="margin-left: 80px;" type="success" @click="createQuestion">创建题目</el-button>
     </div>
-
-
+      <el-affix position="bottom" :offset="50" >
+        <el-button
+            round
+            style="float: right;
+              background-color: #8c2222;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+            :disabled="current_Page>=3"
+            type="primary"
+            @click="current_Page+=1">下一步</el-button>
+        <el-button
+            round
+            style="float: right;
+              background-color: #8c2222;
+              margin-left: 5px;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+            :disabled="current_Page<=0"
+            type="primary"
+            @click="current_Page-=1">上一步</el-button>
+      </el-affix>
     </el-main>
     <el-backtop :bottom="100">
       <div
