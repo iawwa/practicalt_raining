@@ -1,8 +1,8 @@
 <template>
   <el-container style="width: 100%" >
     <el-header>
-      <el-steps :active="current_Page" align-center style="margin-top: 10px;padding-top: 0px;margin-bottom: 0px;">
-        <el-step @click.native="current_Page=0" :icon="ChatSquare" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer;" title="Step 1" description="试卷信息" />
+      <el-steps class="MyElSteps" :active="current_Page" align-center style="margin-top: 10px;padding-top: 0px;margin-bottom: 0px;">
+        <el-step class="MyElStep" @click.native="current_Page=0" :icon="ChatSquare" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer;" title="Step 1" description="试卷信息" />
         <el-step @click.native="current_Page=1" :icon="Picture" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 2" description="试卷封面" />
         <el-step @click.native="current_Page=2" :icon="Edit" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);cursor: pointer" title="Step 3" description="题目信息" />
       </el-steps>
@@ -95,7 +95,15 @@
                 </el-select>
               </el-form-item>
               <el-form-item>
-                <el-button type="danger" style="width: 50px" icon="el-icon-delete" @click="removeQuestion(index)">删除</el-button>
+                <el-button
+                    round
+                    style="float: right;
+              background-color: #8c2222;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+                    type="primary"
+                    @click="removeQuestion(index)">Del</el-button>
               </el-form-item>
               <template v-if="(question.qtype == '1')">
                 <el-form-item label="选项a">
@@ -351,5 +359,9 @@ export default {
 {
   padding: 0px;
   background-color: white !important;
+}
+:deep(.MyElStep){
+  background-color: #ADAD! important;
+  color: #8c2222 !important;
 }
 </style>
