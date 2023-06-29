@@ -1,11 +1,12 @@
 <template>
 
   <div class="common-layout" style="height: 100%;overflow: hidden">
-    <el-container class="layout-container-demo" >
+    <el-container class="layout-container-demo"  >
       <el-header  style="display: flex;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       margin-bottom: 2px;
       height: 100px;
+      padding-left: 2px;padding-right: 2px;
       background-color: #8c2222;
       position: relative;
       color: var(--el-text-color-primary);">
@@ -24,19 +25,7 @@
             </el-image>
           </el-aside>
           <el-main>
-            <div class="toolbar" style="margin-left: 5%;float: right">
-              <el-dropdown>
-                <el-icon style="margin-right: 8px; margin-top: 1px;border: 0px">
-                  <img src="src/assets/Icons/Utilities Sidebar.ico" style="width: 50px;height: 50px;" />
-                </el-icon>
-                <template #dropdown>
-                  <el-dropdown-menu >
-                    <router-link  to="/login"><el-dropdown-item>注销</el-dropdown-item></router-link>
-                    <router-link  to="/MyInfo"><el-dropdown-item>信息</el-dropdown-item></router-link>
-                  </el-dropdown-menu>
-                </template>
-              </el-dropdown>
-            </div>
+
             <el-text style="color: white;text-align: center">{{role}}</el-text>
             <!-- 循环公告 -->
             <el-carousel style="margin-top: 15px" height="20px" interval="4000" indicator-position="none" arrow="never">
@@ -49,13 +38,26 @@
             </el-carousel>
 
           </el-main>
-          <el-aside style="width: 22%;display: flex">
-
-            <div style="width:auto;float: right;text-align: center">
+          <el-aside style="width: 40%; display: flex; align-items: center;padding: 0px">
+            <div style="width: 38%; text-align: center;margin-left:1%">
               <img src="../../src/assets/images/title.png" width="240" height="92">
             </div>
 
+            <div style="margin-right: 1%">
+              <el-dropdown>
+                <el-icon>
+                  <img src="src/assets/Icons/Utilities Sidebar.ico" style="width: 50px; height: 50px;">
+                </el-icon>
+                <template #dropdown>
+                  <el-dropdown-menu>
+                    <router-link to="/login"><el-dropdown-item>注销</el-dropdown-item></router-link>
+                    <router-link to="/MyInfo"><el-dropdown-item>信息</el-dropdown-item></router-link>
+                  </el-dropdown-menu>
+                </template>
+              </el-dropdown>
+            </div>
           </el-aside>
+
         </el-container>
 
       </el-header>
@@ -231,13 +233,6 @@ a{
   background-color: white;
 }
 
-.toolbar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  right: 20px;
-}
 .common-layout {
   /* 添加阴影效果 */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);

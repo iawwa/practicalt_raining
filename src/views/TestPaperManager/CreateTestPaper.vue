@@ -77,6 +77,27 @@
               <el-form-item label="题目描述">
                 <el-input v-model="question.qdescribe" style="padding-right: 5%" placeholder="题目描述"></el-input>
               </el-form-item>
+              <el-form-item label="题目类型">
+                <el-select v-model="question.qtype" placeholder="题目类型" style="width: 100px;">
+                  <el-option label="判断题" value="0"></el-option>
+                  <el-option label="单选题" value="1"></el-option>
+                  <el-option label="填空题" value="2"></el-option>
+                </el-select>
+              </el-form-item>
+              <template v-if="(question.qtype == '1')">
+                <el-form-item label="选项A">
+                  <el-input v-model="question.a" style="padding-right: 5%" placeholder="答案"></el-input>
+                </el-form-item>
+                <el-form-item label="选项B">
+                  <el-input v-model="question.b" style="padding-right: 5%" placeholder="答案"></el-input>
+                </el-form-item>
+                <el-form-item label="选项C">
+                  <el-input v-model="question.c" style="padding-right: 5%" placeholder="答案"></el-input>
+                </el-form-item>
+                <el-form-item label="选项D">
+                  <el-input v-model="question.d" style="padding-right: 5%" placeholder="答案"></el-input>
+                </el-form-item>
+              </template>
               <el-form-item label="答案">
                 <el-input v-if="question.qtype =='2'" v-model="question.answer" style="padding-right: 5%" placeholder="答案"></el-input>
                 <el-select v-if="question.qtype == '0'" v-model="question.answer" placeholder="答案" style="width: 100px;">
@@ -93,13 +114,6 @@
               <el-form-item label="分值">
                 <el-input-number v-model="question.point" controls-position="right" :min="0" :step="1" placeholder="分值"></el-input-number>
               </el-form-item>
-              <el-form-item label="题目类型">
-                <el-select v-model="question.qtype" placeholder="题目类型" style="width: 100px;">
-                  <el-option label="判断题" value="0"></el-option>
-                  <el-option label="单选题" value="1"></el-option>
-                  <el-option label="填空题" value="2"></el-option>
-                </el-select>
-              </el-form-item>
               <el-form-item>
                 <el-button
                     round
@@ -111,20 +125,6 @@
                     type="primary"
                     @click="removeQuestion(index)">Del</el-button>
               </el-form-item>
-              <template v-if="(question.qtype == '1')">
-                <el-form-item label="选项A">
-                  <el-input v-model="question.a" style="padding-right: 5%" placeholder="答案"></el-input>
-                </el-form-item>
-                <el-form-item label="选项B">
-                  <el-input v-model="question.b" style="padding-right: 5%" placeholder="答案"></el-input>
-                </el-form-item>
-                <el-form-item label="选项C">
-                  <el-input v-model="question.c" style="padding-right: 5%" placeholder="答案"></el-input>
-                </el-form-item>
-                <el-form-item label="选项D">
-                  <el-input v-model="question.d" style="padding-right: 5%" placeholder="答案"></el-input>
-                </el-form-item>
-              </template>
             </el-form>
           </div>
           <el-affix position="bottom" :offset="100" >
