@@ -24,6 +24,19 @@
             </el-image>
           </el-aside>
           <el-main>
+            <div class="toolbar" style="margin-left: 5%;float: right">
+              <el-dropdown>
+                <el-icon style="margin-right: 8px; margin-top: 1px;border: 0px">
+                  <img src="src/assets/Icons/Utilities Sidebar.ico" style="width: 50px;height: 50px;" />
+                </el-icon>
+                <template #dropdown>
+                  <el-dropdown-menu >
+                    <router-link  to="/login"><el-dropdown-item>注销</el-dropdown-item></router-link>
+                    <router-link  to="/MyInfo"><el-dropdown-item>信息</el-dropdown-item></router-link>
+                  </el-dropdown-menu>
+                </template>
+              </el-dropdown>
+            </div>
             <el-text style="color: white;text-align: center">{{role}}</el-text>
             <!-- 循环公告 -->
             <el-carousel style="margin-top: 15px" height="20px" interval="4000" indicator-position="none" arrow="never">
@@ -38,22 +51,10 @@
           </el-main>
           <el-aside style="width: 22%;display: flex">
 
-            <div style="width:auto;float: left;text-align: center">
+            <div style="width:auto;float: right;text-align: center">
               <img src="../../src/assets/images/title.png" width="240" height="92">
             </div>
-            <div class="toolbar" style="margin-left: 5%;float: right">
-              <el-dropdown>
-                <el-icon style="margin-right: 8px; margin-top: 1px;border: 0px">
-                  <img src="src/assets/Icons/Utilities Sidebar.ico" style="width: 50px;height: 50px;" />
-                </el-icon>
-                <template #dropdown>
-                  <el-dropdown-menu >
-                    <router-link  to="/login"><el-dropdown-item>注销</el-dropdown-item></router-link>
-                    <router-link  to="/MyInfo"><el-dropdown-item>信息</el-dropdown-item></router-link>
-                  </el-dropdown-menu>
-                </template>
-              </el-dropdown>
-            </div>
+
           </el-aside>
         </el-container>
 
