@@ -7,13 +7,16 @@
              class="input-with-select;"
              style="padding-top: 10px"
          >
-           <template #prepend>
-             <el-select v-model="search_selectd.chose" placeholder="Select"  style="width: 75px;">
-               <el-option label="试卷" value="1" />
-               <el-option label="教师" value="2" />
-               <el-option label="描述" value="3" />
+
+           <template  #prepend>
+             <el-select v-model="search_selectd.chose" placeholder="Select" class="MyElSelect"  style="
+             width: 75px;">
+               <el-option class="MyElOption" label="试卷" value="1" />
+               <el-option class="MyElOption" label="教师" value="2" />
+               <el-option class="MyElOption" label="描述" value="3" />
              </el-select>
            </template>
+
            <template #append>
              <el-button :icon="Search" @click="SearchTestPaperData()" style="background-color: #931414;color: white" />
            </template>
@@ -194,8 +197,6 @@ export default {
   }
 };
 
-
-
 </script>
 
 <style scoped>
@@ -215,15 +216,34 @@ export default {
   /* 在鼠标悬停时，添加激活效果的样式 */
   background-color: #ffffff;
   border-color: #000000;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
 }
 
 .active-image:hover {
   /* 在鼠标悬停时，添加激活效果的样式 */
   border-color: #000000;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
 }
 
+
+
+.MyElSelect:hover
+{
+  color: #8c2222;
+}
+.MyElSelect:active
+{
+  color: white;
+}
+.MyElOption
+{
+  color: black;
+}
+.MyElOption:hover
+{
+  color: #8c2222;
+
+}
 
 </style>
 
