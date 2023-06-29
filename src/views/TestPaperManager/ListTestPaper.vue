@@ -159,11 +159,11 @@
     </el-dialog>
 
   </transition>
-  <el-dialog v-model="visible2">
 
+  <transition name="el-fade-in">
+  <el-dialog v-model="visible2" style="height: auto;width: 600px;border-radius: 10px 10px 10px 10px" :show-close="false" custom-class="my-dialog">
     <el-table
         :data="questions"
-        v-loading="loading"
         style="width: 100%;height:auto;">
       <el-table-column label="试卷号" prop="eid" />
       <el-table-column label="题目号" prop="qid"  />
@@ -173,7 +173,6 @@
       <el-table-column align="right" >
         <template #default="scope">
           <el-button
-              :disabled="!(is_admin||is_teacher)"
               size="small"
               style="background-color: white;border: 1px solid #8c2222;color: black"
               type="default"
@@ -184,6 +183,8 @@
 <!--    eid, Integer qid, String qdescribe, String answer,Integer point-->
 
   </el-dialog>
+  </transition>
+    <transition name="el-fade-in">
   <el-dialog v-model="visible3" style="height: auto;width: 600px;border-radius: 10px 10px 10px 10px" :show-close="false" custom-class="my-dialog">
     <template #header="{ close, titleId, titleClass }">
       <div class="my-header">
@@ -252,6 +253,7 @@
     </template>
 
   </el-dialog>
+    </transition>
 </template>
 
 
