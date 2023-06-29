@@ -129,6 +129,16 @@
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
                   type="primary"
                   @click="submitUpdate"><el-icon><Check /></el-icon></el-button>
+              <el-button
+                  class="MyElButton"
+                  round
+                  style="float: right;
+              background-color: #856629;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+                  type="primary"
+                  @click="visible2=true"><el-icon><Edit /></el-icon></el-button>
 
               <el-button
                   round
@@ -142,20 +152,106 @@
                   @click="close"><el-icon><Close /></el-icon></el-button>
             </div>
           </el-form>
-          <el-form v-for="ques in questions" :key="ques.qid">
-            <el-form-item>{{ ques.qid }}</el-form-item>
-            <el-form-item>{{ ques.answer }}</el-form-item>
-            <el-form-item>{{ ques.eid }}</el-form-item>
-            <el-form-item>{{ ques.point }}</el-form-item>
-            <el-form-item>{{ ques.qdescribe }}</el-form-item>
-            <el-form-item>{{ ques.qtype }}</el-form-item>
-          </el-form>
+
         </div>
       </template>
+
     </el-dialog>
 
-
   </transition>
+  <el-dialog v-model="visible2">
+
+    <el-table
+        :data="questions"
+        v-loading="loading"
+        style="width: 100%;height:auto;">
+      <el-table-column label="试卷号" prop="eid" />
+      <el-table-column label="题目号" prop="qid"  />
+      <el-table-column label="题目类型" prop="qtype"  />
+      <el-table-column label="题目正文" prop="qdescribe"  />
+      <el-table-column label="答案" prop="answer" />
+      <el-table-column align="right" >
+        <template #default="scope">
+          <el-button
+              :disabled="!(is_admin||is_teacher)"
+              size="small"
+              style="background-color: white;border: 1px solid #8c2222;color: black"
+              type="default"
+              @click="EditQuestion(scope.row.eid, scope.row.qid,scope.row.qdescribe,scope.row.answer,scope.row.point)">编辑</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+<!--    eid, Integer qid, String qdescribe, String answer,Integer point-->
+
+  </el-dialog>
+  <el-dialog v-model="visible3" style="height: auto;width: 600px;border-radius: 10px 10px 10px 10px" :show-close="false" custom-class="my-dialog">
+    <template #header="{ close, titleId, titleClass }">
+      <div class="my-header">
+        <el-form class="my-form">
+          <div class="form-row">
+            <el-text class="form-label">试卷ID:</el-text>
+            <el-text class="form-input">{{ questEditParm.currentQuestionEid }}</el-text>
+          </div>
+          <div class="form-row">
+            <el-text class="form-label">题号:</el-text>
+            <el-text class="form-input">{{ questEditParm.currentQuestionQID }}</el-text>
+          </div>
+
+          <div class="form-row">
+            <el-text class="form-label">题目正文:</el-text>
+            <el-input
+                class="form-textarea"
+                style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
+                type="textarea"
+                v-model="questEditParm.currentQuestionDescribe"
+                placeholder="请输入题目描述"
+                :rows="7"
+            ></el-input>
+          </div>
+
+          <div class="form-row">
+            <el-text class="form-label">题目答案:</el-text>
+            <el-input
+                style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
+                type="text" v-model="questEditParm.currentQuestionAnswer" placeholder="请输入题目答案"></el-input>
+          </div>
+
+          <div class="form-row">
+            <el-text class="form-label">题目分数:</el-text>
+            <el-input-number
+                style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
+                 v-model="questEditParm.currentQuestionPoint" placeholder="请输入题目答案"></el-input-number>
+          </div>
+
+          <div class="button-row">
+            <el-button
+                class="MyElButton"
+                round
+                style="float: right;
+              background-color: #298123;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+                type="primary"
+                @click="SubmitQuestionEdit"><el-icon><Check /></el-icon></el-button>
+
+            <el-button
+                round
+                class="MyElButton"
+                style="float: right;
+              background-color: #8c2222;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+                type="primary"
+                @click="close"><el-icon><Close /></el-icon></el-button>
+          </div>
+        </el-form>
+
+      </div>
+    </template>
+
+  </el-dialog>
 </template>
 
 
@@ -181,6 +277,8 @@ export default {
         chose:"1",
       },
       visible:false,
+      visible2:false,
+      visible3:false,
       search: "",
       TestPaperData:"",
       total:0,
@@ -194,6 +292,14 @@ export default {
       loading:true,
       //存放当前题目
       questions:[],
+      questEditParm:
+          {
+            currentQuestionQID:"",
+            currentQuestionDescribe:"",
+            currentQuestionAnswer:"",
+            currentQuestionPoint:"",
+            currentQuestionEid:"",
+          }
     }
   },
   computed: {
@@ -210,7 +316,37 @@ export default {
     handleOpen(eid,ename) {
       this.$router.push({ path: '/DoTestPaper', query: { eid,ename } });
     },
-    // 编辑
+    //编辑题目
+    EditQuestion(a,b,c,d,e)
+    {
+
+        this.visible3=true;
+        this.questEditParm.currentQuestionEid=a;
+        this.questEditParm.currentQuestionQID=b;
+        this.questEditParm.currentQuestionDescribe=c;
+        this.questEditParm.currentQuestionAnswer=d;
+        this.questEditParm.currentQuestionPoint=e;
+    },
+    SubmitQuestionEdit()
+    {
+      console.log("this.questEditParm",this.questEditParm)
+      API({
+        url: '/updateQuestionById',
+        method: 'post',
+        params: {
+          eid: this.questEditParm.currentQuestionEid,
+          qid: this.questEditParm.currentQuestionQID,
+          qdescribe: this.questEditParm.currentQuestionDescribe,
+          answer: this.questEditParm.currentQuestionAnswer,
+          point: this.questEditParm.currentQuestionPoint
+        }
+      }).then((res) => {
+        ElMessageBox.alert(res.data.msg, '提示', {
+          confirmButtonText: '确认',})
+      })
+
+    },
+    // 编辑试卷
     handleEdit(a,b,c) {
       this.visible = true
       this.editParm.currentTestPageID=a

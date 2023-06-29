@@ -1,37 +1,38 @@
 <template>
-  <el-button type="primary" style="margin-left: 16px" @click="drawer = true">
-    open
-  </el-button>
-
-  <el-drawer v-model="drawer" title="I'm outer Drawer" size="50%">
-    <div>
-      <el-button @click="innerDrawer = true">Click me!</el-button>
-      <el-drawer
-          v-model="innerDrawer"
-          title="I'm inner Drawer"
-          :append-to-body="true"
-          :before-close="handleClose"
-      >
-        <p>_(:зゝ∠)_</p>
-      </el-drawer>
-    </div>
-  </el-drawer>
+  <el-table
+      :data="TestPaperData.data"
+      style="width: 100%;height:auto;">
+    <el-table-column label="试卷ID" prop="eid"  />
+    <el-table-column label="试卷名字" prop="ename" />
+    <el-table-column label="描述" prop="edescribe" />
+    <el-table-column label="教师名字" prop="teacher.tname"  />
+    <el-table-column align="right" >
+    </el-table-column>
+  </el-table>
 </template>
+<script lang="ts">
+import API from "../axios/request";
 
-<script lang="ts" setup>
-import { ref } from 'vue'
-import { ElMessageBox } from 'element-plus'
 
-const drawer = ref(false)
-const innerDrawer = ref(false)
 
-const handleClose = (done: () => void) => {
-  ElMessageBox.confirm('You still have unsaved data, proceed?')
-      .then(() => {
-        done()
-      })
-      .catch(() => {
-        // catch error
-      })
+export default {
+  data() {
+    return {
+      TestPaperData:"",
+    }
+  },
+  mounted() {
+    API({
+      url: '/selectExamination',
+      method: 'get',
+      params: {
+        page: 0,
+        limit: 10,
+      }
+    }).then((res) => {
+      this.TestPaperData = res.data;
+      console.log("res.data",res.data)
+    })
+  }
 }
 </script>
