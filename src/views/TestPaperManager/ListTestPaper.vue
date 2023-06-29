@@ -10,22 +10,22 @@
         <el-table-column align="right" >
           <template #header>
             <div style="display: flex; align-items: center;text-align: left">
-                  <el-input
-                      v-model="search"
-                      placeholder="查询"
-                      class="input-with-select"
-                  >
-                    <template #prepend>
-                      <el-select v-model="search_selectd.chose" placeholder="Select"  style="width: 75px;">
-                        <el-option label="试卷" value="1" />
-                        <el-option label="教师" value="2" />
-                        <el-option label="描述" value="3" />
-                      </el-select>
-                    </template>
-                    <template #append>
-                      <el-button :icon="Search" @click="SearchTestPaperData()" style="background-color: #931414;color: white" />
-                    </template>
-                  </el-input>
+              <el-input
+                  v-model="search"
+                  placeholder="查询"
+                  class="input-with-select"
+              >
+                <template #prepend>
+                  <el-select v-model="search_selectd.chose" placeholder="Select"  style="width: 75px;">
+                    <el-option label="试卷" value="1" />
+                    <el-option label="教师" value="2" />
+                    <el-option label="描述" value="3" />
+                  </el-select>
+                </template>
+                <template #append>
+                  <el-button :icon="Search" @click="SearchTestPaperData()" style="background-color: #931414;color: white" />
+                </template>
+              </el-input>
 
             </div>
 
@@ -64,15 +64,15 @@
 
     <el-footer >
       <el-affix position="bottom" :offset="5">
-      <el-pagination
-          style="margin-top: 0px;padding-top: 0px"
-          :background="true"
-          :page-size="pageSize"
-          :total="total"
-          layout=" prev, pager, next"
-          @current-change="handleCurrentChange"
-          class="pagination"
-      />
+        <el-pagination
+            style="margin-top: 0px;padding-top: 0px"
+            :background="true"
+            :page-size="pageSize"
+            :total="total"
+            layout=" prev, pager, next"
+            @current-change="handleCurrentChange"
+            class="pagination"
+        />
       </el-affix>
     </el-footer>
 
@@ -89,12 +89,15 @@
             </div>
             <div class="form-row">
               <el-text class="form-label">试卷名字:</el-text>
-              <el-input type="text" v-model="editParm.currentTestPageName" placeholder="请输入试卷名字"></el-input>
+              <el-input
+                  style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
+                  type="text" v-model="editParm.currentTestPageName" placeholder="请输入试卷名字"></el-input>
             </div>
             <div class="form-row">
               <el-text class="form-label">试卷描述:</el-text>
               <el-input
                   class="form-textarea"
+                  style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
                   type="textarea"
                   v-model="editParm.currentTestPageDescribe"
                   placeholder="请输入试卷描述"
@@ -102,14 +105,27 @@
               ></el-input>
             </div>
             <div class="button-row">
-              <el-button type="success" @click="submitUpdate" class="submit-button">
-                <el-icon>更改</el-icon>
+              <el-button
+                  class="MyElButton"
+                  round
+                  style="float: right;
+              background-color: #298123;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+                  type="primary"
+                  @click="submitUpdate"><el-icon><Check /></el-icon></el-button>
 
-              </el-button>
-              <el-button type="danger" @click="close" class="close-button">
-                <el-icon>关闭</el-icon>
-
-              </el-button>
+              <el-button
+                  round
+                  class="MyElButton"
+                  style="float: right;
+              background-color: #8c2222;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+                  type="primary"
+                  @click="close"><el-icon><Close /></el-icon></el-button>
             </div>
           </el-form>
         </div>
@@ -325,7 +341,6 @@ export default {
 
 .form-textarea {
   width: 400px;
-  height: 120px;
   resize: vertical;
 }
 
@@ -335,21 +350,10 @@ export default {
   margin-top: 20px;
 }
 
-.submit-button {
-  background-color: #67c23a;
-  color: #fff;
+.MyElButton :hover
+{
+
 }
-
-.close-button {
-  background-color: #f56c6c;
-  color: #fff;
-}
-
-.el-button .el-icon {
-  margin-right: 5px;
-}
-
-
 
 
 </style>

@@ -9,130 +9,131 @@
     </el-header>
 
     <el-main style="margin-top: 30px;height:auto">
-  <Transition name="el-fade-in-linear">
-      <el-container v-if="current_Page==0" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
-<!--        <el-header>-->
-<!--          <el-text>试卷名称:</el-text>-->
-<!--          <el-input input-style="width: 100px" v-model="questionData.ename"></el-input>-->
-<!--        </el-header>-->
-        <el-main>
-        <el-form style="align-content: center;" v-if="current_Page==0" >
-          <el-form-item label="试卷名称">
-            <el-input v-model="questionData.ename"></el-input>
-          </el-form-item>
-          <el-form-item label="试卷描述">
-            <el-input  type="textarea" :rows="20" v-model="questionData.edescribe"></el-input>
-          </el-form-item>
-        </el-form>
-        </el-main>
-      </el-container>
-  </Transition>
       <Transition name="el-fade-in-linear">
-      <el-container v-if="current_Page==1">
-        <el-tabs type="border-card" style="width: 100%;height: auto">
-          <el-tab-pane label="上传头像" >
-            <el-upload
-              :auto-upload="false"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
-              :file-list="fileList"
-              :show-file-list="false"
-              :on-change="onchange"
-              list-type="picture"
-              class="avatar-uploader"
-          >
-            <img  class="avatar" v-if="imageUrl" :src="imageUrl" />
-            <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
-          </el-upload>
-          </el-tab-pane>
-          <el-tab-pane label="默认头像">
-            <el-radio-group v-model="selectedDefaultImage" style="width: auto;">
-              <el-radio  class="MyElRadioButton" :label="0" >
-                <img :src="defaultImages[0]" alt="Default Image 1">
-              </el-radio>
-
-              <el-radio class="MyElRadioButton" :label="1">
-                <img :src="defaultImages[1]" alt="Default Image 2">
-              </el-radio>
-
-              <el-radio class="MyElRadioButton" :label="2">
-                <img :src="defaultImages[2]" alt="Default Image 3">
-             </el-radio>
-
-            </el-radio-group>
-          </el-tab-pane>
-        </el-tabs>
-
-      </el-container>
+        <el-container v-if="current_Page==0" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+          <!--        <el-header>-->
+          <!--          <el-text>试卷名称:</el-text>-->
+          <!--          <el-input input-style="width: 100px" v-model="questionData.ename"></el-input>-->
+          <!--        </el-header>-->
+          <el-main>
+            <el-form style="align-content: center;" v-if="current_Page==0" >
+              <el-form-item label="试卷名称">
+                <el-input v-model="questionData.ename"></el-input>
+              </el-form-item>
+              <el-form-item label="试卷描述">
+                <el-input  type="textarea" :rows="20" v-model="questionData.edescribe"></el-input>
+              </el-form-item>
+            </el-form>
+          </el-main>
+        </el-container>
       </Transition>
 
       <Transition name="el-fade-in-linear">
-      <div v-if="current_Page === 2">
-        <div v-for="(question, index) in questionData.questions" :key="index" style="margin-top: 10px;">
-          <el-form :model="question" label-width="100px" style="margin-top: 10px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);padding-bottom: 5px">
-            <el-form-item font-weight="bold" label="题号">
-              {{index+1}}
-            </el-form-item>
-            <el-form-item label="题目描述">
-              <el-input v-model="question.qdescribe" style="padding-right: 5%" placeholder="题目描述"></el-input>
-            </el-form-item>
-            <el-form-item label="答案">
-              <el-input v-if="question.qtype != '0'" v-model="question.answer" style="padding-right: 5%" placeholder="答案"></el-input>
-              <el-select v-if="question.qtype == '0'" v-model="question.answer" placeholder="答案" style="width: 100px;">
-                <el-option label="√" value="a"></el-option>
-                <el-option label="×" value="b"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="分值">
-              <el-input-number v-model="question.point" controls-position="right" :min="0" :step="1" placeholder="分值"></el-input-number>
-            </el-form-item>
-            <el-form-item label="题目类型">
-              <el-select v-model="question.qtype" placeholder="题目类型" style="width: 100px;">
-                <el-option label="判断题" value="0"></el-option>
-                <el-option label="单选题" value="1"></el-option>
-                <el-option label="填空题" value="2"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="danger" style="width: 50px" icon="el-icon-delete" @click="removeQuestion(index)">删除</el-button>
-            </el-form-item>
-            <template v-if="(question.qtype == '1')">
-              <el-form-item label="选项a">
-                <el-input v-model="question.a" style="padding-right: 5%" placeholder="答案"></el-input>
+        <el-container v-if="current_Page==1" style="height: 800px">
+          <el-tabs type="border-card" style="width: 100%;height: auto">
+            <el-tab-pane label="上传头像" >
+              <el-upload
+                  :auto-upload="false"
+                  :on-preview="handlePreview"
+                  :on-remove="handleRemove"
+                  :file-list="fileList"
+                  :show-file-list="false"
+                  :on-change="onchange"
+                  list-type="picture"
+                  class="avatar-uploader"
+              >
+                <img  class="avatar" v-if="imageUrl" :src="imageUrl" />
+                <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+              </el-upload>
+            </el-tab-pane>
+            <el-tab-pane label="默认头像">
+              <el-radio-group v-model="selectedDefaultImage" style="width: auto;">
+                <el-radio  class="MyElRadioButton" :label="0" >
+                  <img :src="defaultImages[0]" alt="Default Image 1">
+                </el-radio>
+
+                <el-radio class="MyElRadioButton" :label="1">
+                  <img :src="defaultImages[1]" alt="Default Image 2">
+                </el-radio>
+
+                <el-radio class="MyElRadioButton" :label="2">
+                  <img :src="defaultImages[2]" alt="Default Image 3">
+                </el-radio>
+
+              </el-radio-group>
+            </el-tab-pane>
+          </el-tabs>
+
+        </el-container>
+      </Transition>
+
+      <Transition name="el-fade-in-linear">
+        <div v-if="current_Page === 2">
+          <div v-for="(question, index) in questionData.questions" :key="index" style="margin-top: 10px;">
+            <el-form :model="question" label-width="100px" style="margin-top: 10px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);padding-bottom: 5px">
+              <el-form-item font-weight="bold" label="题号">
+                {{index+1}}
               </el-form-item>
-              <el-form-item label="选项b">
-                <el-input v-model="question.b" style="padding-right: 5%" placeholder="答案"></el-input>
+              <el-form-item label="题目描述">
+                <el-input v-model="question.qdescribe" style="padding-right: 5%" placeholder="题目描述"></el-input>
               </el-form-item>
-              <el-form-item label="选项c">
-                <el-input v-model="question.c" style="padding-right: 5%" placeholder="答案"></el-input>
+              <el-form-item label="答案">
+                <el-input v-if="question.qtype != '0'" v-model="question.answer" style="padding-right: 5%" placeholder="答案"></el-input>
+                <el-select v-if="question.qtype == '0'" v-model="question.answer" placeholder="答案" style="width: 100px;">
+                  <el-option label="√" value="a"></el-option>
+                  <el-option label="×" value="b"></el-option>
+                </el-select>
               </el-form-item>
-              <el-form-item label="选项d">
-                <el-input v-model="question.d" style="padding-right: 5%" placeholder="答案"></el-input>
+              <el-form-item label="分值">
+                <el-input-number v-model="question.point" controls-position="right" :min="0" :step="1" placeholder="分值"></el-input-number>
               </el-form-item>
-            </template>
-          </el-form>
-        </div>
-        <el-affix position="bottom" :offset="100" >
-          <el-button
-              round
-              style="float: right;
+              <el-form-item label="题目类型">
+                <el-select v-model="question.qtype" placeholder="题目类型" style="width: 100px;">
+                  <el-option label="判断题" value="0"></el-option>
+                  <el-option label="单选题" value="1"></el-option>
+                  <el-option label="填空题" value="2"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="danger" style="width: 50px" icon="el-icon-delete" @click="removeQuestion(index)">删除</el-button>
+              </el-form-item>
+              <template v-if="(question.qtype == '1')">
+                <el-form-item label="选项a">
+                  <el-input v-model="question.a" style="padding-right: 5%" placeholder="答案"></el-input>
+                </el-form-item>
+                <el-form-item label="选项b">
+                  <el-input v-model="question.b" style="padding-right: 5%" placeholder="答案"></el-input>
+                </el-form-item>
+                <el-form-item label="选项c">
+                  <el-input v-model="question.c" style="padding-right: 5%" placeholder="答案"></el-input>
+                </el-form-item>
+                <el-form-item label="选项d">
+                  <el-input v-model="question.d" style="padding-right: 5%" placeholder="答案"></el-input>
+                </el-form-item>
+              </template>
+            </el-form>
+          </div>
+          <el-affix position="bottom" :offset="100" >
+            <el-button
+                round
+                style="float: right;
               background-color: #298123;
               color: white;
               border: 0px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
-              type="primary"
-              @click="createQuestion">上传提交</el-button>
-          <el-button
-              round
-              style="float: right;
+                type="primary"
+                @click="createQuestion">上传提交</el-button>
+            <el-button
+                round
+                style="float: right;
               background-color: #8c2222;
               color: white;
               border: 0px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
-              type="primary"
-              @click="addQuestion">增加题目</el-button>
-        </el-affix>
-      </div>
+                type="primary"
+                @click="addQuestion">增加题目</el-button>
+          </el-affix>
+        </div>
       </Transition>
       <el-affix position="bottom" :offset="30" style="display: flex">
         <el-button
