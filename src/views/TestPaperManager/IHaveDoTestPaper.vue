@@ -5,12 +5,13 @@
               height: 630px;
               margin-top: 10px;
               margin-right: 10px"
+              :default-sort="{ prop: 'score', order: 'descending' }"
     >
       <el-table-column label="试卷ID" prop="examination.eid"  />
       <el-table-column label="试卷名字" prop="examination.ename" />
       <el-table-column label="描述" prop="examination.edescribe" />
       <el-table-column label="老师名字" prop="examination.teacher.tname"  />
-      <el-table-column label="分数" prop="score"  />
+      <el-table-column label="分数" sortable prop="score"  />
     </el-table>
 </template>
 

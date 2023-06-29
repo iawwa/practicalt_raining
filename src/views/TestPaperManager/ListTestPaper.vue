@@ -163,6 +163,7 @@
       <el-table
           :data="questions"
           style="width: 100%;height:auto;">
+
         <el-table-column label="试卷号" prop="eid" />
         <el-table-column label="题目号" prop="qid"  />
         <el-table-column label="题目类型" prop="qtype"  />
@@ -172,6 +173,7 @@
         <el-table-column label="B" prop="b"  />
         <el-table-column label="C" prop="c"  />
         <el-table-column label="D" prop="d"  />
+
         <!--   Integer eid, Integer qid, String qdescribe, String answer,Integer point,Integer qtype,String a,String b,String c,String d-->
         <el-table-column align="right" >
           <template #default="scope">
@@ -182,14 +184,20 @@
                 @click="EditQuestion(scope.row.eid, scope.row.qid,scope.row.qdescribe,scope.row.answer,scope.row.point,scope.row.qtype,scope.row.a,scope.row.b,scope.row.c,scope.row.d)">编辑</el-button>
           </template>
         </el-table-column>
+
       </el-table>
       <!--    eid, Integer qid, String qdescribe, String answer,Integer point-->
 
     </el-dialog>
   </transition>
-  
+
   <transition name="el-fade-in">
-    <el-dialog v-model="visible3" style="padding: 0px;height: auto;border-radius: 10px 10px 10px 10px" :show-close="false" custom-class="my-dialog">
+    <el-dialog v-model="visible3"
+               style="padding: 3px;
+               height: auto;
+               width: 90vh;
+               box-shadow: 3px 2px 4px rgba(0, 0, 0, 0.2);
+               border-radius: 5%" :show-close="false" custom-class="my-dialog">
       <template #header="{ close, titleId, titleClass }">
         <div class="my-header">
           <el-form class="my-form">
