@@ -77,11 +77,12 @@
                 <el-option label="单选题" value="1"></el-option>
                 <el-option label="填空题" value="2"></el-option>
               </el-select>
+              <el-text v-if="(question.qtype == '0')">判断题答案为√选a为，×填b</el-text>
             </el-form-item>
             <el-form-item>
               <el-button type="danger" style="width: 50px" icon="el-icon-delete" @click="removeQuestion(index)">删除</el-button>
             </el-form-item>
-            <template v-if="(question.qtype === '2')">
+            <template v-if="(question.qtype == '1')">
               <el-form-item label="选项a">
                 <el-input v-model="question.a" style="padding-right: 5%" placeholder="答案"></el-input>
               </el-form-item>
