@@ -7,16 +7,16 @@ const routes=[
         component:MainBody,
         children: [
             //这里是用来渲染主页面之下的部分
-            //班级管理
-            {path:"/ClassInfo",component: () => import("@/views/ClassManager/ClassInfo.vue")},
-            {path:"/CreateClass",component: () => import("@/views/ClassManager/CreateClass.vue")},
-            {path:"/ManagerClass",component: () => import("@/views/ClassManager/ManagerClass.vue")},
-
-            //课程管理部分
-            {path: "/CourseManager",component: () => import("@/views/CourseManager/CourseManager.vue")},
-            {path: "/ListCourse", component: () => import("@/views/CourseManager/ListCourese.vue") },
-            {path: "/MyCourse",component: () => import("@/views/CourseManager/MyCourse.vue") },
-            {path: "/CreateCourse",component: () => import("@/views/CourseManager/CreateCourse.vue")},
+            // //班级管理
+            // {path:"/ClassInfo",component: () => import("@/views/ClassManager/ClassInfo.vue")},
+            // {path:"/CreateClass",component: () => import("@/views/ClassManager/CreateClass.vue")},
+            // {path:"/ManagerClass",component: () => import("@/views/ClassManager/ManagerClass.vue")},
+            //
+            // //课程管理部分
+            // {path: "/CourseManager",component: () => import("@/views/CourseManager/CourseManager.vue")},
+            // {path: "/ListCourse", component: () => import("@/views/CourseManager/ListCourese.vue") },
+            // {path: "/MyCourse",component: () => import("@/views/CourseManager/MyCourse.vue") },
+            // {path: "/CreateCourse",component: () => import("@/views/CourseManager/CreateCourse.vue")},
 
             // 个人中心
             {path: '/PersonInfo', component: ()=> import("@/views/PersonInfoManager/PersonInfo.vue") },
