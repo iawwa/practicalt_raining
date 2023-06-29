@@ -25,8 +25,6 @@
             </el-image>
           </el-aside>
           <el-main>
-
-            <el-text style="color: white;text-align: center">{{role}}</el-text>
             <!-- 循环公告 -->
             <el-carousel style="margin-top: 15px" height="20px" interval="4000" indicator-position="none" arrow="never">
               <el-carousel-item v-for="item in noticeList" :key="item.id">
@@ -43,7 +41,7 @@
               <img src="../../src/assets/images/title.png" style="width: 100%; height: 100%;">
             </div>
 
-            <div style="margin-left: 5%;margin-top: 5%">
+            <div style="margin-left: 10%;margin-top: 5%">
               <el-dropdown>
                 <el-icon>
                   <img src="src/assets/Icons/Utilities Sidebar.ico" style="width: 50px; height: 50px;">
@@ -179,6 +177,7 @@ export default
     },
   },mounted()
   {
+    let appellation="";
     let url="";
     console.log("this.$cookies.get(\"data\")：",this.$cookies.get("data"))
     this.role=this.$cookies.get("role")
@@ -188,6 +187,7 @@ export default
         this.is_studnet=true
         this.username=this.$cookies.get("data").sname
         url="/getStuImage"
+        appellation="同学！"
         break
       }
       case "teacher":
@@ -195,6 +195,7 @@ export default
         this.is_teacher=true
         this.username=this.$cookies.get("data").tname
         url="/getTeaImage"
+        appellation="老师！"
         break
       }
       case "manager":{
@@ -214,7 +215,7 @@ export default
 
     ElNotification({
       title: '欢迎',
-      message: "欢迎！"+this.username+"!",
+      message: "欢迎！"+this.username+appellation,
     })
   },components: {
   },computed: {
