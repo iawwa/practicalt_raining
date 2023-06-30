@@ -81,7 +81,7 @@
             <transition name="fade-in-linear">
               <div v-if="currentQuestionClass==2">
 
-              <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex] }}</p>
+              <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex]}}</p>
               </div>
             </transition>
 
@@ -282,8 +282,9 @@ export default {
         this.currentQuestionIndex-=1;
         this.currentQuestion = this.questions[this.currentQuestionIndex];
       }
-      this.showPE()
+
       this.GetCurrentInstanceValue();
+      this.showPE()
     },
     ShiftNextQuestion(){
       if(this.currentQuestionIndex<this.questions.length-1)
@@ -291,9 +292,10 @@ export default {
         this.currentQuestionIndex+=1;
         this.currentQuestion = this.questions[this.currentQuestionIndex];
       }
-      this.showPE()
+
       this.currentQuestionClass=this.currentQuestion.qtype
-      this.GetCurrentInstanceValue();
+      this.GetCurrentInstanceValue()
+      this.showPE();
     },
     SaveCurrentQuestion(){
       if ( this.isQuestionCompleted[this.currentQuestionIndex] === false) {
