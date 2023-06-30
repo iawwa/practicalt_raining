@@ -164,15 +164,15 @@
           :data="questions"
           style="width: 100%;height:auto;">
 
-        <el-table-column label="试卷号" prop="eid" />
-        <el-table-column label="题目号" prop="qid"  />
-        <el-table-column label="题目类型" prop="qtype"  />
-<!--        <el-table-column label="题目正文" prop="qdescribe"  />-->
-        <el-table-column label="答案" prop="answer" />
-        <el-table-column label="A" prop="a"  />
-        <el-table-column label="B" prop="b"  />
-        <el-table-column label="C" prop="c"  />
-        <el-table-column label="D" prop="d"  />
+<!--        <el-table-column label="试卷号" prop="eid" />-->
+        <el-table-column label="题号" prop="qid" width="100" />
+<!--        <el-table-column label="题目类型" prop="qtype"  />-->
+        <el-table-column label="题目正文" prop="qdescribe"  />
+        <el-table-column label="答案" prop="answer"  />
+<!--        <el-table-column label="A" prop="a"  />-->
+<!--        <el-table-column label="B" prop="b"  />-->
+<!--        <el-table-column label="C" prop="c"  />-->
+<!--        <el-table-column label="D" prop="d"  />-->
 
         <!--   Integer eid, Integer qid, String qdescribe, String answer,Integer point,Integer qtype,String a,String b,String c,String d-->
         <el-table-column align="right" >
