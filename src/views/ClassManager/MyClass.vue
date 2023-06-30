@@ -6,7 +6,7 @@
       <el-button type="primary" :icon="Search" @click="SearchClass" style="margin-left: 5px">查询</el-button>
       <!-- 新建班级 -->
       <el-button type="primary" @click="dialogVisible = true" :disabled="!is_teacher"
-        style="margin-left: 5px">新建班级</el-button>
+                 style="margin-left: 5px">新建班级</el-button>
     </div>
 
     <el-dialog v-model="dialogVisible" title="创建班级" width="60%" align-center>
@@ -42,20 +42,20 @@
           <el-row>
             <el-col>
               <el-button size="small" type="success" style="border: 0px;background-color: #298123"
-                @click="handleOpen(scope.row.cid, scope.row.cname)">打开
+                         @click="handleOpen(scope.row.cid, scope.row.cname)">打开
               </el-button>
             </el-col>
             <el-col>
               <el-button :disabled="!is_teacher" size="small"
-                style="background-color: white;border: 1px solid #8c2222;color: black" type="default"
-                @click=" Visible = true">编辑</el-button>
+                         style="background-color: white;border: 1px solid #8c2222;color: black" type="default"
+                         @click=" Visible = true">编辑</el-button>
             </el-col>
             <el-col>
               <el-button size="small" type="danger" :disabled="!is_teacher" style="background-color:#8c2222;border: 0px"
-                @click="handleDelete(scope.row.cid)">删除</el-button>
+                         @click="handleDelete(scope.row.cid)">删除</el-button>
             </el-col>
             <el-col>
-              <el-button size="small" type="default" :disabled="!is_teacher" style="background-color: #856629;color:white ;border: 0px"
+              <el-button size="small" type="default"  style="background-color: #856629;color:white ;border: 0px"
                          @click="OpenCourseVideo(scope.row.cid)">视频</el-button>
             </el-col>
           </el-row>
@@ -80,7 +80,7 @@
 
     <!-- 教师 编辑 cid cname cdescribe-->
     <el-dialog v-model="Visible" style="height: auto;width: 600px;border-radius: 10px 10px 10px 10px" :show-close="false"
-      custom-class="my-dialog">
+               custom-class="my-dialog">
       <el-form :model="classInfo" label-width="120px">
         <el-form-item label="班级id:">
           <el-input v-model="classInfo.cid" />
@@ -104,7 +104,7 @@
 
   </div>
 </template>
-  
+
 <script lang='ts'>
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
 import { ElMessageBox } from 'element-plus'
@@ -215,7 +215,7 @@ export default {
     //   this.currentPage = number
     //   this.SearchClassListData(number)
     // },
-    
+
     // 搜索
     SearchClass() {
       this.classSearch.keyword = this.search
@@ -257,15 +257,15 @@ export default {
     let current_role = this.$cookies.get("role");
     switch (current_role) {
       case "student":
-        {
-          this.is_studnet = true
-          break
-        }
+      {
+        this.is_studnet = true
+        break
+      }
       case "teacher":
-        {
-          this.is_teacher = true
-          break
-        }
+      {
+        this.is_teacher = true
+        break
+      }
       case "manager": {
         this.is_admin = true
         break
@@ -280,4 +280,3 @@ export default {
 
 
 </script>
-  
