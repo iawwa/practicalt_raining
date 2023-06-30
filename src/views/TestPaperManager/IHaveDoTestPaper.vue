@@ -5,7 +5,6 @@
               height: 630px;
               margin-top: 10px;
               margin-right: 10px"
-              :default-sort="{ prop: 'score', order: 'descending' }"
     >
       <el-table-column label="试卷ID" prop="examination.eid"  />
       <el-table-column label="试卷名字" prop="examination.ename" />
