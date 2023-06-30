@@ -33,9 +33,9 @@
                 </el-radio-group>
                 <p v-if="visable" style="font-weight: bold;">
                   正确答案:
-                  <template v-if="currentQuestion.answer === 'a'">
-                    <span v-if="currentQuestionClass === '0' && currentQuestion.answer === 'a'" >√</span>
-                    <span v-else-if="currentQuestionClass === '0' && currentQuestion.answer === 'b'" >×</span>
+                  <template v-if="currentQuestionClass === '0'">
+                    <span  v-if="currentQuestion.answer === 'a'" >√</span>
+                    <span v-if="currentQuestion.answer === 'b'" >×</span>
                   </template>
                 </p>
               </div>
@@ -117,7 +117,7 @@
               border: 0px;
               box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
                 type="primary"
-                :disabled="isSaveButtonDisabled"
+                :disabled="visable"
                 @click="SaveCurrentQuestion">保存当前答案</el-button>
             <el-button
                 round
@@ -296,6 +296,9 @@ export default {
       this.GetCurrentInstanceValue();
     },
     SaveCurrentQuestion(){
+      if ( this.isQuestionCompleted[this.currentQuestionIndex] === false) {
+        this.currentDonNumb+=1;
+      }
       this.isQuestionCompleted[this.currentQuestionIndex] = true;
       console.log("this.currentQuestionClass",this.currentQuestionClass)
       //判断当前题型以获得用户的答案
@@ -324,12 +327,12 @@ export default {
       }
       console.log("this.currentQuestionUserResult",this.currentQuestionUserResult)
       this.UserResult[this.currentQuestionIndex] = this.currentQuestionUserResult;
-      this.currentDonNumb+=1;
+
       this.ShiftNextQuestion();
-      if(this.currentDonNumb==this.questions.length)
-      {
-        this.isSaveButtonDisabled = true;
-      }
+      // if(this.currentDonNumb==this.questions.length)
+      // {
+      //   this.isSaveButtonDisabled = true;
+      // }
       // console.log("this.currentQuestionIndex",this.currentQuestionIndex)
       ElNotification.success({
         title: '保存',
@@ -392,6 +395,33 @@ export default {
         this.Pvisable = false;
         this.Evisable = true;
       }
+      // console.log("if(this.visable==true)",this.visable,this.visable==true)
+      if(this.visable==true)
+      {
+        console.log("this.currentQuestionClass",this.currentQuestionClass)
+        if(this.currentQuestionClass===0)
+        {
+          this.result0=this.UserResult[this.currentQuestionIndex];
+        }
+        else if(this.currentQuestionClass===1)
+        {
+          this.result1=this.UserResult[this.currentQuestionIndex];
+        }
+        else if(this.currentQuestionClass===2)
+        {
+          this.result2=this.UserResult[this.currentQuestionIndex];
+        }
+        else{
+
+        }
+
+
+
+
+      }
+
+
+
     }
     ,GetCurrentInstanceValue()
     {
