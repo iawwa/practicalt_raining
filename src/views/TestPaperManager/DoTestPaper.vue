@@ -275,6 +275,7 @@ export default {
         this.showPE()
       }
       this.GetCurrentInstanceValue();
+      this.showPE()
     },
     ShiftBeforeQuestion(){
       if(this.currentQuestionIndex>0)
