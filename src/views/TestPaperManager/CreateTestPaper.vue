@@ -310,7 +310,7 @@ export default {
         message: '添加一列',
         customClass:"AddMessage",
       });
-      console.log('selectedDefaultImage', this.selectedDefaultImage);
+
     },
     removeQuestion(index) {
       this.questionData.questions.splice(index, 1);
@@ -319,10 +319,13 @@ export default {
       const url = '/createExamination'; // 后端接口的URL
       const requestData = new FormData();
 
+      console.log('selectedDefaultImage', this.selectedDefaultImage);
+
       requestData.append('ename', this.questionData.ename);
       requestData.append('edescribe', this.questionData.edescribe);
       requestData.append('questions', JSON.stringify(this.questionData.questions));
       requestData.append('defaultImageIndex', this.selectedDefaultImage);
+      console.log("this.selectedDefaultImage", this.selectedDefaultImage);
       if (this.fileList.length > 0) {
         requestData.append('multipartFile', this.fileList[0].raw);
       }
