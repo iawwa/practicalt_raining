@@ -21,7 +21,12 @@ const routes=[
 
             //班级管理
             {path:"/TeacherManagerRequest",component: () => import("@/views/ClassManager/TeacherManagerRequest.vue")},
-
+            { path: "/MyClass", component: () => import("@/views/ClassManager/MyClass.vue") },
+            { path: "/AllClass", component: () => import("@/views/ClassManager/AllClass.vue") },
+            { path: "/ClassStudent", component: () => import("@/views/ClassManager/ClassStudent.vue") },
+            { path: "/TeacherManagerRequest", component: () => import("@/views/ClassManager/TeacherManagerRequest.vue") },
+            { path: "/StudentReuqest", component: () => import("@/views/ClassManager/StudentRequest.vue") },
+            { path: "/StudentOutReuqest", component: () => import("@/views/ClassManager/StudentOutRequest.vue") },
 
 
 
