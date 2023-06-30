@@ -17,6 +17,7 @@ const routes=[
             // {path: "/ListCourse", component: () => import("@/views/CourseManager/ListCourese.vue") },
             // {path: "/MyCourse",component: () => import("@/views/CourseManager/MyCourse.vue") },
             // {path: "/CreateCourse",component: () => import("@/views/CourseManager/CreateCourse.vue")},
+            {path: "/MyCourse",component: () => import("@/views/ClassManager/MyCourse.vue") },
 
             //班级管理
             {path:"/TeacherManagerRequest",component: () => import("@/views/ClassManager/TeacherManagerRequest.vue")},

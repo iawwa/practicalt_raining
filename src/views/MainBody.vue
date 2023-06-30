@@ -80,7 +80,6 @@
               <router-link to="/ResetHeadPic"><el-menu-item class="MyElMenuItem" index="1-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Pictures.ico"></el-icon>修改头像</el-menu-item></router-link>
               <router-link to="/ResetInfo"><el-menu-item class="MyElMenuItem" index="1-4"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Get Info.ico"></el-icon>信息修改</el-menu-item></router-link>
 
-
             </el-sub-menu>
 
             <el-sub-menu index="2" style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
@@ -90,7 +89,7 @@
               <el-menu-item-group>
                 <router-link to=""><el-menu-item class="MyElMenuItem" index="2-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Developer Folder.ico"></el-icon>所有班级</el-menu-item></router-link>
                 <router-link to=""><el-menu-item class="MyElMenuItem" index="2-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Public.ico"></el-icon>我的班级</el-menu-item></router-link>
-                <router-link to=""><el-menu-item class="MyElMenuItem" index="2-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Desktop.ico"></el-icon>我的课程</el-menu-item></router-link>
+                <router-link to="/MyCourse"><el-menu-item class="MyElMenuItem" index="2-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Desktop.ico"></el-icon>我的课程</el-menu-item></router-link>
                 <router-link to="/TeacherManagerRequest"><el-menu-item class="MyElMenuItem" index="2-4"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Mail.ico"></el-icon>管理申请</el-menu-item></router-link>
               </el-menu-item-group>
             </el-sub-menu>
