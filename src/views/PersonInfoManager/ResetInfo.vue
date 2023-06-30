@@ -22,7 +22,7 @@
       <label for="user-phone" class="user-form__label">Phone Number:</label>
       <input type="text" v-model="formData.phoneNumber" id="user-phone" name="user-phone" class="user-form__input" required>
     </div>
-    <button type="submit" @click="updateUser">Update</button>
+    <el-button style="background-color: #8c2222;color: white" @click="updateUser">Update</el-button>
   </div>
 </template>
 
@@ -138,7 +138,7 @@ export default {
   max-width: 700px;
   margin: 0 auto;
   padding: 40px 20px;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }

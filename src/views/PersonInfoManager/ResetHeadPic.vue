@@ -5,7 +5,7 @@
         <label for="image" class="image-upload__label">Select an image file:</label>
         <input type="file" ref="fileInput" id="image" name="image" class="image-upload__input" accept="image/*" required>
       </div>
-      <button type="submit" class="image-upload__submit-btn" @click="uploadImage">Upload</button>
+      <button style="background-color: #298123;color:white ;" class="image-upload__submit-btn" @click="uploadImage">Upload</button>
     <div v-if="imageURL" class="image-upload__preview">
       <img :src="imageURL" alt="Preview">
     </div>
@@ -65,7 +65,7 @@ export default {
   max-width: 700px;
   margin: 0 auto;
   padding: 40px 20px;
-  background-color: #f5f5f5;
+  background-color: white;
   border-radius: 10px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }

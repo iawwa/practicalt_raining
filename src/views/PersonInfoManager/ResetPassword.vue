@@ -6,7 +6,7 @@
         <label for="password" class="update-password__label">New Password:</label>
         <input type="password" v-model="password" id="password" name="password" class="update-password__input" required>
       </div>
-      <el-button type="danger" @click="sumbit">Submit</el-button>
+      <el-button style="background-color: #8c2222;color: white;border: 0px" @click="sumbit">Submit</el-button>
     </form>
   </div>
 </template>
@@ -59,7 +59,7 @@ export default {
   max-width: 700px;
   margin: 0 auto;
   padding: 40px 20px;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
