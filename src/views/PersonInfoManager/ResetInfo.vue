@@ -1,6 +1,7 @@
 <template>
   <div class="user-form">
-    <h1 class="user-form__title">Update {{ userRole }} Information</h1>
+    <h1 class="user-form__title">修改 {{ userRole }} 信息</h1>
+    <div v-if="uploadSuccess" class="success-message">上传成功！</div>
     <div class="user-form__form-group">
       <label for="user-name" class="user-form__label">Name:</label>
       <input type="text" v-model="formData.name" id="user-name" name="user-name" class="user-form__input" required>
@@ -41,7 +42,8 @@ export default {
         phoneNumber: ''
       },
       user: null,
-      userRole: ''
+      userRole: '',
+      uploadSuccess: false
     };
   },
   methods: {
@@ -55,7 +57,7 @@ export default {
           url = "/updateStu"
           API({
             url:url,
-            method:"get",
+            method:"post",
             params:{
               sname:this.formData.name,
               sex:this.formData.sex,
@@ -67,13 +69,14 @@ export default {
             console.log("sname",this.sname)
             console.log("res.data.msg",res.data.msg)
             console.log("res.data",res.data)
+            this.uploadSuccess = true; // set uploadSuccess to true after successful API call
           })
           break;
         case "teacher":
           url = "/updateTea"
           API({
             url:url,
-            method:"get",
+            method:"post",
             params:{
               tname:this.formData.name,
               sex:this.formData.sex,
@@ -82,15 +85,17 @@ export default {
               phoneNumber: this.formData.phoneNumber
             }
           }).then((res)=>{
+            console.log("tname",this.tname)
             console.log("res.data.msg",res.data.msg)
             console.log("res.data",res.data)
+            this.uploadSuccess = true; // set uploadSuccess to true after successful API call
           })
           break;
         case "manager":
           url = "/updateMan"
           API({
             url:url,
-            method:"get",
+            method:"post",
             params:{
               mname:this.formData.name,
               sex:this.formData.sex,
@@ -101,6 +106,7 @@ export default {
           }).then((res)=>{
             console.log("res.data.msg",res.data.msg)
             console.log("res.data",res.data)
+            this.uploadSuccess = true; // set uploadSuccess to true after successful API call
           })
           break;
         default:
@@ -117,6 +123,7 @@ export default {
           phoneNumber: this.formData.phoneNumber
         }
       }).then((res)=>{
+        console.log("mname",this.mname)
         console.log("res.data.msg",res.data.msg)
         console.log("res.data",res.data)
       })
@@ -203,5 +210,15 @@ export default {
   .user-form {
     padding: 20px;
   }
+}
+
+.success-message {
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  background-color: green;
+  border-radius: 5px;
 }
 </style>

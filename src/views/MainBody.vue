@@ -74,7 +74,8 @@
               <template #title class="MyElMenutitle">
                 <el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Firefox.ico"></el-icon >个人中心
               </template>
-              <router-link v-if="is_admin" to="/PersonInfo"><el-menu-item class="MyElMenuItem" index="1-1"><el-icon><img style="width: 30px;height: 30px;back" src="src/assets/Icons/Home.ico"></el-icon>用户信息管理</el-menu-item></router-link>
+              <router-link v-if="is_admin" to="/PersonInfo"><el-menu-item index="1-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Home.ico"></el-icon>教师信息管理</el-menu-item></router-link>
+              <router-link v-if="is_admin" to="/StudentInfo"><el-menu-item index="1-5"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Get Info.ico"></el-icon>学生信息管理</el-menu-item></router-link>
               <router-link to="/ResetPassword"><el-menu-item class="MyElMenuItem" index="1-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Computer Blue.ico"></el-icon>修改密码</el-menu-item></router-link>
               <router-link to="/ResetHeadPic"><el-menu-item class="MyElMenuItem" index="1-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Pictures.ico"></el-icon>修改头像</el-menu-item></router-link>
               <router-link to="/ResetInfo"><el-menu-item class="MyElMenuItem" index="1-4"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Get Info.ico"></el-icon>信息修改</el-menu-item></router-link>

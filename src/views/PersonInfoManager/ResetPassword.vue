@@ -1,6 +1,6 @@
 <template>
   <div class="update-password">
-    <h2 class="update-password__title">Update Password</h2>
+    <h2 class="update-password__title">修改密码</h2>
     <form @submit.prevent="updatePassword" class="update-password__form">
       <div class="update-password__form-group">
         <label for="password" class="update-password__label">New Password:</label>

@@ -31,6 +31,8 @@ const routes=[
             {path: "/ResetHeadPic",component: () => import("@/views/PersonInfoManager/ResetHeadPic.vue")},
             {path: "/ResetInfo",component: () => import("@/views/PersonInfoManager/ResetInfo.vue")},
             {path: "/MyInfo",component: () => import("@/views/PersonInfoManager/MyInfo.vue")},
+            {path: "/StudentInfo",component: () => import("@/views/PersonInfoManager/StudentInfo.vue")},
+
 
 
             // 试卷考试管理

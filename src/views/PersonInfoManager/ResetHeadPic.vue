@@ -1,11 +1,11 @@
 <template>
   <div class="image-upload">
-    <h2 class="image-upload__title">Upload Image</h2>
-    <div class="image-upload__form-group">
-      <label for="image" class="image-upload__label">Select an image file:</label>
-      <input type="file" ref="fileInput" id="image" name="image" class="image-upload__input" accept="image/*" required>
-    </div>
-    <button type="submit" class="image-upload__submit-btn" @click="uploadImage">Upload</button>
+    <h2 class="image-upload__title">修改头像</h2>
+      <div class="image-upload__form-group">
+        <label for="image" class="image-upload__label">Select an image file:</label>
+        <input type="file" ref="fileInput" id="image" name="image" class="image-upload__input" accept="image/*" required>
+      </div>
+      <button type="submit" class="image-upload__submit-btn" @click="uploadImage">Upload</button>
     <div v-if="imageURL" class="image-upload__preview">
       <img :src="imageURL" alt="Preview">
     </div>
