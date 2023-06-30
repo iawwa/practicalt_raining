@@ -47,7 +47,14 @@ export default {
 
       }).then((res) => {
         console.log("res.data.msg", res.data.msg)
-        this.$router.push({path: '/login'});
+        this.$confirm('密码修改成功，是否返回登录页？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'success'
+        }).then(() => {
+          this.$router.push({path: '/login'});
+        }).catch(() => {
+        });
       })
     }
   }

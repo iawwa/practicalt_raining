@@ -2,15 +2,15 @@
   <div class="container">
     <div class="left">
       <div class="logo">
-        <img src="src/assets/images/123.png"/>
+<!--        <img src="src/assets/images/123.png"/>-->
       </div>
       <div class="icon">
-        <img src="src/assets/images/123.png"/>
+<!--        <img src="src/assets/images/123.png"/>-->
       </div>
     </div>
     <div class="right">
       <div class="left-line">
-        <img  src="src/assets/images/123.png"/>
+<!--        <img  src="src/assets/images/123.png"/>-->
       </div>
       <div id="rollBox" :class = "{'box_Rolling': isRolling}" >
         <div class="login box">

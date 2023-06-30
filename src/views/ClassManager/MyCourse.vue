@@ -190,12 +190,12 @@
                     style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
                     type="text" v-model="addParm.cid" placeholder="请输入班级ID"></el-input>
               </div>
-              <div class="form-row">
-                <el-text class="form-label">视频ID:</el-text>
-                <el-input
-                    style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"
-                    type="text" v-model="addParm.vid" placeholder="请输入视频ID"></el-input>
-              </div>
+<!--              <div class="form-row">-->
+<!--                <el-text class="form-label">视频ID:</el-text>-->
+<!--                <el-input-->
+<!--                    style="margin-left: 20px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);border-radius: 5%"-->
+<!--                    type="text" v-model="addParm.vid" placeholder="请输入视频ID"></el-input>-->
+<!--              </div>-->
   
               <div class="form-row">
                 <el-text class="form-label">视频名称:</el-text>
