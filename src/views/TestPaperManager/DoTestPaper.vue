@@ -16,7 +16,7 @@
           <div slot="header" style="font-weight: bold;">
             题号: {{ currentQuestionIndex + 1 }}
             <transition name="fade-in-linear">
-            <span v-if="visable" style="float: right">得分: {{ UserScore }}</span>
+              <span v-if="visable" style="float: right">得分: {{ UserScore }}</span>
             </transition>
           </div>
           <div style="margin-bottom: 10px;">
@@ -42,12 +42,12 @@
             </transition>
             <transition name="fade-in-linear">
               <div v-if="currentQuestionClass==0">
-              <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex] }}</p>
+                <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex] }}</p>
               </div>
             </transition>
 
 
-<!--            单选题abcd-->
+            <!--            单选题abcd-->
             <transition name="fade-in-linear">
               <div v-if="currentQuestionClass==1">
                 <el-radio-group v-model="result1" class="ml-4">
@@ -56,17 +56,17 @@
                   <el-radio label="c" size="large">C:{{choice_c}}</el-radio>
                   <el-radio label="d" size="large">D:{{choice_d}}</el-radio>
                 </el-radio-group>
-              <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
+                <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
               </div>
             </transition>
             <transition name="fade-in-linear">
               <div v-if="currentQuestionClass==1">
-              <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex] }}</p>
+                <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex] }}</p>
               </div>
             </transition>
 
 
-<!--            填空题-->
+            <!--            填空题-->
             <transition name="fade-in-linear">
               <div v-if="currentQuestionClass==2">
                 <el-input
@@ -75,13 +75,13 @@
                     input-style="width: 200px"
                     placeholder="请输入答案"
                 />
-              <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
+                <p v-if="visable" style="font-weight: bold;">正确答案: {{ currentQuestion.answer }}</p>
               </div>
             </transition>
             <transition name="fade-in-linear">
               <div v-if="currentQuestionClass==2">
 
-              <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex]}}</p>
+                <p v-if="visable">你的答案: {{ UserResult[currentQuestionIndex]}}</p>
               </div>
             </transition>
 
@@ -103,48 +103,50 @@
             :format="format"
             style="margin-bottom: 15px;width: 100%;"
         />
-        <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; margin-top: 10px;">
 
-          <el-button
-              round
-              style="float: right;
-              background-color: #d75959;
-              color: white;
-              border: 0px;
-              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
-              type="primary"
-              @click="ShiftBeforeQuestion">上一题</el-button>
-          <el-button
-              round
-              style="float: right;
-              background-color: #856629;
-              color: white;
-              border: 0px;
-              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
-              type="primary"
-              @click="ShiftNextQuestion">下一题</el-button>
-          <el-button
-              round
-              style="float: right;
-              background-color: #8c2222;
-              color: white;
-              border: 0px;
-              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
-              type="primary"
-              :disabled="visable"
-              @click="SaveCurrentQuestion">保存当前答案</el-button>
-          <el-button
-              round
-              style="float: right;
-              background-color: #298123;
-              color: white;
-              border: 0px;
-              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
-              type="primary"
-              :disabled="isSubmitButtonDisabled||!isStudent"
-              @click="SubmitAnswer">提交</el-button>
+          <div style="display: flex;margin: 3%">
+            <el-button
+                round
+                style="background-color: #d75959;
+        color: white;
+        border: 0px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+                type="primary"
+                @click="ShiftBeforeQuestion">上一题</el-button>
+            <el-button
+                round
+                style="background-color: #856629;
+        color: white;
+        border: 0px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+                type="primary"
+                @click="ShiftNextQuestion">下一题</el-button>
+          </div>
+
+          <div style="display: flex;margin: 3%">
+            <el-button
+                round
+                style="background-color: #8c2222;
+        color: white;
+        border: 0px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+                type="primary"
+                :disabled="visable"
+                @click="SaveCurrentQuestion">保存当前答案</el-button>
+            <el-button
+                round
+                style="background-color: #298123;
+        color: white;
+        border: 0px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+                type="primary"
+                :disabled="isSubmitButtonDisabled||!isStudent"
+                @click="SubmitAnswer">提交</el-button>
+          </div>
 
         </div>
+
         <el-text>答题卡</el-text>
         <el-row>
           <el-col v-for="(question, index) in questions" :key="index" :span="4">
@@ -221,7 +223,7 @@ export default {
       Evisable: false,
       // 用于跟踪每个题目的完成状态
       isQuestionCompleted: [],
-    //timer
+      //timer
       timer:900, // 15 minutes in seconds
     };
   },
@@ -464,17 +466,17 @@ export default {
     Delete() {
       return Delete
     },
-      progressPercentage() {
-        let progress_line;
-        progress_line=(this.currentDonNumb) / this.questions.length * 100;
-        return Math.floor(progress_line);
-      },
+    progressPercentage() {
+      let progress_line;
+      progress_line=(this.currentDonNumb) / this.questions.length * 100;
+      return Math.floor(progress_line);
+    },
     timerFormatted() {
       const minutes = Math.floor(this.timer / 60);
       const seconds = this.timer % 60;
       return `${minutes}:${seconds.toString().padStart(2, "0")}`;
     },
-    },
+  },
 
 };
 </script>
