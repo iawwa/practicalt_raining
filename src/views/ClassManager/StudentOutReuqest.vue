@@ -38,7 +38,7 @@
 
     </div>
 </template>
-    
+
 <script lang='ts'>
 import { Delete, Edit, Search } from '@element-plus/icons-vue'
 import { ElMessageBox } from 'element-plus'
@@ -152,4 +152,3 @@ export default {
 
 
 </script>
-    

@@ -26,7 +26,7 @@ const routes=[
             { path: "/ClassStudent", component: () => import("@/views/ClassManager/ClassStudent.vue") },
             { path: "/TeacherManagerRequest", component: () => import("@/views/ClassManager/TeacherManagerRequest.vue") },
             { path: "/StudentReuqest", component: () => import("@/views/ClassManager/StudentRequest.vue") },
-            { path: "/StudentOutReuqest", component: () => import("@/views/ClassManager/StudentOutRequest.vue") },
+            { path: "/StudentOutReuqest", component: () => import("@/views/ClassManager/StudentOutReuqest.vue") },
 
 
 
