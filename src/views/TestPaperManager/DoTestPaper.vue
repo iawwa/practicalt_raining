@@ -399,17 +399,26 @@ export default {
       if(this.visable==true)
       {
         console.log("this.currentQuestionClass",this.currentQuestionClass)
-        if(this.currentQuestionClass===0)
+        if(this.currentQuestionClass==='0')
         {
-          this.result0=this.UserResult[this.currentQuestionIndex];
+          if(this.UserResult[this.currentQuestionIndex]==='√')
+          {
+            this.result0="a"
+          }
+          else if(this.UserResult[this.currentQuestionIndex]==='×')
+          {
+            this.result0="b"
+          }
         }
-        else if(this.currentQuestionClass===1)
+        else if(this.currentQuestionClass==='1')
         {
           this.result1=this.UserResult[this.currentQuestionIndex];
+          console.log("this.result1",this.result1)
         }
-        else if(this.currentQuestionClass===2)
+        else if(this.currentQuestionClass==='2')
         {
           this.result2=this.UserResult[this.currentQuestionIndex];
+          console.log("this.result2",this.result2)
         }
         else{
 
