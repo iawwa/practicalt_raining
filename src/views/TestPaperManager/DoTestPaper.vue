@@ -101,7 +101,7 @@
             striped-flow
             :duration="10"
             :format="format"
-            style="margin-bottom: 15px;width: auto;"
+            style="margin-bottom: 15px;width: 100%;"
         />
         <div style="display: flex; justify-content: space-between; margin-top: 10px;">
 
@@ -212,8 +212,8 @@ export default {
       //完成题目数量
       currentDonNumb:0,
       progressPercentage: 0,
-      format:(percentage) => (percentage === 100 ? '完成' : `${percentage}%`),
-
+      // format:(percentage) => (percentage === 100 ? '完成' : `${percentage}%`),
+      format:(percentage) => (""),
       //再提交后禁用
       isSaveButtonDisabled: false,
       isSubmitButtonDisabled: false,
@@ -342,6 +342,7 @@ export default {
         title: '保存',
         offset: 100,
         customClass:"SaveSuccess",
+        position: 'bottom-left',
       })
     },
     SubmitAnswer() {
