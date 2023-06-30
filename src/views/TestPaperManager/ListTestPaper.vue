@@ -167,7 +167,7 @@
         <el-table-column label="试卷号" prop="eid" />
         <el-table-column label="题目号" prop="qid"  />
         <el-table-column label="题目类型" prop="qtype"  />
-        <el-table-column label="题目正文" prop="qdescribe"  />
+<!--        <el-table-column label="题目正文" prop="qdescribe"  />-->
         <el-table-column label="答案" prop="answer" />
         <el-table-column label="A" prop="a"  />
         <el-table-column label="B" prop="b"  />
