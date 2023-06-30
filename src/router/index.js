@@ -18,6 +18,13 @@ const routes=[
             // {path: "/MyCourse",component: () => import("@/views/CourseManager/MyCourse.vue") },
             // {path: "/CreateCourse",component: () => import("@/views/CourseManager/CreateCourse.vue")},
 
+            //班级管理
+            {path:"/TeacherManagerRequest",component: () => import("@/views/ClassManager/TeacherManagerRequest.vue")},
+
+
+
+
+
             // 个人中心
             {path: '/PersonInfo', component: ()=> import("@/views/PersonInfoManager/PersonInfo.vue") },
             {path: "/ResetPassword", component: () => import("@/views/PersonInfoManager/ResetPassword.vue")},

@@ -90,6 +90,7 @@
                 <router-link to=""><el-menu-item class="MyElMenuItem" index="2-1"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Developer Folder.ico"></el-icon>所有班级</el-menu-item></router-link>
                 <router-link to=""><el-menu-item class="MyElMenuItem" index="2-2"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Public.ico"></el-icon>我的班级</el-menu-item></router-link>
                 <router-link to=""><el-menu-item class="MyElMenuItem" index="2-3"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Desktop.ico"></el-icon>我的课程</el-menu-item></router-link>
+                <router-link to="/TeacherManagerRequest"><el-menu-item class="MyElMenuItem" index="2-4"><el-icon><img style="width: 30px;height: 30px" src="src/assets/Icons/Mail.ico"></el-icon>管理申请</el-menu-item></router-link>
               </el-menu-item-group>
             </el-sub-menu>
 
