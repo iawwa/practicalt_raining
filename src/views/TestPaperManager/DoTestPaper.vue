@@ -486,7 +486,7 @@ export default {
   color: white !important;
 }
 .incorrect-question {
-  background-color: indianred !important;
+  background-color: #8c2222 !important;
   color: white !important;
 }
 .SaveSuccess
