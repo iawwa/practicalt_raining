@@ -89,48 +89,7 @@
 
           </div>
 
-          <div style="display: flex; justify-content: space-between; margin-top: 10px;">
 
-            <el-button
-                round
-                style="float: right;
-              background-color: #d75959;
-              color: white;
-              border: 0px;
-              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
-                type="primary"
-                @click="ShiftBeforeQuestion">上一题</el-button>
-            <el-button
-                round
-                style="float: right;
-              background-color: #856629;
-              color: white;
-              border: 0px;
-              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
-                type="primary"
-                @click="ShiftNextQuestion">下一题</el-button>
-            <el-button
-                round
-                style="float: right;
-              background-color: #8c2222;
-              color: white;
-              border: 0px;
-              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
-                type="primary"
-                :disabled="visable"
-                @click="SaveCurrentQuestion">保存当前答案</el-button>
-            <el-button
-                round
-                style="float: right;
-              background-color: #298123;
-              color: white;
-              border: 0px;
-              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
-                type="primary"
-                :disabled="isSubmitButtonDisabled||!isStudent"
-                @click="SubmitAnswer">提交</el-button>
-
-          </div>
         </el-card>
       </el-aside>
       <el-main style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -144,6 +103,48 @@
             :format="format"
             style="margin-bottom: 15px;width: auto;"
         />
+        <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+
+          <el-button
+              round
+              style="float: right;
+              background-color: #d75959;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+              type="primary"
+              @click="ShiftBeforeQuestion">上一题</el-button>
+          <el-button
+              round
+              style="float: right;
+              background-color: #856629;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+              type="primary"
+              @click="ShiftNextQuestion">下一题</el-button>
+          <el-button
+              round
+              style="float: right;
+              background-color: #8c2222;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+              type="primary"
+              :disabled="visable"
+              @click="SaveCurrentQuestion">保存当前答案</el-button>
+          <el-button
+              round
+              style="float: right;
+              background-color: #298123;
+              color: white;
+              border: 0px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);"
+              type="primary"
+              :disabled="isSubmitButtonDisabled||!isStudent"
+              @click="SubmitAnswer">提交</el-button>
+
+        </div>
         <el-text>答题卡</el-text>
         <el-row>
           <el-col v-for="(question, index) in questions" :key="index" :span="4">
