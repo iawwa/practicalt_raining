@@ -338,6 +338,7 @@
         },
         loading:true,
         vlink:'',
+        cid:"",
       }
     },
     computed: {
@@ -468,12 +469,7 @@
         this.loading=true;
         let current_data=this.$cookies.get("data");
         let obj = {}
-       // console.log(current_data);
-       // console.log(11);
-       // console.log(this);
         if(this.is_studnet){
-          //console.log(2222);
-          // 取cid
           API({
             url: '/class/yijiaru',
             method: 'get',
@@ -482,16 +478,18 @@
             console.log(res)
              console.log("======",res)
             let datastudent = res.data;
-            console.log("current_data====",datastudent)   
+            console.log("current_data====",datastudent)
             datastudent.forEach(el => {
               console.log(44444);
                 console.log("aaa",el)
-                obj['cid'] = el.cid;
+
                 console.log("el.cid",el.cid)
                 API({
                   url: '/selectVideoByCid',
                   method: 'get',
-                  params: obj
+                  params:{
+                    cid:this.cid,
+                  }
                 }).then((res) => {
                   this.videoPaperData = [res.data];
                   this.total=this.videoPaperData.length
@@ -499,7 +497,6 @@
                 })
               
             }
-             
             );
           })
         }else{
@@ -515,11 +512,12 @@
             data.forEach(el => {
 
               if(el.tid == current_data.tid){
-                obj['cid'] = el.cid;
                 API({
                   url: '/selectVideoByCid',
                   method: 'get',
-                  params: obj
+                  params:{
+                    cid:this.cid,
+                  }
                 }).then((res) => {
                   this.videoPaperData = [res.data];
                   this.total=this.videoPaperData.length
@@ -529,9 +527,7 @@
             });
           })
         }
-        
-  
-        
+
         this.loading=false
       }
   
@@ -540,7 +536,7 @@
     // 初始化函数
     mounted() {
       // 在mounted钩子中调用getData
-      
+      this.cid=this.$route.query.cid
       let current_role=this.$cookies.get("role");
       console.log(this.$cookies.get("role"))
       switch(current_role){

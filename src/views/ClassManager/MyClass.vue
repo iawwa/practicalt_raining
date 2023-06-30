@@ -54,6 +54,10 @@
               <el-button size="small" type="danger" :disabled="!is_teacher" style="background-color:#8c2222;border: 0px"
                 @click="handleDelete(scope.row.cid)">删除</el-button>
             </el-col>
+            <el-col>
+              <el-button size="small" type="default" :disabled="!is_teacher" style="background-color: #856629;color:white ;border: 0px"
+                         @click="OpenCourseVideo(scope.row.cid)">视频</el-button>
+            </el-col>
           </el-row>
         </template>
       </el-table-column>
@@ -142,6 +146,9 @@ export default {
     // ElInput, ElButton, CircleCloseFilled, ElDialog,
   },
   methods: {
+    OpenCourseVideo(cid){
+      this.$router.push({ path: '/MyCourse', query: { cid } });
+    },
     rowClassName({ rowIndex }) {
       return rowIndex % 2 === 0 ? 'row-color-even' : 'row-color-odd';
     },
