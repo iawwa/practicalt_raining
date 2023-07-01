@@ -1,10 +1,10 @@
 <template>
   <el-container>
     <el-main>
-    <el-table :data="TestPaperData.data" border
+    <el-table :data="TestPaperData" border
               style="width: auto;
               margin-left: 10px;
-              height: 80vh;
+              height: auto;
               margin-top: 10px;
               margin-right: 10px"
     >
@@ -39,31 +39,31 @@ export default {
   data() {
     return {
       TestPaperData:"",
-      currentPage:0,
+      currentPage:1,
       total:0,
-      pageSize:9,
+      pageSize:12,
     }
   },
   methods: {
     handleCurrentChange(number)
     {
       this.currentPage=number
-      this.search_data()
+      this.search_data(number)
     },
-    search_data()
+    search_data(num=this.currentPage)
     {
       API({
         url: '/selectScore',
         method: 'get',
         params: {
           sid:this.$cookies.get("data").sid,
-          page:this.currentPage,
+          page:num,
           limit:this.pageSize,
         }
       }).then((res) => {
         console.log("res.data", res.data);
-        this.TestPaperData=res.data;
-        this.total=res.data.data.length;
+        this.TestPaperData=res.data.data.list;
+        this.total=res.data.data.total;
         console.log("total.data", this.total);
       })
     },
