@@ -57,7 +57,7 @@ export default {
     return {
       RequestData:"",
       currentPage:1,
-      pageSize:9,
+      pageSize:12,
       total:0,
     }
   },
@@ -116,8 +116,8 @@ export default {
         }
       }).then((res) => {
         console.log("res.data", res.data);
-        this.RequestData=res.data;
-        this.total=res.data.length
+        this.RequestData=res.data.data.list;
+        this.total=res.data.data.total,
         console.log("this.total",this.total)
       })
     },
