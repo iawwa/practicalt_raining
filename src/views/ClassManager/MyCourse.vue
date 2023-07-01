@@ -473,7 +473,7 @@
           API({
             url: '/class/yijiaru',
             method: 'get',
-            params: {pageNum:1,pageSize:100}
+            params: {pageNum:1,pageSize:10}
           }).then((res) => {
             console.log(res)
              console.log("======",res)
@@ -504,7 +504,7 @@
           API({
             url: '/selectAllClass',
             method: 'get',
-            params: {pageNum:1,pageSize:100}
+            params: {pageNum:1,pageSize:10}
           }).then((res) => {
              console.log("======",res)
             let data = res.data;

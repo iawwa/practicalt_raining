@@ -2,10 +2,10 @@
   <div style="padding: 10px">
     <div style="margin: 10px 0">
       <!--      搜索区域-->
-      <el-input v-model="search" placeholder="请输入班级名称" style="width: 20%" />
+      <el-input v-model="search" placeholder="请输入班级名称" style="width: 20%" clearable/>
       <el-button type="primary" :icon="Search" @click="SearchClass" style="margin-left: 5px">查询</el-button>
       <!-- 新建班级 -->
-      <el-button type="primary" @click="dialogVisible = true" :disabled="!is_teacher"
+      <el-button type="primary" @click="dialogVisible = true" v-if="is_teacher"
                  style="margin-left: 5px">新建班级</el-button>
     </div>
 
@@ -46,12 +46,12 @@
               </el-button>
             </el-col>
             <el-col>
-              <el-button :disabled="!is_teacher" size="small"
+              <el-button v-if="is_teacher" size="small"
                          style="background-color: white;border: 1px solid #8c2222;color: black" type="default"
                          @click=" Visible = true">编辑</el-button>
             </el-col>
             <el-col>
-              <el-button size="small" type="danger" :disabled="!is_teacher" style="background-color:#8c2222;border: 0px"
+              <el-button size="small" type="danger" v-if="is_teacher" style="background-color:#8c2222;border: 0px"
                          @click="handleDelete(scope.row.cid)">删除</el-button>
             </el-col>
             <el-col>
@@ -226,10 +226,11 @@ export default {
           keyword: this.search
         }
       }).then((res) => {
-        console.log(this.$cookies.get("role"))
+        this.ClassListData = res.data;
+        this.total = res.data.count
       })
     },
-    // 根据班级名展示信息
+    // 展示信息
     SearchClassListData(default_current_page = this.currentPage,urls) {
       this.loading = true
       if (this.$cookies.get("role")=='teacher') {

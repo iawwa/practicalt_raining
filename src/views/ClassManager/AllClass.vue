@@ -4,10 +4,10 @@
             <!--      搜索区域-->
             <el-input v-model="search" placeholder="请输入班级名称" style="width: 20%" />
             <el-button type="primary" :icon="Search" @click="SearchClassListData" style="margin-left: 5px">查询</el-button>
-            <el-button :disabled="!is_studnet" style="margin-left: 5px"
+            <el-button v-if="is_studnet" style="margin-left: 5px"
                 @click="handleRequest">申请加入班级
             </el-button>
-            <el-button :disabled="!is_studnet" style="margin-left: 5px"
+            <el-button v-if="is_studnet" style="margin-left: 5px"
                 @click="handleOutRequest">申请退出班级
             </el-button>
         </div>
@@ -91,7 +91,7 @@ export default {
         //   this.currentPage = number
         //   this.SearchClassListData(number)
         // },
-        //根据班级名展示信息
+        //根据班级名(关键词)展示信息
         SearchClassListData(default_current_page = this.currentPage) {
             this.loading = true
             this.classSearch.keyword = this.search

@@ -149,7 +149,6 @@ export default {
    this.formData.email=this.$cookies.get("data").email;
    this.formData.phoneNumber=this.$cookies.get("data").phoneNumber;
     this.formData.sex=this.$cookies.get("data").sex;
-
   }
 }
 

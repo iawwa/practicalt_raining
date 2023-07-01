@@ -1,8 +1,9 @@
 <template>
   <div>
-    <!-- 教师管理页面标题 -->
+    <!-- 学生管理页面标题 -->
     <h1>学生管理</h1>
-
+    <!-- 添加学生按钮 -->
+    <el-button type="primary" icon="el-icon-plus" @click="dialogVisible = true">添加学生</el-button>
     <!-- 学生列表 -->
     <el-table :data="students" style="width: 100%; margin-top: 20px;">
       <el-table-column prop="sid" label="ID" width="150"></el-table-column>
@@ -13,18 +14,17 @@
       <el-table-column prop="phoneNumber" label="电话" width="150"></el-table-column>
       <el-table-column fixed="right" label="操作" width="200">
         <template #default="scope">
-          <div v-if="scope.$index === 0">
-            <!-- 编辑教师按钮 -->
-            <el-button @click="Visible = true">编辑</el-button>
-            <!-- 删除教师按钮 -->
-            <el-button type="danger" @click="Visible1= true">删除</el-button>
+          <div v-if="scope">
+            <!-- 编辑学生按钮 -->
+            <el-button @click="editStudent1(scope.row.sid)">编辑</el-button>
+<!--            &lt;!&ndash; 删除学生按钮 &ndash;&gt;-->
+<!--            <el-button type="danger" @click="deleteStudent1(scope.row.sid)" >删除</el-button>-->
           </div>
         </template>
       </el-table-column>
     </el-table>
 
-    <!-- 添加教师按钮 -->
-    <el-button type="primary" icon="el-icon-plus" @click="dialogVisible = true">添加学生</el-button>
+
 
     <!-- 添加学生对话框 -->
     <el-dialog :title="dialogTitle" v-model="dialogVisible" width="30%" :before-close="handleClose">
@@ -67,8 +67,8 @@
     <el-dialog :title="dialogTitle" v-model="Visible" width="30%" :before-close="handleClose">
       <!-- 学生信息表单 -->
       <el-form :model="student" :rules="rules" ref="form">
-        <el-form-item label="id" prop="sid">
-          <el-input v-model="student.id"></el-input>
+        <el-form-item label="username" prop="username">
+          <el-input v-model="student.username"></el-input>
         </el-form-item>
         <el-form-item label="姓名" prop="sname">
           <el-input v-model="student.sname"></el-input>
@@ -96,12 +96,12 @@
         <el-button type="primary" @click="editStudent">确 定</el-button>
       </div>
     </el-dialog>
-    <!-- 删除教师对话框 -->
+    <!-- 删除学生对话框 -->
     <el-dialog :title="dialogTitle" v-model="Visible1" width="30%" :before-close="handleClose">
-      <!-- 教师信息表单 -->
+      <!-- 学生信息表单 -->
       <el-form :model="student" :rules="rules" ref="form">
         <el-form-item label="id" prop="id">
-          <el-input v-model="student.id"></el-input>
+          <el-input v-model="student.sid"></el-input>
         </el-form-item>
       </el-form>
       <!-- 对话框底部按钮 -->
@@ -110,6 +110,14 @@
         <el-button type="primary" @click="deleteStudent">确 定</el-button>
       </div>
     </el-dialog>
+    <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page.sync="pageNum"
+        :page-size="pageSize"
+        layout="prev, pager, next"
+        :total="total"
+        style="margin-top: 20px; text-align: right;"
+    ></el-pagination>
   </div>
 </template>
 <script>
@@ -117,19 +125,22 @@ import API from "../../axios/request";
 import { reactive, ref } from 'vue'
 import {ElButton} from "element-plus";
 import {ElDialog} from "element-plus";
+import {ElPagination} from "element-plus";
+
 
 export default {
   data() {
     return {
-      pageNum: '',
-      pageSize: '',
+      pageNum: 1,
+      pageSize: 10,
+      total:0,
       students: [],
       dialogTitle: '',
       Visible: false,
       Visible1:false,
       dialogVisible: false,
       student: {
-        id: '',
+        sid: '',
         username: '',
         password: '',
         sname:'',
@@ -139,7 +150,7 @@ export default {
         phoneNumber: '',
       },
       rules: {
-        id:[
+        sid:[
           {required: true, message: '请输入用户名', trigger: 'blur'}
         ],
         username: [
@@ -173,22 +184,31 @@ export default {
     };
   },
   component:{
-    ElButton,ElDialog
+    ElButton,ElDialog,ElPagination,
   },
   mounted() {
-    API({
-      url: "/student/listall",
-      method: "get",
-      params: {
-        pageNum: 1,
-        pageSize: 20,
-      }
-    }).then((res) => {
-      this.students = res.data;
-      console.log("res.data", res.data)
-    })
+    this.getStudents();
+
   },
   methods: {
+    getStudents(pageNum=this.pageNum){
+      API({
+        url: "/student/listall",
+        method: "get",
+        params: {
+          pageNum: pageNum,
+          pageSize: this.pageSize,
+        }
+      }).then((res) => {
+        this.students = res.data;
+        this.total = 30;
+        console.log("res.data", res.data)
+      })
+    },
+    handleCurrentChange(number){
+      this.pageNum = number;
+      this.getStudents(number);
+    },
     addStudent() {
       let msg = "";
       API({
@@ -211,13 +231,18 @@ export default {
         this.dialogVisible = false;
       })
     },
-    editStudent() {
+    editStudent1(sid){
+      this.Visible = true;
       this.dialogTitle = '编辑学生信息';
+      this.sid=sid;
+    },
+    editStudent() {
       API({
         url:"/student/mod",
         method:"put",
         data: JSON.stringify({
-          sid:this.student.id,
+          sid:this.sid,
+          username:this.student.username,
           sname: this.student.sname,
           sex: this.student.sex,
           age: this.student.age,
@@ -233,20 +258,35 @@ export default {
       })
     },
     // 删除教师
+    deleteStudent1(sid){
+      // this.Visible1= true;
+      // this.dialogTitle="删除学生";
+      this.sid = sid;
+      this.deleteStudent();
+    },
     deleteStudent(){
-      this.Visible1="删除学生";
+      // this.Visible1= true;
+      // this.dialogTitle="删除学生";
       API({
         url:"/student/delete",
         method:"delete",
         data: JSON.stringify({
-          sid:this.student.id,
+          sid:this.sid
         }),
         headers: {
           "Content-Type": "application/json"
         }
       }).then((res)=>{
         console.log("res.data.msg", res.data.msg)
-        this.Visible1=false;
+        console.log("sid",sid)
+            this.$confirm('删除成功', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'success'
+            }).then(() => {
+              // this.Visible=false
+            }).catch(() => {
+            });
       })
     },
 

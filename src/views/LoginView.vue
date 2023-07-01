@@ -1,18 +1,18 @@
 <template>
-  <div class="container">
-    <div class="left">
-      <div class="logo">
-<!--        <img src="src/assets/images/123.png"/>-->
+  <div class="container" style="background-color: white">
+    <div class="left" style="background-color: white">
+      <div class="logo" style="background-color: white">
+<!--        <img style="width: 100%;" src="src/assets/login.png"/>-->
       </div>
       <div class="icon">
-<!--        <img src="src/assets/images/123.png"/>-->
+      <img style="width: 100%;" src="src/assets/login.png"/>
       </div>
     </div>
     <div class="right">
       <div class="left-line">
-<!--        <img  src="src/assets/images/123.png"/>-->
+        <img style="width: auto;margin-left: 100px"  src="src/assets/登录封面2.png"/>
       </div>
-      <div id="rollBox" :class = "{'box_Rolling': isRolling}" >
+      <div id="rollBox" :class = "{'box_Rolling': isRolling}"  >
         <div class="login box">
           <h3>欢迎登录</h3>
           <div class="box-form">
@@ -199,7 +199,12 @@ export default {
       }).then((res) => {
           console.log("res.data.msg", res.data.msg)
           console.log("res.data",res.data)
-        this.$router.push({ path: '/login'});
+        this.$confirm('注册成功', {
+          confirmButtonText: '确定',
+          cancelButtonText: null,
+          showCancelButton: false,
+          type: 'success'
+        })
       })
 
     },

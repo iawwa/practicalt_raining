@@ -1,14 +1,11 @@
 <template>
   <div class="image-upload">
     <h2 class="image-upload__title">修改头像</h2>
-      <div class="image-upload__form-group">
-        <label for="image" class="image-upload__label">Select an image file:</label>
-        <input type="file" ref="fileInput" id="image" name="image" class="image-upload__input" accept="image/*" required>
-      </div>
-      <button style="background-color: #298123;color:white ;" class="image-upload__submit-btn" @click="uploadImage">Upload</button>
-    <div v-if="imageURL" class="image-upload__preview">
-      <img :src="imageURL" alt="Preview">
+    <div class="image-upload__form-group">
+      <label for="image" class="image-upload__label">Select an image file:</label>
+      <input type="file" ref="fileInput" id="image" name="image" class="image-upload__input" accept="image/*" required>
     </div>
+    <button style="background-color: #298123;color:white ;" class="image-upload__submit-btn" @click="uploadImage">Upload</button>
   </div>
 </template>
 
@@ -27,17 +24,17 @@ export default {
       const file = this.$refs.fileInput.files[0];
       const formData = new FormData();
       formData.append("multipartFile", file);
-      let url="";
+      let url = "";
       this.userRole = this.$cookies.get("role")
       switch (this.userRole) {
         case "student":
-          url="/updateStuImageData"
+          url = "/updateStuImageData"
           break;
         case "teacher":
-          url="/updateTeaImageData"
+          url = "/updateTeaImageData"
           break;
         case "manager":
-          url="/updateImageData"
+          url = "/updateImageData"
           break;
         default:
           break;
@@ -52,8 +49,15 @@ export default {
       }).then((res) => {
         console.log("res", res);
         this.imageURL = "data:image/png;base64," + res.imageBase64;
-      }).catch((err) => {
-        console.log("err", err);
+        this.$confirm('上传成功', {
+          confirmButtonText: '确定',
+          cancelButtonText: null,
+          showCancelButton:false,
+          type: 'success'
+        }).then(() => {
+          // this.Visible=false
+        }).catch(() => {
+        });
       })
     }
   }

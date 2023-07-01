@@ -2,7 +2,11 @@
   <div>
     <!-- 教师管理页面标题 -->
     <h1>教师管理</h1>
-
+    <!--      搜索区域-->
+    <el-input v-model="search" placeholder="请输入教师名称" style="width: 20%" />
+    <el-button type="primary" :icon="Search" @click="SearchTeacher" style="margin-left: 5px">查询</el-button>
+    <!-- 添加教师按钮 -->
+    <el-button type="primary" icon="el-icon-plus" @click="dialogVisible = true">添加教师</el-button>
     <!-- 教师列表 -->
     <el-table :data="teachers" style="width: 100%; margin-top: 20px;">
       <el-table-column prop="tid" label="ID" width="150"></el-table-column>
@@ -13,18 +17,17 @@
       <el-table-column prop="phoneNumber" label="电话" width="150"></el-table-column>
       <el-table-column fixed="right" label="操作" width="200">
         <template #default="scope">
-          <div v-if="scope.$index === 0">
+          <div v-if="scope">
           <!-- 编辑教师按钮 -->
-          <el-button @click="Visible = true">编辑</el-button>
-          <!-- 删除教师按钮 -->
-          <el-button type="danger" @click="Visible1= true">删除</el-button>
+          <el-button @click="editTeacher1(scope.row.tid)">编辑</el-button>
+<!--          &lt;!&ndash; 删除教师按钮 &ndash;&gt;-->
+<!--          <el-button type="danger" @click="Visible1= true">删除</el-button>-->
           </div>
         </template>
       </el-table-column>
     </el-table>
 
-    <!-- 添加教师按钮 -->
-    <el-button type="primary" icon="el-icon-plus" @click="dialogVisible = true">添加教师</el-button>
+
 
     <!-- 添加教师对话框 -->
     <el-dialog :title="dialogTitle" v-model="dialogVisible" width="30%" :before-close="handleClose">
@@ -67,8 +70,8 @@
     <el-dialog :title="dialogTitle" v-model="Visible" width="30%" :before-close="handleClose">
       <!-- 教师信息表单 -->
       <el-form :model="teacher" :rules="rules" ref="form">
-        <el-form-item label="id" prop="tname">
-          <el-input v-model="teacher.id"></el-input>
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="teacher.username"></el-input>
         </el-form-item>
         <el-form-item label="姓名" prop="tname">
           <el-input v-model="teacher.tname"></el-input>
@@ -110,6 +113,15 @@
         <el-button type="primary" @click="deleteTeacher">确 定</el-button>
       </div>
     </el-dialog>
+    <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page.sync="currentPage"
+        :page-size="pageSize"
+        layout="prev, pager, next"
+        :total="total"
+        style="margin-top: 20px; text-align: right;"
+    ></el-pagination>
+
   </div>
 </template>
 <script>
@@ -121,15 +133,16 @@ import {ElDialog} from "element-plus";
 export default {
   data() {
     return {
-      pageNum: '',
-      pageSize: '',
+      currentPage: 1,
+      pageSize: 10,
+      total:0,
       teachers: [],
       dialogTitle: '',
       Visible: false,
       Visible1:false,
       dialogVisible: false,
       teacher: {
-        id: '',
+        tid: '',
         username: '',
         password: '',
         tname:'',
@@ -139,7 +152,7 @@ export default {
         phone: '',
       },
       rules: {
-        id:[
+        tid:[
           {required: true, message: '请输入用户名', trigger: 'blur'}
         ],
         username: [
@@ -177,19 +190,28 @@ export default {
     ElButton,ElDialog
   },
   mounted() {
-    API({
-      url: "/teacher/listallTeacher",
-      method: "get",
-      params: {
-        pageNum: 1,
-        pageSize: 10,
-      }
-    }).then((res) => {
-      this.teachers = res.data;
-      console.log("res.data", res.data)
-    })
+    this.getTeachers();
+
   },
   methods: {
+    getTeachers(){
+      API({
+        url: "/teacher/listallTeacher",
+        method: "get",
+        params: {
+          pageNum: this.currentPage,
+          pageSize: this.pageSize,
+        }
+      }).then((res) => {
+        this.teachers = res.data;
+        this.total = res.data.length;
+        console.log("res.data", res.length)
+      })
+    },
+    handleCurrentChange(val){
+      this.pageNum = val;
+      this.getTeachers();
+    },
     addTeacher() {
       let msg = "";
       API({
@@ -212,13 +234,17 @@ export default {
         this.dialogVisible = false;
       })
     },
-    editTeacher() {
+    editTeacher1(tid){
+      this.Visible= true;
       this.dialogTitle = '编辑教师信息';
+      this.tid=tid;
+    },
+    editTeacher() {
       API({
         url:"/teacher/modTeacher",
         method:"put",
         data: JSON.stringify({
-          tid:this.teacher.id,
+          tid:this.tid,
           tname: this.teacher.tname,
           sex: this.teacher.sex,
           age: this.teacher.age,

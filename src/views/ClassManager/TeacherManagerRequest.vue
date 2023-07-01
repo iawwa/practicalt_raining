@@ -116,8 +116,8 @@ export default {
         }
       }).then((res) => {
         console.log("res.data", res.data);
-        this.RequestData=res.data.data.list;
-        this.total=res.data.data.total,
+        this.RequestData=res.data;
+        this.total=res.data.count,
         console.log("this.total",this.total)
       })
     },
