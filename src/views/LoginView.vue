@@ -5,12 +5,12 @@
 <!--        <img style="width: 100%;" src="src/assets/login.png"/>-->
       </div>
       <div class="icon">
-      <img style="width: 100%;" src="src/assets/login.png"/>
+      <img style="width: 500px;height: 600px;margin-left: 90px;margin-top: 15px;" src="src/assets/登录封面2.png"/>
       </div>
     </div>
     <div class="right">
       <div class="left-line">
-        <img style="width: auto;margin-left: 100px"  src="src/assets/登录封面2.png"/>
+        <!-- <img style="width: auto;margin-left: 80px"/> -->
       </div>
       <div id="rollBox" :class = "{'box_Rolling': isRolling}"  >
         <div class="login box">
