@@ -1,50 +1,50 @@
 <template>
   <el-container>
     <el-main>
-  <el-table :data="RequestData" border
-            style="width: auto;
+      <el-table :data="RequestData" border
+                style="width: auto;
               margin-left: 10px;
               height: 80vh;
               margin-top: 10px;
               margin-right: 10px"
-            :default-sort="{ prop: 'score', order: 'descending' }"
-  >
-    <el-table-column label="学生ID" prop="sid"  />
-    <el-table-column label="学生名字" prop="sname" />
-    <el-table-column label="班级ID" prop="cid" />
-    <el-table-column label="班级名字" prop="cname" />
-    <el-table-column align="right" >
-      <template #header></template>
-      <template #default="scope">
-        <el-button
-            size="small"
-            type="success"
-            style="border: 0px;background-color: #298123"
-            @click="handleAgreeRequest(scope.row.sid,scope.row.cid)">同意
-        </el-button>
-        <el-button
-            size="small"
-            style="background-color: #8c2222;border: 1px solid #8c2222;color: white"
-            type="default"
-            @click="handleDisagreeRequest(scope.row.sid,scope.row.cid)">拒绝</el-button>
+                :default-sort="{ prop: 'score', order: 'descending' }"
+      >
+        <el-table-column label="学生ID" prop="sid"  />
+        <el-table-column label="学生名字" prop="sname" />
+        <el-table-column label="班级ID" prop="cid" />
+        <el-table-column label="班级名字" prop="cname" />
+        <el-table-column align="right" >
+          <template #header></template>
+          <template #default="scope">
+            <el-button
+                size="small"
+                type="success"
+                style="border: 0px;background-color: #298123"
+                @click="handleAgreeRequest(scope.row.sid,scope.row.cid)">同意
+            </el-button>
+            <el-button
+                size="small"
+                style="background-color: #8c2222;border: 1px solid #8c2222;color: white"
+                type="default"
+                @click="handleDisagreeRequest(scope.row.sid,scope.row.cid)">拒绝</el-button>
 
-      </template>
-    </el-table-column>
-    </el-table>
+          </template>
+        </el-table-column>
+      </el-table>
     </el-main>
-  <el-footer>
-    <el-affix position="bottom" :offset="20">
+    <el-footer>
+      <el-affix position="bottom" :offset="20">
 
-      <el-pagination
-          :background="true"
-          :page-size="pageSize"
-          :total="total"
-          layout=" prev, pager, next"
-          @current-change="handleCurrentChange"
-          class="pagination"
-      />
-    </el-affix>
-  </el-footer>
+        <el-pagination
+            :background="true"
+            :page-size="pageSize"
+            :total="total"
+            layout=" prev, pager, next"
+            @current-change="handleCurrentChange"
+            class="pagination"
+        />
+      </el-affix>
+    </el-footer>
   </el-container>
 </template>
 
@@ -66,13 +66,13 @@ export default {
       API({
         url: '/student/agreeRequest',
         method: 'put',
-          data: {
-            sid: sid,
-            cid: cid,
-          },
-          headers: {
-            'Content-Type': 'application/json',
-          },
+        data: {
+          sid: sid,
+          cid: cid,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
 
       }).then((res) => {
         console.log("res", res);
@@ -116,9 +116,9 @@ export default {
         }
       }).then((res) => {
         console.log("res.data", res.data);
-        this.RequestData=res.data;
-        this.total=res.data.count,
-        console.log("this.total",this.total)
+        this.RequestData=res.data.data.list;
+        this.total=res.data.data.total,
+            console.log("this.total",this.total)
       })
     },
   },mounted() {
