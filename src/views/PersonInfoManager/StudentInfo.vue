@@ -2,6 +2,9 @@
   <div>
     <!-- 学生管理页面标题 -->
     <h1>学生管理</h1>
+    <!--      搜索区域-->
+    <el-input v-model="search" placeholder="请输入学生名称" style="width: 20%" />
+    <el-button type="primary" :icon="Search" @click="SearchStudent" style="margin-left: 5px">查询</el-button>
     <!-- 添加学生按钮 -->
     <el-button type="primary" icon="el-icon-plus" @click="dialogVisible = true">添加学生</el-button>
     <!-- 学生列表 -->
@@ -131,6 +134,7 @@ import {ElPagination} from "element-plus";
 export default {
   data() {
     return {
+      search:'',
       pageNum: 1,
       pageSize: 10,
       total:0,
@@ -203,6 +207,18 @@ export default {
         this.students = res.data;
         this.total = 30;
         console.log("res.data", res.data)
+      })
+    },
+    SearchStudent(){
+      API({
+        url: '/student/lists',
+        method: 'get',
+        params: {
+          sname: this.search
+        }
+      }).then((res) => {
+        this.students=res.data
+        console.log("res.data",res.data.msg)
       })
     },
     handleCurrentChange(number){

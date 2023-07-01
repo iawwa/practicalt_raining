@@ -18,10 +18,10 @@
       <el-table-column fixed="right" label="操作" width="200">
         <template #default="scope">
           <div v-if="scope">
-          <!-- 编辑教师按钮 -->
-          <el-button @click="editTeacher1(scope.row.tid)">编辑</el-button>
-<!--          &lt;!&ndash; 删除教师按钮 &ndash;&gt;-->
-<!--          <el-button type="danger" @click="Visible1= true">删除</el-button>-->
+            <!-- 编辑教师按钮 -->
+            <el-button @click="editTeacher1(scope.row.tid)">编辑</el-button>
+            <!--          &lt;!&ndash; 删除教师按钮 &ndash;&gt;-->
+            <!--          <el-button type="danger" @click="Visible1= true">删除</el-button>-->
           </div>
         </template>
       </el-table-column>
@@ -133,6 +133,7 @@ import {ElDialog} from "element-plus";
 export default {
   data() {
     return {
+      search:'',
       currentPage: 1,
       pageSize: 10,
       total:0,
@@ -141,6 +142,9 @@ export default {
       Visible: false,
       Visible1:false,
       dialogVisible: false,
+      TeacherSearch:{
+        keywords:''
+      },
       teacher: {
         tid: '',
         username: '',
@@ -204,13 +208,27 @@ export default {
         }
       }).then((res) => {
         this.teachers = res.data;
-        this.total = res.data.length;
-        console.log("res.data", res.length)
+        this.total = 10;
+        console.log("res.data", res.data)
       })
     },
     handleCurrentChange(val){
-      this.pageNum = val;
+      this.currentPage = val;
       this.getTeachers();
+    },
+    SearchTeacher() {
+      console.log("search",this.search)
+      API({
+        url: '/teacher/listoneTeacher',
+        method: 'get',
+        params: {
+          tname: this.search
+        }
+      }).then((res) => {
+        console.log("res.list",res.data)
+        this.teachers=res.data
+        console.log("res.data",res.data.msg)
+      })
     },
     addTeacher() {
       let msg = "";
@@ -275,7 +293,7 @@ export default {
         console.log("res.data.msg", res.data.msg)
         this.Visible1=false;
       })
-},
+    },
 
     handleClose(done) {
       this.$confirm('确认关闭？')
