@@ -129,6 +129,28 @@ export default {
       })
     }
   }
+  ,mounted() {
+    this.formData.age=this.$cookies.get("data").age;
+    switch (this.$cookies.get("role")) {
+      case "student": {
+        this.formData.name = this.$cookies.get("data").sname;
+        break;
+      }case "teacher": {
+        this.formData.name = this.$cookies.get("data").tname;
+        break;
+      }
+      case "manager": {
+        this.formData.name = this.$cookies.get("data").mname;
+        break;
+      }
+      default:
+        break;
+    }
+   this.formData.email=this.$cookies.get("data").email;
+   this.formData.phoneNumber=this.$cookies.get("data").phoneNumber;
+    this.formData.sex=this.$cookies.get("data").sex;
+
+  }
 }
 
 </script>
