@@ -2,11 +2,10 @@
   <div style="padding: 10px">
     <div style="margin: 10px 0">
       <!--      搜索区域-->
-      <el-input v-model="search" placeholder="请输入班级名称" style="width: 20%" clearable/>
+      <el-input v-model="search" placeholder="请输入班级名称" style="width: 20%" clearable />
       <el-button type="primary" :icon="Search" @click="SearchClass" style="margin-left: 5px">查询</el-button>
       <!-- 新建班级 -->
-      <el-button type="primary" @click="dialogVisible = true" v-if="is_teacher"
-                 style="margin-left: 5px">新建班级</el-button>
+      <el-button type="primary" @click="dialogVisible = true" v-if="is_teacher" style="margin-left: 5px">新建班级</el-button>
     </div>
 
     <el-dialog v-model="dialogVisible" title="创建班级" width="60%" align-center>
@@ -55,7 +54,7 @@
                          @click="handleDelete(scope.row.cid)">删除</el-button>
             </el-col>
             <el-col>
-              <el-button size="small" type="default"  style="background-color: #856629;color:white ;border: 0px"
+              <el-button size="small" type="default" style="background-color: #856629;color:white ;border: 0px"
                          @click="OpenCourseVideo(scope.row.cid)">视频</el-button>
             </el-col>
           </el-row>
@@ -133,7 +132,10 @@ export default {
       search: "",
       ClassListData: "",
       total: 0,
-      urls:"",
+      urls: "",
+      // 搜索 学生或教师的接口 id
+      urlsSearch: "",
+      id: 0,
       currentPage: 1,
       pageSize: 12,
       loading: true,
@@ -146,7 +148,7 @@ export default {
     // ElInput, ElButton, CircleCloseFilled, ElDialog,
   },
   methods: {
-    OpenCourseVideo(cid){
+    OpenCourseVideo(cid) {
       this.$router.push({ path: '/MyCourse', query: { cid } });
     },
     rowClassName({ rowIndex }) {
@@ -219,24 +221,39 @@ export default {
     // 搜索
     SearchClass() {
       this.classSearch.keyword = this.search
-      API({
-        url: '/selectClass',
-        method: 'get',
-        params: {
-          keyword: this.search
-        }
-      }).then((res) => {
-        this.ClassListData = res.data;
-        this.total = res.data.count
-      })
+      if (this.$cookies.get("role") == 'teacher') {
+        API({
+          url: '/selectClassByTidAndKey',
+          method: 'get',
+          params: {
+            tid: this.$cookies.get("data").tid,
+            keyword: this.search
+          }
+        }).then((res) => {
+          this.ClassListData = res.data;
+          this.total = res.data.count
+        })
+      } else {
+        API({
+          url: '/selectClassBySidAndKey',
+          method: 'get',
+          params: {
+            sid: this.$cookies.get("data").sid,
+            keyword: this.search
+          }
+        }).then((res) => {
+          this.ClassListData = res.data;
+          this.total = res.data.count
+        })
+      }
     },
     // 展示信息
-    SearchClassListData(default_current_page = this.currentPage,urls) {
+    SearchClassListData(default_current_page = this.currentPage, urls) {
       this.loading = true
-      if (this.$cookies.get("role")=='teacher') {
-        urls='/teacher/selectownclass'
+      if (this.$cookies.get("role") == 'teacher') {
+        urls = '/teacher/selectownclass'
       } else {
-        urls='/class/yijiaru'
+        urls = '/class/yijiaru'
       }
       API({
         url: urls,
